@@ -10,6 +10,11 @@ public class EnemyAI : MonoBehaviour
     public float stoppingDistance = 0.5f;
     public float updateRate = 0.2f; // cada cuánto recalcula la dirección al jugador
 
+    public int maxHealth = 1;
+    private int currentHealth;
+
+    public GameObject EXPDrop;
+
     private Vector2 targetDirection;
     private float updateTimer;
 
@@ -41,7 +46,28 @@ public class EnemyAI : MonoBehaviour
     {
         if (collider.CompareTag("Player"))
         {
-            gameObject.SetActive(false); // regresa al pool
+            killEnemy();
         }
+    }
+
+    // Cuando el pool reactiva el enemigo
+    void OnEnable()
+    {
+        currentHealth = maxHealth;
+    }
+
+    public void takeDamage(int damage)
+    {
+        currentHealth -= damage;
+        if (currentHealth <= 0)
+        {
+            Instantiate(EXPDrop, transform.position, Quaternion.identity);
+            killEnemy();
+        }
+    }
+
+    public void killEnemy()
+    {
+        gameObject.SetActive(false); // regresa al pool
     }
 }

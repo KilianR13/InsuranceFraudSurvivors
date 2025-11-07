@@ -67,7 +67,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.35
+  m_Radius: 0.45
 --- !u!1 &4944665793180853158
 GameObject:
   m_ObjectHideFlags: 0
@@ -363,3 +363,5 @@ MonoBehaviour:
   turnSpeed: 200
   stoppingDistance: 0.5
   updateRate: 0.2
+  maxHealth: 1
+  EXPDrop: {fileID: 7722951614812473733, guid: b09f973f946b2624780fd3cda672a9e7, type: 3}
