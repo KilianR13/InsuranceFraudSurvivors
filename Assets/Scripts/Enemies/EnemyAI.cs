@@ -12,6 +12,7 @@ public class EnemyAI : MonoBehaviour
 
     public int maxHealth = 1;
     private int currentHealth;
+    public int damage;
 
     public GameObject EXPDrop;
 
@@ -46,6 +47,11 @@ public class EnemyAI : MonoBehaviour
     {
         if (collider.CompareTag("Player"))
         {
+            PlayerGameLogic player = collider.GetComponentInParent<PlayerGameLogic>();
+            if (player != null)
+            {
+                player.takeDamage(damage);    
+            }
             killEnemy();
         }
     }

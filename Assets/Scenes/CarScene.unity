@@ -129,7 +129,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3778220891801129964, guid: b09f973f946b2624780fd3cda672a9e7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.5099549
+      value: 4.31
       objectReference: {fileID: 0}
     - target: {fileID: 3778220891801129964, guid: b09f973f946b2624780fd3cda672a9e7, type: 3}
       propertyPath: m_LocalPosition.y
@@ -276,6 +276,7 @@ GameObject:
   m_Component:
   - component: {fileID: 341637403}
   - component: {fileID: 341637402}
+  - component: {fileID: 341637404}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -318,6 +319,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &341637404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 341637401}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd5784dd10fcbb34dad5b760ab0b4491, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameManager
 --- !u!1 &499837929
 GameObject:
   m_ObjectHideFlags: 0

@@ -12,7 +12,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - PlayerEXP
   - PlayerHurtbox
   - Enemy_HitboxCollision
   - Enemy_HitboxHurtbox
