@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 835709395653758475}
-  - component: {fileID: 4461681946759762435}
+  - component: {fileID: 214632383080102459}
   m_Layer: 6
   m_Name: PlayerEXPBox
   m_TagString: Player
@@ -32,8 +32,8 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2893038597859865627}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!58 &4461681946759762435
-CircleCollider2D:
+--- !u!70 &214632383080102459
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -45,10 +45,10 @@ CircleCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 951
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -67,7 +67,39 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 1
+  m_Size: {x: 1.5, y: 2.5}
+  m_Direction: 0
+--- !u!1 &2970405601796366427
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4747867348241869562}
+  m_Layer: 0
+  m_Name: FirePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4747867348241869562
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2970405601796366427}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2893038597859865627}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3246612153441771264
 GameObject:
   m_ObjectHideFlags: 0
@@ -83,6 +115,7 @@ GameObject:
   - component: {fileID: 5376568330624388301}
   - component: {fileID: 3310858472393324216}
   - component: {fileID: 4289009811494200035}
+  - component: {fileID: 5022270277495408703}
   m_Layer: 0
   m_Name: Car_Player
   m_TagString: Player
@@ -105,6 +138,7 @@ Transform:
   m_Children:
   - {fileID: 580173713355562805}
   - {fileID: 835709395653758475}
+  - {fileID: 4747867348241869562}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &394915901387341467
@@ -276,6 +310,23 @@ MonoBehaviour:
   m_DefaultActionMap: 
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &5022270277495408703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3246612153441771264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bfbcb71b235daf469b204cdf78d5452, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoAttackFireball
+  attackRange: 20
+  attackCooldown: 1.5
+  damage: 1
+  fireballPrefab: {fileID: 5272944387553640330, guid: f130ff0a4e061e146aac4aee60edac51, type: 3}
+  firePoint: {fileID: 4747867348241869562}
 --- !u!1 &3576485808171583709
 GameObject:
   m_ObjectHideFlags: 0

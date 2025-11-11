@@ -14,7 +14,10 @@ public class EnemyAI : MonoBehaviour
     private int currentHealth;
     public int damage;
 
+    [Header("Drops & feedback")]
     public GameObject EXPDrop;
+    public GameObject healthBarPrefab;
+    private HealthBar healthBar;
 
     private Vector2 targetDirection;
     private float updateTimer;
@@ -60,11 +63,39 @@ public class EnemyAI : MonoBehaviour
     void OnEnable()
     {
         currentHealth = maxHealth;
+        // Crea barra de vida
+        if (healthBarPrefab != null)
+        {
+            GameObject bar = Instantiate(healthBarPrefab);
+
+            // Hacer la barra hija del enemigo
+            bar.transform.SetParent(transform);
+
+            // Ajustar escala para evitar distorsión
+            bar.transform.localScale = Vector3.one * 0.015f;
+
+            // Obtener componente y configurar
+            healthBar = bar.GetComponent<HealthBar>();
+            if (healthBar != null)
+            {
+                // Inicializar con target, cámara y offset
+                Camera mainCam = Camera.main; // la cámara principal del jugador
+                healthBar.Initialize(transform, mainCam);
+
+                // Actualizar el valor inicial de vida
+                healthBar.UpdateHealthbar(currentHealth, maxHealth);
+            }
+        }
+
     }
 
     public void takeDamage(int damage)
     {
         currentHealth -= damage;
+
+        if (healthBar != null)
+            healthBar.UpdateHealthbar(currentHealth, maxHealth);
+
         if (currentHealth <= 0)
         {
             Instantiate(EXPDrop, transform.position, Quaternion.identity);
@@ -74,6 +105,9 @@ public class EnemyAI : MonoBehaviour
 
     public void killEnemy()
     {
+        if (healthBar != null)
+            Destroy(healthBar.gameObject);
+        
         gameObject.SetActive(false); // regresa al pool
     }
 }

@@ -363,6 +363,7 @@ MonoBehaviour:
   turnSpeed: 200
   stoppingDistance: 0.5
   updateRate: 0.2
-  maxHealth: 1
+  maxHealth: 2
   damage: 1
   EXPDrop: {fileID: 7722951614812473733, guid: b09f973f946b2624780fd3cda672a9e7, type: 3}
+  healthBarPrefab: {fileID: 5680389111961237268, guid: 8ef82025fb6c5cf438ce35e3711fe11d, type: 3}
