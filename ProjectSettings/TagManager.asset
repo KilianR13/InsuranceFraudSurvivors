@@ -16,7 +16,7 @@ TagManager:
   - PlayerHurtbox
   - Enemy_HitboxCollision
   - Enemy_HitboxHurtbox
-  - 
+  - PlayerAttack
   - 
   - 
   - 

@@ -78,7 +78,7 @@ public class EnemyAI : MonoBehaviour
             healthBar = bar.GetComponent<HealthBar>();
             if (healthBar != null)
             {
-                // Inicializar con target, cámara y offset
+                // Inicializar con target y la cámara principal
                 Camera mainCam = Camera.main; // la cámara principal del jugador
                 healthBar.Initialize(transform, mainCam);
 

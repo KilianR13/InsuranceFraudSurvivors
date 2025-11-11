@@ -7,6 +7,9 @@ public class PlayerGameLogic : MonoBehaviour
     private int currentEXP;
     private int currentLevel;
 
+    [Header("Upgrades")]
+    [SerializeField] private SwordUpgrade swordUpgrade;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -19,7 +22,8 @@ public class PlayerGameLogic : MonoBehaviour
     public void addEXP(int exp)
     {
         currentEXP += exp;
-        Debug.Log($"Current EXP: {currentEXP}");
+        swordUpgrade.TrySpawnSword(currentEXP);
+        // Debug.Log($"Current EXP: {currentEXP}");
     }
 
     public void takeDamage(int damage)
@@ -30,6 +34,6 @@ public class PlayerGameLogic : MonoBehaviour
             return;
         }
         currentHealth -= damage;
-        Debug.Log($"Current health: {currentHealth}");
+        // Debug.Log($"Current health: {currentHealth}");
     }
 }

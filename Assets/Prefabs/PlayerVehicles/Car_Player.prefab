@@ -100,6 +100,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2893038597859865627}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3004877183333432946
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1830273388157214192}
+  m_Layer: 0
+  m_Name: SwordPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1830273388157214192
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3004877183333432946}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: 0.8, y: 0, z: 0}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2893038597859865627}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
 --- !u!1 &3246612153441771264
 GameObject:
   m_ObjectHideFlags: 0
@@ -116,6 +147,7 @@ GameObject:
   - component: {fileID: 3310858472393324216}
   - component: {fileID: 4289009811494200035}
   - component: {fileID: 5022270277495408703}
+  - component: {fileID: 2040020884514034144}
   m_Layer: 0
   m_Name: Car_Player
   m_TagString: Player
@@ -139,6 +171,7 @@ Transform:
   - {fileID: 580173713355562805}
   - {fileID: 835709395653758475}
   - {fileID: 4747867348241869562}
+  - {fileID: 1830273388157214192}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &394915901387341467
@@ -280,6 +313,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerGameLogic
   maxHealth: 10
+  swordUpgrade: {fileID: 2040020884514034144}
 --- !u!114 &4289009811494200035
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -327,6 +361,20 @@ MonoBehaviour:
   damage: 1
   fireballPrefab: {fileID: 5272944387553640330, guid: f130ff0a4e061e146aac4aee60edac51, type: 3}
   firePoint: {fileID: 4747867348241869562}
+--- !u!114 &2040020884514034144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3246612153441771264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d8604d9d25f6aa4eb5f129bf99d701f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SwordUpgrade
+  swordPrefab: {fileID: 4845601921339126416, guid: fd687b795b7e9464682e24e6a638eaf2, type: 3}
+  swordSpawnPoint: {fileID: 1830273388157214192}
 --- !u!1 &3576485808171583709
 GameObject:
   m_ObjectHideFlags: 0
