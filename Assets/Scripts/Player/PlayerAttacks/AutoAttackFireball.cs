@@ -7,7 +7,6 @@ public class AutoAttackFireball : MonoBehaviour
     [Header("Ataque")]
     public float attackRange = 5f;        // Rango de detección de enemigos
     public float attackCooldown = 1.5f;   // Tiempo entre ataques
-    public int damage = 1;                // Daño que inflige cada ataque
     public GameObject fireballPrefab;      // Prefab de la bola de fuego
     public Transform firePoint;         // Punto desde donde se inicia el ataque.
 
@@ -59,7 +58,7 @@ public class AutoAttackFireball : MonoBehaviour
         FireBall proj = fireball.GetComponent<FireBall>();
         if (proj != null)
         {
-            proj.SetTarget(enemy.transform, damage);
+            proj.SetTarget(enemy.transform);
         }
     }
 }

@@ -8,13 +8,12 @@ public class FireBall : MonoBehaviour
     public float lifetime = 5f;
 
     private Transform target;
-    private int damage;
+    [SerializeField] private int damage = 10;
     private bool hasTarget = false;
 
-    public void SetTarget(Transform newTarget, int dmg)
+    public void SetTarget(Transform newTarget)
     {
         target = newTarget;
-        damage = dmg;
         hasTarget = true;
     }
 

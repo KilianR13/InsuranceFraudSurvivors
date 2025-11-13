@@ -43,6 +43,15 @@ public class SwordUpgrade : MonoBehaviour
         // Posición y rotación relativa al spawn point
         currentSword.transform.localPosition = -localOffset;
         currentSword.transform.localRotation = Quaternion.identity;
+        Sword swordComp = currentSword.GetComponent<Sword>();
+        if (swordComp != null)
+        {
+            Rigidbody2D playerRb = swordSpawnPoint.GetComponentInParent<Rigidbody2D>();
+            if (playerRb != null)
+                swordComp.SetPlayerRb(playerRb);
+            else
+                Debug.LogWarning("No se encontró Rigidbody2D en el jugador para la espada.");
+        }
 
     }
 }

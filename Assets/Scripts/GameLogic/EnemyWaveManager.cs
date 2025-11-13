@@ -38,7 +38,7 @@ public class EnemyWaveManager : MonoBehaviour
         {
             spawnTimer = 0f;
 
-            Vector3 spawnPos = player.position + (Vector3)(Random.insideUnitCircle.normalized * 10f);
+            Vector3 spawnPos = GetSpawnPositionOutsideCamera(10f);
             var enemy = spawner.SpawnEnemy(currentWave.enemyPrefab, spawnPos);
             activeEnemies.Add(enemy);
         }
@@ -50,4 +50,47 @@ public class EnemyWaveManager : MonoBehaviour
             currentWaveIndex = (currentWaveIndex + 1) % waves.Count; // bucle infinito
         }
     }
+    private Vector3 GetSpawnPositionOutsideCamera(float minDistanceFromPlayer)
+    {
+        Camera cam = Camera.main;
+        Vector3 spawnPos;
+        int attempts = 0;
+
+        // Calcula los límites de la cámara en world space
+        float camHeight = 2f * cam.orthographicSize;
+        float camWidth = camHeight * cam.aspect;
+
+        float left = cam.transform.position.x - camWidth / 2f;
+        float right = cam.transform.position.x + camWidth / 2f;
+        float bottom = cam.transform.position.y - camHeight / 2f;
+        float top = cam.transform.position.y + camHeight / 2f;
+
+        do
+        {
+            // Genera un punto aleatorio en un rectángulo más grande que la cámara
+            float x, y;
+
+            // Decide si spawnear horizontalmente o verticalmente fuera de la cámara
+            if (Random.value < 0.5f)
+            {
+                // Izquierda o derecha
+                x = Random.value < 0.5f ? left - minDistanceFromPlayer : right + minDistanceFromPlayer;
+                y = Random.Range(bottom - minDistanceFromPlayer, top + minDistanceFromPlayer);
+            }
+            else
+            {
+                // Arriba o abajo
+                x = Random.Range(left - minDistanceFromPlayer, right + minDistanceFromPlayer);
+                y = Random.value < 0.5f ? bottom - minDistanceFromPlayer : top + minDistanceFromPlayer;
+            }
+
+            spawnPos = new Vector3(x, y, 0f);
+            attempts++;
+
+        } while (Vector3.Distance(spawnPos, player.position) < minDistanceFromPlayer && attempts < 100);
+
+        return spawnPos;
+    }
+
+
 }
