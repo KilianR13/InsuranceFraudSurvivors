@@ -27,12 +27,9 @@ public class Sword : MonoBehaviour
         EnemyAI enemy = collision.GetComponentInParent<EnemyAI>();
         if (enemy != null && !damagedEnemies.Contains(enemy))
         {
-            Debug.Log(playerRb.linearVelocity.magnitude);
             float speed = playerRb != null ? playerRb.linearVelocity.magnitude : 0f;
             int finalDamage = baseDamage + Mathf.RoundToInt(speed * damageMultiplier);
             enemy.takeDamage(finalDamage);
-            Debug.Log($"Velocidad del jugador: {speed}");
-            Debug.Log($"Daño: {finalDamage}");
             damagedEnemies.Add(enemy);
         }
     }
