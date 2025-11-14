@@ -439,12 +439,12 @@ MonoBehaviour:
     enemyPrefab: {fileID: 8178609513803999020, guid: f62474948b434e945829d63224ac24ce, type: 3}
     maxEnemiesAlive: 5
     spawnInterval: 1
-    duration: 5
+    duration: 10
   - name: 
     enemyPrefab: {fileID: 8178609513803999020, guid: f62474948b434e945829d63224ac24ce, type: 3}
-    maxEnemiesAlive: 5
-    spawnInterval: 1
-    duration: 5
+    maxEnemiesAlive: 30
+    spawnInterval: 0.7
+    duration: 30
   currentWaveIndex: 0
 --- !u!4 &341637403
 Transform:
