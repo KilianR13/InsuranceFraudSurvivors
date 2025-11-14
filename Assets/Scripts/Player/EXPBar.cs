@@ -1,16 +1,21 @@
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EXPBar : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [SerializeField] private Slider slider;
+    [SerializeField] private TextMeshProUGUI currentLVL;
+
+
+    public void UpdateEXPBar(float currentValue, float maxValue)
     {
-        
+        slider.value = currentValue / maxValue;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void UpdateLevel(int newLevel)
     {
-        
+        currentLVL.text = $"Lv {newLevel}";
     }
+
 }

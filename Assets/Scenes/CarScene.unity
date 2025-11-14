@@ -298,10 +298,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 728897027}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0.25}
-  m_AnchorMax: {x: 1, y: 0.75}
+  m_AnchorMin: {x: 0, y: 0.25}
+  m_AnchorMax: {x: 0.99, y: 0.75}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &308569605
 MonoBehaviour:
@@ -388,7 +388,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 20, w: 0}
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -649,6 +649,7 @@ GameObject:
   - component: {fileID: 728897031}
   - component: {fileID: 728897030}
   - component: {fileID: 728897029}
+  - component: {fileID: 728897032}
   m_Layer: 5
   m_Name: EXPBar
   m_TagString: Untagged
@@ -740,6 +741,20 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &728897032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 728897026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55b9b39c66acb60479e961541ad23f62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EXPBar
+  slider: {fileID: 1828243341}
+  currentLVL: {fileID: 308569605}
 --- !u!1 &1094637139
 GameObject:
   m_ObjectHideFlags: 0
@@ -1407,6 +1422,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Car_Player
       objectReference: {fileID: 0}
+    - target: {fileID: 3310858472393324216, guid: 914a115e6c673bf42818dc404bd00802, type: 3}
+      propertyPath: expBar
+      value: 
+      objectReference: {fileID: 728897032}
     - target: {fileID: 3310858472393324216, guid: 914a115e6c673bf42818dc404bd00802, type: 3}
       propertyPath: baseEXP
       value: 30
