@@ -20,6 +20,10 @@ public class EnemyAI : MonoBehaviour
     private HealthBar healthBar;
 
     [HideInInspector] public bool poolable = true; // por defecto sí se puede volver al pool
+    public int waveIndex { get; set; } // propiedad para guardar la oleada a la que pertenece
+    [HideInInspector] public EnemyWaveManager waveManager; // referencia al manager
+
+
 
     private Vector2 targetDirection;
     private float updateTimer;
@@ -107,31 +111,30 @@ public class EnemyAI : MonoBehaviour
 
     public void killEnemy()
     {
+        int currentWaveIndex = waveManager != null ? waveManager.currentWaveIndex : waveIndex;
+
         if (healthBar != null)
         {
             Destroy(healthBar.gameObject);
-            Debug.Log($"{name}: Barra de vida destruida.");
+        }
+
+        if (!poolable || waveIndex < currentWaveIndex) // enemigos de oleadas pasadas
+        {
+            Destroy(gameObject);
+            return;
         }
 
         if (poolable)
         {
             Poolable p = GetComponent<Poolable>();
-
             if (p != null && p.originalPrefab != null)
             {
-                Debug.Log($"{name}: Devolviendo al pool -> Prefab: {p.originalPrefab.name}");
                 SimplePool.Return(p.originalPrefab, gameObject);
             }
             else
             {
-                Debug.LogWarning($"{name}: Se ha matado sin tener Poolable asignado. Se desactiva como fallback.");
-                gameObject.SetActive(false); // fallback
+                gameObject.SetActive(false);
             }    
-        }
-        else
-        {
-            Debug.Log($"{name}: poolable=false -> Destruyendo objeto");
-            Destroy(gameObject);
         }
     }
 

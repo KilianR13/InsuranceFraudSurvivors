@@ -17,40 +17,50 @@ public class EnemyWaveManager : MonoBehaviour
     public EnemySpawner spawner;
     public List<Wave> waves = new List<Wave>();
 
-    private int currentWaveIndex = 0;
+    public int currentWaveIndex = 0;
     private float waveTimer = 0f;
     private float spawnTimer = 0f;
     private List<GameObject> activeEnemies = new List<GameObject>();
+    private bool waveFinished = false;
 
     void Update()
     {
         if (waves.Count == 0 || spawner == null) return;
 
+        // Detener spawn si la oleada terminó
+        if (waveFinished) return;
+
         Wave currentWave = waves[currentWaveIndex];
         waveTimer += Time.deltaTime;
         spawnTimer += Time.deltaTime;
 
-        // Limpia SOLO enemigos muertos de esta oleada
+        // Limpia enemigos muertos de esta oleada
         activeEnemies.RemoveAll(e => e == null || !e.activeSelf);
-
         int aliveFromThisWave = activeEnemies.Count;
 
-        // Spawn de enemigos
+        // Spawn enemigos mientras haya espacio
         if (aliveFromThisWave < currentWave.maxEnemiesAlive && spawnTimer >= currentWave.spawnInterval)
         {
             spawnTimer = 0f;
-
             Vector3 spawnPos = GetSpawnPositionOutsideCamera(10f);
-
-            // PASAMOS LA OLEADA AQUÍ
             var enemy = spawner.SpawnEnemy(currentWave.enemyPrefab, spawnPos, currentWaveIndex);
+
+            EnemyAI ai = enemy.GetComponent<EnemyAI>();
+            if (ai != null)
+            {
+                ai.waveIndex = currentWaveIndex;
+                ai.poolable = true;
+            }
 
             activeEnemies.Add(enemy);
         }
 
-        // Cambiar de oleada
+        // Comprobar fin de oleada
         if (waveTimer >= currentWave.duration)
         {
+            waveFinished = true;
+
+            // Marcar enemigos vivos como no poolable
             foreach (var e in activeEnemies)
             {
                 if (e != null && e.TryGetComponent(out EnemyAI ai))
@@ -58,23 +68,29 @@ public class EnemyWaveManager : MonoBehaviour
                     ai.poolable = false;
                 }
             }
-            // Limpia enemigos del pool de oleadas anteriores
+
+            // Limpiar enemigos muertos del pool
             ClearWaveEnemies(currentWaveIndex);
 
-            waveTimer = 0f;
-            activeEnemies.Clear();
-            spawnTimer = 0f;
+            Debug.Log($"Oleada {currentWaveIndex} terminada");
 
-            currentWaveIndex = (currentWaveIndex + 1) % waves.Count;
+            // Avanzar a la siguiente oleada si existe
+            if (waves.Count > currentWaveIndex + 1)
+            {
+                currentWaveIndex++;
+                waveFinished = false;
+                waveTimer = 0f;
+                spawnTimer = 0f;
+                activeEnemies.Clear();
+            }
         }
     }
 
-    // 🔥 Limpia enemigos (vivos o muertos) de una oleada pasadas
     private void ClearWaveEnemies(int waveIndex)
     {
         List<GameObject> toRemove = new();
 
-        var dict = SimplePool.GetInternalDictionary();
+        var dict = SimplePool.GetInternalDictionary(); // necesitas exponer este método en SimplePool
 
         foreach (var kvp in dict)
         {
@@ -90,7 +106,7 @@ public class EnemyWaveManager : MonoBehaviour
             }
         }
 
-        // destruir físicamente y sacar del pool
+        // Destruir físicamente y sacar del pool
         foreach (var obj in toRemove)
         {
             PoolIdentity id = obj.GetComponent<PoolIdentity>();
@@ -98,7 +114,6 @@ public class EnemyWaveManager : MonoBehaviour
             Destroy(obj);
         }
     }
-
 
     private Vector3 GetSpawnPositionOutsideCamera(float minDistanceFromPlayer)
     {
