@@ -71,4 +71,31 @@ public static class SimplePool
 
         poolDict[prefab].Clear();
     }
+
+    public static Dictionary<GameObject, Queue<GameObject>> GetInternalDictionary()
+    {
+        return poolDict;
+    }
+
+    public static void RemoveSpecific(GameObject prefab, GameObject obj)
+    {
+        if (!poolDict.ContainsKey(prefab))
+            return;
+
+        Queue<GameObject> queue = poolDict[prefab];
+
+        // Reconstruimos la cola sin el objeto
+        Queue<GameObject> newQueue = new Queue<GameObject>();
+
+        foreach (var e in queue)
+        {
+            if (e != obj)
+                newQueue.Enqueue(e);
+        }
+
+        poolDict[prefab] = newQueue;
+    }
+
+
+    
 }

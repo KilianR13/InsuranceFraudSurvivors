@@ -24,6 +24,7 @@ public class PlayerGameLogic : MonoBehaviour
         currentLevel = 1;
         currentEXP = 0;
         expBar.UpdateEXPBar(currentEXP, expToNextLevel);
+        expBar.UpdateLevel(currentLevel);
         currentHealth = maxHealth;
     }
 
@@ -48,7 +49,6 @@ public class PlayerGameLogic : MonoBehaviour
 
     private void OnLevelUp()
     {
-        Debug.Log($"¡Subiste al nivel {currentLevel}!");
         expBar.UpdateLevel(currentLevel);
         // Aquí luego podemos desbloquear mejoras, aumentar stats, etc.
     }

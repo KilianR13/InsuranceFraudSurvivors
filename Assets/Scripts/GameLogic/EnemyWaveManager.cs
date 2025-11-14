@@ -30,33 +30,82 @@ public class EnemyWaveManager : MonoBehaviour
         waveTimer += Time.deltaTime;
         spawnTimer += Time.deltaTime;
 
-        // Limpia los enemigos inactivos
+        // Limpia SOLO enemigos muertos de esta oleada
         activeEnemies.RemoveAll(e => e == null || !e.activeSelf);
 
-        // Spawnea mientras haya hueco
-        if (activeEnemies.Count < currentWave.maxEnemiesAlive && spawnTimer >= currentWave.spawnInterval)
+        int aliveFromThisWave = activeEnemies.Count;
+
+        // Spawn de enemigos
+        if (aliveFromThisWave < currentWave.maxEnemiesAlive && spawnTimer >= currentWave.spawnInterval)
         {
             spawnTimer = 0f;
 
             Vector3 spawnPos = GetSpawnPositionOutsideCamera(10f);
-            var enemy = spawner.SpawnEnemy(currentWave.enemyPrefab, spawnPos);
+
+            // PASAMOS LA OLEADA AQUÍ
+            var enemy = spawner.SpawnEnemy(currentWave.enemyPrefab, spawnPos, currentWaveIndex);
+
             activeEnemies.Add(enemy);
         }
 
-        // Cambia de oleada si pasa el tiempo
+        // Cambiar de oleada
         if (waveTimer >= currentWave.duration)
         {
+            foreach (var e in activeEnemies)
+            {
+                if (e != null && e.TryGetComponent(out EnemyAI ai))
+                {
+                    ai.poolable = false;
+                }
+            }
+            // Limpia enemigos del pool de oleadas anteriores
+            ClearWaveEnemies(currentWaveIndex);
+
             waveTimer = 0f;
-            currentWaveIndex = (currentWaveIndex + 1) % waves.Count; // bucle infinito
+            activeEnemies.Clear();
+            spawnTimer = 0f;
+
+            currentWaveIndex = (currentWaveIndex + 1) % waves.Count;
         }
     }
+
+    // 🔥 Limpia enemigos (vivos o muertos) de una oleada pasadas
+    private void ClearWaveEnemies(int waveIndex)
+    {
+        List<GameObject> toRemove = new();
+
+        var dict = SimplePool.GetInternalDictionary();
+
+        foreach (var kvp in dict)
+        {
+            foreach (var obj in kvp.Value)
+            {
+                if (obj == null) continue;
+
+                if (obj.TryGetComponent(out PoolIdentity id))
+                {
+                    if (id.waveId == waveIndex)
+                        toRemove.Add(obj);
+                }
+            }
+        }
+
+        // destruir físicamente y sacar del pool
+        foreach (var obj in toRemove)
+        {
+            PoolIdentity id = obj.GetComponent<PoolIdentity>();
+            SimplePool.RemoveSpecific(id.prefab, obj);
+            Destroy(obj);
+        }
+    }
+
+
     private Vector3 GetSpawnPositionOutsideCamera(float minDistanceFromPlayer)
     {
         Camera cam = Camera.main;
         Vector3 spawnPos;
         int attempts = 0;
 
-        // Calcula los límites de la cámara en world space
         float camHeight = 2f * cam.orthographicSize;
         float camWidth = camHeight * cam.aspect;
 
@@ -67,19 +116,15 @@ public class EnemyWaveManager : MonoBehaviour
 
         do
         {
-            // Genera un punto aleatorio en un rectángulo más grande que la cámara
             float x, y;
 
-            // Decide si spawnear horizontalmente o verticalmente fuera de la cámara
             if (Random.value < 0.5f)
             {
-                // Izquierda o derecha
                 x = Random.value < 0.5f ? left - minDistanceFromPlayer : right + minDistanceFromPlayer;
                 y = Random.Range(bottom - minDistanceFromPlayer, top + minDistanceFromPlayer);
             }
             else
             {
-                // Arriba o abajo
                 x = Random.Range(left - minDistanceFromPlayer, right + minDistanceFromPlayer);
                 y = Random.value < 0.5f ? bottom - minDistanceFromPlayer : top + minDistanceFromPlayer;
             }
@@ -91,6 +136,4 @@ public class EnemyWaveManager : MonoBehaviour
 
         return spawnPos;
     }
-
-
 }

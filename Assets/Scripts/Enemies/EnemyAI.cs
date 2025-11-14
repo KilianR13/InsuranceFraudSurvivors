@@ -19,6 +19,8 @@ public class EnemyAI : MonoBehaviour
     public GameObject healthBarPrefab;
     private HealthBar healthBar;
 
+    [HideInInspector] public bool poolable = true; // por defecto sí se puede volver al pool
+
     private Vector2 targetDirection;
     private float updateTimer;
 
@@ -106,8 +108,32 @@ public class EnemyAI : MonoBehaviour
     public void killEnemy()
     {
         if (healthBar != null)
+        {
             Destroy(healthBar.gameObject);
-        
-        gameObject.SetActive(false); // regresa al pool
+            Debug.Log($"{name}: Barra de vida destruida.");
+        }
+
+        if (poolable)
+        {
+            Poolable p = GetComponent<Poolable>();
+
+            if (p != null && p.originalPrefab != null)
+            {
+                Debug.Log($"{name}: Devolviendo al pool -> Prefab: {p.originalPrefab.name}");
+                SimplePool.Return(p.originalPrefab, gameObject);
+            }
+            else
+            {
+                Debug.LogWarning($"{name}: Se ha matado sin tener Poolable asignado. Se desactiva como fallback.");
+                gameObject.SetActive(false); // fallback
+            }    
+        }
+        else
+        {
+            Debug.Log($"{name}: poolable=false -> Destruyendo objeto");
+            Destroy(gameObject);
+        }
     }
+
+
 }
