@@ -9,17 +9,27 @@ public class SwordUpgrade : MonoBehaviour
     private GameObject currentSword;
 
     // Llamar para intentar spawnear la espada
-    public void TrySpawnSword(int currentXP)
+    public void SwordApplyUpgrade()
     {
-        if (currentSword != null) return; // ya tenemos la espada
-
-        if (currentXP >= 0) // requisito para obtener la espada
+        // Si NO existe la espada, la creamos
+        if (currentSword == null)
         {
             SpawnSword();
+            Debug.Log("Espada creada por primera vez.");
+            return;
+        }
+
+        // Si ya existe, aumentamos su daño
+        Sword swordComp = currentSword.GetComponent<Sword>();
+        if (swordComp != null)
+        {
+            swordComp.baseDamage += 5;          // +5 daño base (puedes ajustar)
+            // swordComp.damageMultiplier += 0.1f; // +10% escalado por velocidad (opcional)
+
+            Debug.Log($"Espada mejorada → baseDamage = {swordComp.baseDamage}, multiplier = {swordComp.damageMultiplier}");
         }
     }
-
-    private void SpawnSword()
+    public void SpawnSword()
     {
         if (swordPrefab == null || swordSpawnPoint == null) return;
 

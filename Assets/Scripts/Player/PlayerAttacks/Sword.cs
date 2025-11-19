@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class Sword : MonoBehaviour
 {
-    [SerializeField] private int baseDamage = 5;
-    [SerializeField] private float damageMultiplier = 1f; // cuánto multiplica la velocidad
+    [SerializeField] public int baseDamage = 5;
+    [SerializeField] public float damageMultiplier = 1f; // cuánto multiplica la velocidad
     private Rigidbody2D playerRb;
 
     // Guardamos los enemigos que ya recibieron daño mientras estén dentro

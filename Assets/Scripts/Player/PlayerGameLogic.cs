@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,7 +11,11 @@ public class PlayerGameLogic : MonoBehaviour
     private int currentLevel;
 
     [Header("Upgrades")]
-    [SerializeField] private SwordUpgrade swordUpgrade;
+    [SerializeField] public SwordUpgrade swordUpgrade;
+
+    [Header("Available Upgrades")]
+    public List<UpgradeData> allUpgrades = new List<UpgradeData>();
+
 
     [Header("Level System")]
     [SerializeField] private int baseEXPNeeded = 30;              // EXP necesaria para subir del nivel 1 al 2
@@ -38,7 +44,6 @@ public class PlayerGameLogic : MonoBehaviour
     public void addEXP(int exp)
     {
         currentEXP += exp;
-        swordUpgrade.TrySpawnSword(currentEXP);
         expBar.UpdateEXPBar(currentEXP, expToNextLevel);
         // Debug.Log($"Current EXP: {currentEXP}");
         CheckLevelUp();
@@ -65,16 +70,23 @@ public class PlayerGameLogic : MonoBehaviour
         
 
         if (cardManager != null)
-            cardManager.ShowCards(3, OnCardSelected); // mostramos 3 cartas
+        {
+            List<UpgradeData> selected = allUpgrades
+                .OrderBy(x => Random.value)
+                .Take(3)
+                .ToList();
 
+            cardManager.ShowCards(selected, OnCardSelected);
+        }
+        
         // Pausar el juego (física, timers, etc.)
         Time.timeScale = 0f;
-        // Aquí luego podemos desbloquear mejoras, aumentar stats, etc.
     }
 
     private void OnCardSelected(UpgradeCard card)
     {
-        Debug.Log($"Jugador eligió: {card.titleText.text}");
+        Debug.Log($"Jugador eligió la mejora: {card.upgradeData.id}");
+        ApplyUpgrade(card.upgradeData);
 
         // Aquí aplicas la mejora (más adelante). Por ahora solo cerramos.
         if (upgradePanel != null)
@@ -83,6 +95,12 @@ public class PlayerGameLogic : MonoBehaviour
         // Reanudar el juego
         Time.timeScale = 1f;
     }
+
+    private void ApplyUpgrade(UpgradeData upgrade)
+    {
+        upgrade.Apply(this);
+    }
+
 
     public void takeDamage(int damage)
     {
@@ -94,15 +112,4 @@ public class PlayerGameLogic : MonoBehaviour
         currentHealth -= damage;
         // Debug.Log($"Current health: {currentHealth}");
     }
-
-    /* ----------------------------------------------------------------------------------------------------- */
-    // PREPARACIÓN PARA LA UI
-    public float GetEXPProgress()
-    {
-        return (float)currentEXP / expToNextLevel;
-    }
-
-    public int GetCurrentLevel() => currentLevel;
-    public int GetCurrentEXP() => currentEXP;
-    public int GetEXPToNextLevel() => expToNextLevel;
 }

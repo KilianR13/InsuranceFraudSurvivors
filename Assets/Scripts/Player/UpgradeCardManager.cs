@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class UpgradeCardManager : MonoBehaviour
@@ -10,22 +11,20 @@ public class UpgradeCardManager : MonoBehaviour
     private Action<UpgradeCard> onCardPicked; // callback que avisa al jugador
 
     // Muestra 'count' cartas y llama a onPicked cuando se elige una
-    public void ShowCards(int count, Action<UpgradeCard> onPicked)
+    public void ShowCards(List<UpgradeData> upgrades, Action<UpgradeCard> onPicked)
+
     {
         ClearCards();
-
         onCardPicked = onPicked;
 
-        for (int i = 0; i < count; i++)
+        foreach (var upgrade in upgrades)
         {
             GameObject cardGO = Instantiate(cardPrefab, cardParent);
             UpgradeCard card = cardGO.GetComponent<UpgradeCard>();
+
             if (card != null)
             {
-                // Rellena con contenido de prueba (más tarde usa datos reales)
-                string title = $"Mejora {i + 1}";
-                string desc = "Descripción de ejemplo";
-                card.Setup(title, desc, OnCardSelectedFromUI);
+                card.Setup(upgrade, OnCardSelectedFromUI);  // << REAL DATA
             }
         }
     }
