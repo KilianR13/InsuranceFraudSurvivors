@@ -6,7 +6,7 @@ public class HealthBar : MonoBehaviour
     [SerializeField] private Slider slider;
     [SerializeField] private Camera cam;
     [SerializeField] private Transform target;
-    [SerializeField] private Vector3 offset;
+    [SerializeField] public Vector3 offset;
 
     public void UpdateHealthbar(float currentValue, float maxValue)
     {

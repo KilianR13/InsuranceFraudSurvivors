@@ -5,7 +5,10 @@ using UnityEngine.UI;
 
 public class PlayerGameLogic : MonoBehaviour
 {
+    [Header("Health")]
     public int maxHealth;
+    public GameObject healthBarGameoObject;
+    private HealthBar healthBar;
     private int currentHealth;
     private int currentEXP;
     private int currentLevel;
@@ -38,6 +41,30 @@ public class PlayerGameLogic : MonoBehaviour
         if (upgradePanel != null)
         {
             upgradePanel.SetActive(false);    
+        }
+        if (healthBarGameoObject != null)
+        {
+            GameObject bar = Instantiate(healthBarGameoObject);
+
+            // Hacer la barra hija del enemigo
+            bar.transform.SetParent(transform);
+
+            // Ajustar escala para evitar distorsión
+            bar.transform.localScale = Vector3.one * 0.015f;
+
+            // Obtener componente y configurar
+            healthBar = bar.GetComponent<HealthBar>();
+            if (healthBar != null)
+            {
+                // Inicializar con target y la cámara principal
+                Camera mainCam = Camera.main; // la cámara principal del jugador
+                healthBar.Initialize(transform, mainCam);
+                healthBar.offset = new Vector3(0, 1.5f, 0);   // súbelo 1 unidad
+
+
+                // Actualizar el valor inicial de vida
+                healthBar.UpdateHealthbar(currentHealth, maxHealth);
+            }
         }
     }
 
@@ -87,7 +114,7 @@ public class PlayerGameLogic : MonoBehaviour
     {
         Debug.Log($"Jugador eligió la mejora: {card.upgradeData.id}");
         ApplyUpgrade(card.upgradeData);
-
+        healthBar.UpdateHealthbar(currentHealth, maxHealth);
         // Aquí aplicas la mejora (más adelante). Por ahora solo cerramos.
         if (upgradePanel != null)
             upgradePanel.SetActive(false);
@@ -104,12 +131,14 @@ public class PlayerGameLogic : MonoBehaviour
 
     public void takeDamage(int damage)
     {
+        currentHealth -= damage;
+        
         if (currentHealth <= 0)
         {
             // GameManager.gm.loseGame();
             return;
         }
-        currentHealth -= damage;
-        // Debug.Log($"Current health: {currentHealth}");
+        if (healthBar != null)
+            healthBar.UpdateHealthbar(currentHealth, maxHealth);
     }
 }

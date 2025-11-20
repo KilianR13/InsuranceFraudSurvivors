@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -16,8 +17,13 @@ public class EnemyAI : MonoBehaviour
 
     [Header("Drops & feedback")]
     public GameObject EXPDrop;
-    public GameObject healthBarPrefab;
-    private HealthBar healthBar;
+    // public GameObject healthBarPrefab;
+    // private HealthBar healthBar;
+    public Sprite normalSprite;   // Giulia 1
+    public Sprite whiteSprite;    // Giulia 1_white
+
+    private SpriteRenderer sr;
+
 
     [HideInInspector] public bool poolable = true; // por defecto sí se puede volver al pool
     public int waveIndex { get; set; } // propiedad para guardar la oleada a la que pertenece
@@ -70,28 +76,36 @@ public class EnemyAI : MonoBehaviour
     {
         currentHealth = maxHealth;
         // Crea barra de vida
-        if (healthBarPrefab != null)
+        // if (healthBarPrefab != null)
+        // {
+        //     GameObject bar = Instantiate(healthBarPrefab);
+
+        //     // Hacer la barra hija del enemigo
+        //     bar.transform.SetParent(transform);
+
+        //     // Ajustar escala para evitar distorsión
+        //     bar.transform.localScale = Vector3.one * 0.015f;
+
+        //     // Obtener componente y configurar
+        //     healthBar = bar.GetComponent<HealthBar>();
+        //     if (healthBar != null)
+        //     {
+        //         // Inicializar con target y la cámara principal
+        //         Camera mainCam = Camera.main; // la cámara principal del jugador
+        //         healthBar.Initialize(transform, mainCam);
+
+        //         // Actualizar el valor inicial de vida
+        //         healthBar.UpdateHealthbar(currentHealth, maxHealth);
+        //     }
+        // }
+        if (sr == null)
         {
-            GameObject bar = Instantiate(healthBarPrefab);
-
-            // Hacer la barra hija del enemigo
-            bar.transform.SetParent(transform);
-
-            // Ajustar escala para evitar distorsión
-            bar.transform.localScale = Vector3.one * 0.015f;
-
-            // Obtener componente y configurar
-            healthBar = bar.GetComponent<HealthBar>();
-            if (healthBar != null)
-            {
-                // Inicializar con target y la cámara principal
-                Camera mainCam = Camera.main; // la cámara principal del jugador
-                healthBar.Initialize(transform, mainCam);
-
-                // Actualizar el valor inicial de vida
-                healthBar.UpdateHealthbar(currentHealth, maxHealth);
-            }
+            sr = GetComponent<SpriteRenderer>();    
         }
+        
+
+        // Asegurarte de que vuelve con el sprite normal
+        sr.sprite = normalSprite;
 
     }
 
@@ -99,8 +113,9 @@ public class EnemyAI : MonoBehaviour
     {
         currentHealth -= damage;
 
-        if (healthBar != null)
-            healthBar.UpdateHealthbar(currentHealth, maxHealth);
+        // if (healthBar != null)
+        //     healthBar.UpdateHealthbar(currentHealth, maxHealth);
+        StartCoroutine(FlashWhite());
 
         if (currentHealth <= 0)
         {
@@ -109,14 +124,21 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
+    private IEnumerator FlashWhite()
+    {
+        sr.sprite = whiteSprite;
+        yield return new WaitForSeconds(0.08f);  // Ajustable
+        sr.sprite = normalSprite;
+    }
+
     public void killEnemy()
     {
         int currentWaveIndex = waveManager != null ? waveManager.currentWaveIndex : waveIndex;
 
-        if (healthBar != null)
-        {
-            Destroy(healthBar.gameObject);
-        }
+        // if (healthBar != null)
+        // {
+        //     Destroy(healthBar.gameObject);
+        // }
 
         if (!poolable || waveIndex < currentWaveIndex) // enemigos de oleadas pasadas
         {

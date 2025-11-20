@@ -314,6 +314,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerGameLogic
   maxHealth: 10
+  healthBarGameoObject: {fileID: 5680389111961237268, guid: 8ef82025fb6c5cf438ce35e3711fe11d, type: 3}
   swordUpgrade: {fileID: 2040020884514034144}
   allUpgrades:
   - {fileID: 11400000, guid: 35d8a2290aed90649ae8607bcc1cd396, type: 2}
