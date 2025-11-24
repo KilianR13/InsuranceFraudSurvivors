@@ -8,11 +8,13 @@ public class UpgradeCardManager : MonoBehaviour
     public GameObject cardPrefab;   // prefab de la carta (CardUI)
     public Transform cardParent;    // panel donde se instancian (layout horizontal)
 
+    [Header("SFX")]
+    [SerializeField] private AudioSource upgradeChosen;
+
     private Action<UpgradeCard> onCardPicked; // callback que avisa al jugador
 
     // Muestra 'count' cartas y llama a onPicked cuando se elige una
     public void ShowCards(List<UpgradeData> upgrades, Action<UpgradeCard> onPicked)
-
     {
         ClearCards();
         onCardPicked = onPicked;
@@ -34,6 +36,8 @@ public class UpgradeCardManager : MonoBehaviour
     {
         // Llamamos al callback del cliente (PlayerGameLogic)
         onCardPicked?.Invoke(card);
+
+        upgradeChosen.Play();
 
         // Limpiamos y ocultamos las cartas del panel
         ClearCards();

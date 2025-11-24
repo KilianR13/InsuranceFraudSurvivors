@@ -1,34 +1,39 @@
+using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EXPScript : MonoBehaviour
 {
     public int expWorth;
-    public 
+    public AudioSource PickUpSFX;
+    public SpriteRenderer sr;
+    private bool pickable = true;
 
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        PickUpSFX = GetComponent<AudioSource>();
+        sr = GetComponent<SpriteRenderer>();
     }
     
     void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.CompareTag("Player"))
+        if (collider.CompareTag("Player") && pickable)
         {
+            pickable = false;
             PlayerGameLogic player = collider.GetComponentInParent<PlayerGameLogic>();
             if (player != null)
             {
-                player.addEXP(expWorth);    
+                player.addEXP(expWorth);
+                StartCoroutine(waitForSFX());
             }
-            
-            Destroy(gameObject);
         }
+    }
+
+    private IEnumerator waitForSFX()
+    {   
+        PickUpSFX.Play();
+        sr.enabled = false;
+        yield return new WaitForSecondsRealtime(PickUpSFX.clip.length);
+        Destroy(gameObject);
     }
 }

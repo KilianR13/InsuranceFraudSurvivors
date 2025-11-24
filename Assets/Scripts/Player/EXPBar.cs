@@ -4,11 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class EXPBar : MonoBehaviour
-{
+{   
+    [Header("UI")]
     [SerializeField] private Slider slider;
     [SerializeField] private TextMeshProUGUI currentLVL;
-
     [SerializeField] private Image fillImage;
+
+    
 
     private Coroutine rainbowCoroutine;
 

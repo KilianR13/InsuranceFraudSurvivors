@@ -19,6 +19,9 @@ public class PlayerGameLogic : MonoBehaviour
     [Header("Available Upgrades")]
     public List<UpgradeData> allUpgrades = new List<UpgradeData>();
 
+    [Header("SFX")]
+    [SerializeField] private AudioSource levelUp;
+
 
     [Header("Level System")]
     [SerializeField] private int baseEXPNeeded = 30;              // EXP necesaria para subir del nivel 1 al 2
@@ -26,6 +29,7 @@ public class PlayerGameLogic : MonoBehaviour
     [SerializeField] private EXPBar expBar;
     [SerializeField] private GameObject upgradePanel;          // el panel Canvas que contiene CardPanel (GameObject)
     [SerializeField] private UpgradeCardManager cardManager;    // componente que instancia cartas
+    public int FireBallBonusDMG = 0;
 
     private int expToNextLevel => Mathf.RoundToInt(baseEXPNeeded * Mathf.Pow(expMultiplier, currentLevel - 1));
 
@@ -89,6 +93,7 @@ public class PlayerGameLogic : MonoBehaviour
     private void OnLevelUp()
     {
         expBar.UpdateLevel(currentLevel);
+        levelUp.Play();
         expBar.StartRainbow();
         if (upgradePanel != null)
         {

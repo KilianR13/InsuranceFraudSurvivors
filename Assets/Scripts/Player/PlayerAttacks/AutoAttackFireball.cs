@@ -11,6 +11,12 @@ public class AutoAttackFireball : MonoBehaviour
     public Transform firePoint;         // Punto desde donde se inicia el ataque.
 
     private float cooldownTimer = 0f;
+    private PlayerGameLogic player;   // <--- referencia al jugador
+
+    private void Start()
+    {
+        player = GetComponent<PlayerGameLogic>(); // obtiene el daño bonus
+    }
 
     void Update()
     {
@@ -58,6 +64,9 @@ public class AutoAttackFireball : MonoBehaviour
         FireBall proj = fireball.GetComponent<FireBall>();
         if (proj != null)
         {
+            int baseDamage = fireballPrefab.GetComponent<FireBall>().damage;
+            proj.damage = baseDamage + player.FireBallBonusDMG;
+
             proj.SetTarget(enemy.transform);
         }
     }

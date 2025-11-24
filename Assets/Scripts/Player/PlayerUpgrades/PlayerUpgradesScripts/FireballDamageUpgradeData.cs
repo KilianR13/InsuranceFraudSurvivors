@@ -7,10 +7,6 @@ public class FireballDamageUpgradeData : UpgradeData
 
     public override void Apply(PlayerGameLogic player)
     {
-        AutoAttackFireball autoFire = player.GetComponent<AutoAttackFireball>();
-        if (autoFire != null)
-        {
-            autoFire.fireballPrefab.GetComponent<FireBall>().damage += bonusDamage;
-        }
+        player.FireBallBonusDMG += bonusDamage;
     }
 }

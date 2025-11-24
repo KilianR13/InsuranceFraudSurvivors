@@ -1,15 +1,25 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
-public class UpgradeCard : MonoBehaviour, IPointerClickHandler
+public class UpgradeCard : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
     public TextMeshProUGUI titleText;
     public TextMeshProUGUI descriptionText;
 
     public UpgradeData upgradeData;
 
+    public AudioSource hoverSFX;
+
+    public Outline coolOutline;
+
     public System.Action<UpgradeCard> onCardSelected;
+
+    void Start()
+    {
+        coolOutline.enabled = false;
+    }
 
     // Setup para strings (se mantiene)
     public void Setup(string title, string description, System.Action<UpgradeCard> callback)
@@ -32,5 +42,19 @@ public class UpgradeCard : MonoBehaviour, IPointerClickHandler
     public void OnPointerClick(PointerEventData eventData)
     {
         onCardSelected?.Invoke(this);
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (hoverSFX != null)
+        {
+            hoverSFX.Play();
+        }
+        coolOutline.enabled = true;
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        coolOutline.enabled = false;
     }
 }
