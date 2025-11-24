@@ -4,10 +4,20 @@ using System.Collections.Generic;
 public class EnemyWaveManager : MonoBehaviour
 {
     [System.Serializable]
+    public class EnemyEntry
+    {
+        public GameObject prefab;
+        public int amount; // cuántos debe haber en esta oleada
+    }
+
+    [System.Serializable]
     public class Wave
     {
         public string name;
-        public GameObject enemyPrefab;
+        public List<EnemyEntry> enemies = new List<EnemyEntry>(); 
+        // Ejemplo en el inspector:
+        //  - prefab Giulia | amount = 10
+        //  - prefab Zombie | amount = 5
         public int maxEnemiesAlive;
         public float spawnInterval;
         public float duration;
@@ -43,7 +53,9 @@ public class EnemyWaveManager : MonoBehaviour
         {
             spawnTimer = 0f;
             Vector3 spawnPos = GetSpawnPositionOutsideCamera(10f);
-            var enemy = spawner.SpawnEnemy(currentWave.enemyPrefab, spawnPos, currentWaveIndex);
+            GameObject prefabToSpawn = ChooseEnemyPrefab(currentWave);
+            var enemy = spawner.SpawnEnemy(prefabToSpawn, spawnPos, currentWaveIndex);
+
 
             EnemyAI ai = enemy.GetComponent<EnemyAI>();
             if (ai != null)
@@ -85,6 +97,26 @@ public class EnemyWaveManager : MonoBehaviour
             }
         }
     }
+
+    private GameObject ChooseEnemyPrefab(Wave wave)
+    {
+        int total = 0;
+        foreach (var e in wave.enemies)
+            total += e.amount;
+
+        int r = Random.Range(0, total);
+        int sum = 0;
+
+        foreach (var e in wave.enemies)
+        {
+            sum += e.amount;
+            if (r < sum)
+                return e.prefab;
+        }
+
+        return wave.enemies[0].prefab; // fallback
+    }
+
 
     private void ClearWaveEnemies(int waveIndex)
     {

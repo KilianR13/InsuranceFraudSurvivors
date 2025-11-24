@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: add72d3425a175749a7c0e6c0b1dea0b
+guid: 10fe2c03c7d3b9c49a1304d8d9084932
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -1121673491810974395
-    second: Giulia 1_white_0
+      213: -7106155238681680066
+    second: Enemy_Truck_White_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -51,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 32
+  spritePixelsToUnits: 40
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Giulia 1_white_0
+      name: Enemy_Truck_White_0
       rect:
         serializedVersion: 2
-        x: 17
-        y: 2
-        width: 30
-        height: 60
+        x: 0
+        y: 0
+        width: 40
+        height: 80
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 54582aee6e30f60f0800000000000000
-      internalID: -1121673491810974395
+      spriteID: e37e89fd57dd16d90800000000000000
+      internalID: -7106155238681680066
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Giulia 1_white_0: -1121673491810974395
+      Enemy_Truck_White_0: -7106155238681680066
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

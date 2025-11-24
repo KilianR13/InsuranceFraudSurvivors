@@ -23,7 +23,7 @@ public class SwordUpgrade : MonoBehaviour
         Sword swordComp = currentSword.GetComponent<Sword>();
         if (swordComp != null)
         {
-            swordComp.baseDamage += 5;          // +5 daño base (puedes ajustar)
+            swordComp.baseDamage += 2;          // +5 daño base (puedes ajustar)
             // swordComp.damageMultiplier += 0.1f; // +10% escalado por velocidad (opcional)
 
             Debug.Log($"Espada mejorada → baseDamage = {swordComp.baseDamage}, multiplier = {swordComp.damageMultiplier}");

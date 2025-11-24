@@ -5,6 +5,6 @@ public class SwordSpawnUpgrade  : UpgradeData
 {
     public override void Apply(PlayerGameLogic player)
     {
-        player.swordUpgrade.SpawnSword();
+        player.swordUpgrade.SwordApplyUpgrade();
     }
 }
