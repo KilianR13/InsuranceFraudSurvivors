@@ -15,6 +15,13 @@ public class PlayerMovement_Car : MonoBehaviour
     public SpriteRenderer sr;
     public float rotationOffset = 0f;
 
+    [Header("Skid Marks")]
+    [SerializeField] private TrailRenderer leftTrail;
+    [SerializeField] private TrailRenderer rightTrail;
+    public Transform leftWheel;            // posición de rueda trasera izquierda
+    public Transform rightWheel;           // posición de rueda trasera derecha
+    public float skidThreshold = 0.2f;    // cuánta velocidad lateral dispara derrape
+
     private Rigidbody2D rb;
     private float moveInput;
     private float steerInput;
@@ -62,13 +69,16 @@ public class PlayerMovement_Car : MonoBehaviour
             Vector2 forwardVel = transform.up * Vector2.Dot(rb.linearVelocity, transform.up);
             Vector2 sideVel = transform.right * Vector2.Dot(rb.linearVelocity, transform.right);
             rb.linearVelocity = forwardVel + sideVel * (1 - grip);
+
+            bool isDrifting = sideVel.magnitude > skidThreshold;
+
+            leftTrail.emitting = isDrifting;
+            rightTrail.emitting = isDrifting;
         }
 
+        
+
         visual.localRotation = Quaternion.Euler(0, 0, rb.rotation + rotationOffset);
-    }
-    void Update()
-    {
-        // Debug.Log($"SteerInput: {steerInput}, MoveInput: {moveInput}");
     }
 
 }

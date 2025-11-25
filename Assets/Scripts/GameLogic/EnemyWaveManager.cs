@@ -95,6 +95,10 @@ public class EnemyWaveManager : MonoBehaviour
                 spawnTimer = 0f;
                 activeEnemies.Clear();
             }
+            else
+            {
+                GameManager.gm.StageCompleted();
+            }
         }
     }
 

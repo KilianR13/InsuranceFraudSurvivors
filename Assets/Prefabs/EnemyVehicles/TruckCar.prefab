@@ -360,12 +360,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAI
   player: {fileID: 0}
-  moveSpeed: 4
-  turnSpeed: 100
+  moveSpeed: 12
+  turnSpeed: 80
   stoppingDistance: 0.5
   updateRate: 0.2
   maxHealth: 30
-  damage: 0
+  damage: 2
   EXPDrop: {fileID: 7722951614812473733, guid: dfb18e466b2216e4b9dbd88d992d6c95, type: 3}
   normalSprite: {fileID: 21300000, guid: 8e5aeb32cba3835428c56b04eb905265, type: 3}
   whiteSprite: {fileID: 21300000, guid: 10fe2c03c7d3b9c49a1304d8d9084932, type: 3}
