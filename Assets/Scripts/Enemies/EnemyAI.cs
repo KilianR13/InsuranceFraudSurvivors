@@ -22,6 +22,10 @@ public class EnemyAI : MonoBehaviour
     public Sprite normalSprite;   // Giulia 1
     public Sprite whiteSprite;    // Giulia 1_white
 
+    [Header("SFX")]
+    public AudioSource hurtSFX;
+    private AudioPlayer audioPlayer;
+
     private SpriteRenderer sr;
 
 
@@ -75,29 +79,7 @@ public class EnemyAI : MonoBehaviour
     void OnEnable()
     {
         currentHealth = maxHealth;
-        // Crea barra de vida
-        // if (healthBarPrefab != null)
-        // {
-        //     GameObject bar = Instantiate(healthBarPrefab);
-
-        //     // Hacer la barra hija del enemigo
-        //     bar.transform.SetParent(transform);
-
-        //     // Ajustar escala para evitar distorsión
-        //     bar.transform.localScale = Vector3.one * 0.015f;
-
-        //     // Obtener componente y configurar
-        //     healthBar = bar.GetComponent<HealthBar>();
-        //     if (healthBar != null)
-        //     {
-        //         // Inicializar con target y la cámara principal
-        //         Camera mainCam = Camera.main; // la cámara principal del jugador
-        //         healthBar.Initialize(transform, mainCam);
-
-        //         // Actualizar el valor inicial de vida
-        //         healthBar.UpdateHealthbar(currentHealth, maxHealth);
-        //     }
-        // }
+        audioPlayer = FindFirstObjectByType<AudioPlayer>();
         if (sr == null)
         {
             sr = GetComponent<SpriteRenderer>();    
@@ -113,14 +95,16 @@ public class EnemyAI : MonoBehaviour
     {
         currentHealth -= damage;
 
-        // if (healthBar != null)
-        //     healthBar.UpdateHealthbar(currentHealth, maxHealth);
         StartCoroutine(FlashWhite());
 
         if (currentHealth <= 0)
         {
             Instantiate(EXPDrop, transform.position, Quaternion.identity);
             killEnemy();
+        }
+        else
+        {
+            hurtSFX.Play();
         }
     }
 
@@ -135,11 +119,7 @@ public class EnemyAI : MonoBehaviour
     {
         int currentWaveIndex = waveManager != null ? waveManager.currentWaveIndex : waveIndex;
 
-        // if (healthBar != null)
-        // {
-        //     Destroy(healthBar.gameObject);
-        // }
-
+        StartCoroutine(audioPlayer.playEnemyDefeatedSFX());
         if (!poolable || waveIndex < currentWaveIndex) // enemigos de oleadas pasadas
         {
             Destroy(gameObject);

@@ -5,6 +5,7 @@ public static class SimplePool
 {
     private static Dictionary<GameObject, Queue<GameObject>> poolDict = new();
 
+    
     /// <summary>
     /// Crea un pool inicial si no existe.
     /// </summary>
