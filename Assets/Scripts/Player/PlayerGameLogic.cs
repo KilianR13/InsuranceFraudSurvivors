@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -31,10 +32,16 @@ public class PlayerGameLogic : MonoBehaviour
     [SerializeField] private GameObject upgradePanel;          // el panel Canvas que contiene CardPanel (GameObject)
     [SerializeField] private UpgradeCardManager cardManager;    // componente que instancia cartas
     public int FireBallBonusDMG = 0;
+    public float FireBallFireRateReduction = 0f;
+
+    public event Action OnSignal;
 
     private int expToNextLevel => Mathf.RoundToInt(baseEXPNeeded * Mathf.Pow(expMultiplier, currentLevel - 1));
 
-
+    public void upgradeFireRateFireballs()
+    {
+        OnSignal?.Invoke();
+    }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -105,7 +112,7 @@ public class PlayerGameLogic : MonoBehaviour
         if (cardManager != null)
         {
             List<UpgradeData> selected = allUpgrades
-                .OrderBy(x => Random.value)
+                .OrderBy(x => UnityEngine.Random.value)
                 .Take(3)
                 .ToList();
 

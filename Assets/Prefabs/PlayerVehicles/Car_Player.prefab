@@ -328,6 +328,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 35d8a2290aed90649ae8607bcc1cd396, type: 2}
   - {fileID: 11400000, guid: d7b09b24e19852342aabeea7947e97f2, type: 2}
   - {fileID: 11400000, guid: f5309cd35be8c7d44813f29dec308fcb, type: 2}
+  - {fileID: 11400000, guid: 01abd98d63366d14f8a40bc85ee41bd6, type: 2}
   levelUp: {fileID: 1332601026443912167}
   baseEXPNeeded: 30
   expMultiplier: 1.2
@@ -335,6 +336,7 @@ MonoBehaviour:
   upgradePanel: {fileID: 5892222177803268883}
   cardManager: {fileID: 3257236750262948770}
   FireBallBonusDMG: 0
+  FireBallFireRateReduction: 0
 --- !u!114 &4289009811494200035
 MonoBehaviour:
   m_ObjectHideFlags: 0

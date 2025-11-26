@@ -15,13 +15,22 @@ public class AutoAttackFireball : MonoBehaviour
 
     private void Start()
     {
-        player = GetComponent<PlayerGameLogic>(); // obtiene el daño bonus
+        player = GetComponent<PlayerGameLogic>(); // obtiene cualquier mejora
+        player.OnSignal += ReduceFirerate;
+    }
+
+    private void ReduceFirerate()
+    {
+        if(cooldownTimer >= 0.01f)
+        {
+            cooldownTimer -= player.FireBallFireRateReduction;    
+        }
     }
 
     void Update()
     {
         cooldownTimer -= Time.deltaTime;
-
+        
         if (cooldownTimer <= 0f)
         {
             EnemyAI nearestEnemy = FindNearestEnemy();
