@@ -21,6 +21,7 @@ public class EnemyAI : MonoBehaviour
     // private HealthBar healthBar;
     public Sprite normalSprite;   // Giulia 1
     public Sprite whiteSprite;    // Giulia 1_white
+    private bool activated;
 
     [Header("SFX")]
     public AudioSource hurtSFX;
@@ -78,6 +79,7 @@ public class EnemyAI : MonoBehaviour
     // Cuando el pool reactiva el enemigo
     void OnEnable()
     {
+        activated = true;
         currentHealth = maxHealth;
         audioPlayer = FindFirstObjectByType<AudioPlayer>();
         if (sr == null)
@@ -94,17 +96,18 @@ public class EnemyAI : MonoBehaviour
     public void takeDamage(int damage)
     {
         currentHealth -= damage;
-
-        StartCoroutine(FlashWhite());
-
-        if (currentHealth <= 0)
+        if (activated)
         {
-            Instantiate(EXPDrop, transform.position, Quaternion.identity);
-            killEnemy();
-        }
-        else
-        {
-            hurtSFX.Play();
+            StartCoroutine(FlashWhite());    
+            if (currentHealth <= 0)
+            {
+                Instantiate(EXPDrop, transform.position, Quaternion.identity);
+                killEnemy();
+            }
+            else
+            {
+                hurtSFX.Play();
+            }
         }
     }
 
@@ -117,6 +120,7 @@ public class EnemyAI : MonoBehaviour
 
     public void killEnemy()
     {
+        activated = false;
         int currentWaveIndex = waveManager != null ? waveManager.currentWaveIndex : waveIndex;
 
         StartCoroutine(audioPlayer.playEnemyDefeatedSFX());

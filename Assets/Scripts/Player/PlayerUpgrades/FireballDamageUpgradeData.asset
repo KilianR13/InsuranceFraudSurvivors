@@ -15,4 +15,6 @@ MonoBehaviour:
   id: FIREBALL_DMG_UP
   title: Upgrade Fireball DMG
   description: Make your fireball deal 5 more damage.
+  maxStacks: 6
+  currentStacks: 0
   bonusDamage: 5

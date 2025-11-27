@@ -16,6 +16,7 @@ public class PlayerGameLogic : MonoBehaviour
 
     [Header("Upgrades")]
     [SerializeField] public SwordUpgrade swordUpgrade;
+    public bool hasSword = false;
 
     [Header("Available Upgrades")]
     public List<UpgradeData> allUpgrades = new List<UpgradeData>();
@@ -47,6 +48,13 @@ public class PlayerGameLogic : MonoBehaviour
     {
         currentLevel = 1;
         currentEXP = 0;
+        hasSword = false;
+        
+        foreach (var u in allUpgrades)
+        {
+            u.currentStacks = 0;
+        }
+        
         expBar.UpdateEXPBar(currentEXP, expToNextLevel);
         expBar.UpdateLevel(currentLevel);
         currentHealth = maxHealth;
@@ -112,12 +120,41 @@ public class PlayerGameLogic : MonoBehaviour
         if (cardManager != null)
         {
             List<UpgradeData> selected = allUpgrades
+                .Where(u => u.CanApply) // Filtra las mejoras dependiendo de si el jugador puede tener más copias de la misma mejora.
+                .Where(u => u.IsAvailable(this)) // Filtra las mejoras dependiendo de si están disponibles (Si el jugador tiene el arma o no).
                 .OrderBy(x => UnityEngine.Random.value)
                 .Take(3)
                 .ToList();
 
             cardManager.ShowCards(selected, OnCardSelected);
         }
+        /*
+        if (cardManager != null)
+        {
+            // Filtra upgrades válidas
+            List<UpgradeData> validUpgrades = allUpgrades
+                .Where(u => u.CanApply)
+                .Where(u => u.IsAvailable(this))
+                .ToList();
+
+            // Si hay MENOS de 3, usa todas
+            int amountToPick = Mathf.Min(3, validUpgrades.Count);
+
+            // Barajar lista correctamente (Fisher–Yates)
+            for (int i = 0; i < validUpgrades.Count; i++)
+            {
+                int r = UnityEngine.Random.Range(i, validUpgrades.Count);
+                (validUpgrades[i], validUpgrades[r]) = (validUpgrades[r], validUpgrades[i]);
+            }
+
+            // Tomar las primeras N ya barajadas
+            List<UpgradeData> selected = validUpgrades.Take(amountToPick).ToList();
+
+            // Mostrar cartas
+            cardManager.ShowCards(selected, OnCardSelected);
+        }
+        
+        */
         
         // Pausar el juego (física, timers, etc.)
         Time.timeScale = 0f;
@@ -125,20 +162,21 @@ public class PlayerGameLogic : MonoBehaviour
 
     private void OnCardSelected(UpgradeCard card)
     {
-        Debug.Log($"Jugador eligió la mejora: {card.upgradeData.id}");
-        ApplyUpgrade(card.upgradeData);
+        UpgradeData upgrade = card.upgradeData;
+
+        Debug.Log($"Jugador eligió la mejora: {upgrade.id}");
+
+        // Registra el stack y aplica la mejora. 
+        upgrade.ApplyStack(this);
+        
         healthBar.UpdateHealthbar(currentHealth, maxHealth);
+        
         // Aquí aplicas la mejora (más adelante). Por ahora solo cerramos.
         if (upgradePanel != null)
             upgradePanel.SetActive(false);
         expBar.StopRainbow();
         // Reanudar el juego
         Time.timeScale = 1f;
-    }
-
-    private void ApplyUpgrade(UpgradeData upgrade)
-    {
-        upgrade.Apply(this);
     }
 
 

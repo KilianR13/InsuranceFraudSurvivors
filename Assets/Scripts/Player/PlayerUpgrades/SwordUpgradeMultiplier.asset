@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8acca5d6cb22fb148a6c7aa32d4bbbc2, type: 3}
+  m_Name: SwordUpgradeMultiplier
+  m_EditorClassIdentifier: Assembly-CSharp::SwordUpgradeMultiplier
+  id: SWORD_MULT_UP
+  title: Sword Multiplier UP
+  description: Increase the damage your sword deals the faster you go!
+  maxStacks: 15
+  currentStacks: 0
+  swordMultiplierIncrease: 0.1

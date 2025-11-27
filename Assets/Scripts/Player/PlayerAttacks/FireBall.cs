@@ -48,7 +48,6 @@ public class FireBall : MonoBehaviour
         EnemyAI enemy = target.GetComponent<EnemyAI>();
         if (enemy != null)
         {
-            Debug.Log(damage);
             enemy.takeDamage(damage);
         }
 

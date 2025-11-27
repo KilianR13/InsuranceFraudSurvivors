@@ -324,11 +324,14 @@ MonoBehaviour:
   maxHealth: 10
   healthBarGameoObject: {fileID: 5680389111961237268, guid: 8ef82025fb6c5cf438ce35e3711fe11d, type: 3}
   swordUpgrade: {fileID: 2040020884514034144}
+  hasSword: 0
   allUpgrades:
   - {fileID: 11400000, guid: 35d8a2290aed90649ae8607bcc1cd396, type: 2}
   - {fileID: 11400000, guid: d7b09b24e19852342aabeea7947e97f2, type: 2}
   - {fileID: 11400000, guid: f5309cd35be8c7d44813f29dec308fcb, type: 2}
   - {fileID: 11400000, guid: 01abd98d63366d14f8a40bc85ee41bd6, type: 2}
+  - {fileID: 11400000, guid: 5f455981da4272340b0f832acd868a7f, type: 2}
+  - {fileID: 11400000, guid: 51f4b7667284bc24a89251e95ecf3371, type: 2}
   levelUp: {fileID: 1332601026443912167}
   baseEXPNeeded: 30
   expMultiplier: 1.2

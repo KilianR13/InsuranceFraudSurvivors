@@ -14,5 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FireBallFireRate
   id: FIREBALL_FIRERATE_INCREASE
   title: Reduced fireball cooldown
-  description: Reduce the cooldown of your fireball by 0.1 seconds.
-  FireBallFireRateDown: 0.1
+  description: Reduce the cooldown of your fireball by 0.2 seconds.
+  maxStacks: 6
+  currentStacks: 0
+  FireBallFireRateDown: 0.2

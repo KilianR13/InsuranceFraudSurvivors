@@ -21,9 +21,9 @@ public class AutoAttackFireball : MonoBehaviour
 
     private void ReduceFirerate()
     {
-        if(cooldownTimer >= 0.01f)
+        if(attackCooldown >= 0.01f && ((attackCooldown - player.FireBallFireRateReduction) > 0))
         {
-            cooldownTimer -= player.FireBallFireRateReduction;    
+            attackCooldown -= player.FireBallFireRateReduction;    
         }
     }
 

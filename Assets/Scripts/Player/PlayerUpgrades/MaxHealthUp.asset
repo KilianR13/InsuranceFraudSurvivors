@@ -15,4 +15,6 @@ MonoBehaviour:
   id: HP_UP
   title: Increase HP
   description: Increase how much health you have.
-  healthIncrease: 20
+  maxStacks: 6
+  currentStacks: 0
+  healthIncrease: 5

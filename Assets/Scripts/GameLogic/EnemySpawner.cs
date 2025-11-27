@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public GameObject[] enemyPrefabs;
     public Transform player;
 
     public GameObject SpawnEnemy(GameObject prefab, Vector3 position, int waveId)
