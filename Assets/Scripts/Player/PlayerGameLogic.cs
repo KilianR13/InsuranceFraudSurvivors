@@ -137,20 +137,22 @@ public class PlayerGameLogic : MonoBehaviour
             overLevelBonus += 50;
             pendingLevelUps--;
 
-            // ACTUALIZAR BARRA DE EXP CORRECTAMENTE
+            // Actualiza la barra de EXP
             expBar.UpdateLevel(currentLevel);
             expBar.UpdateEXPBar(currentEXP, expToNextLevel);
             expBar.StopRainbow();
 
-            // LIMPIAR UI
+            // Limpia la UI
             upgradeUIActive = false;
             cardManager.ClearCards();
             if (upgradePanel != null)
+            {
                 upgradePanel.SetActive(false);
+            }
 
             Time.timeScale = 1f;
 
-            // SEGUIR PROCESANDO NIVELES SI QUEDAN MÁS POR AÑADIR
+            // Si hay más niveles que procesar, vuelve a comprobar el checklevelup.
             if (pendingLevelUps > 0)
             {
                 CheckLevelUp();
