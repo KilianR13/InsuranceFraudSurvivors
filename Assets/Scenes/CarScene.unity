@@ -248,7 +248,7 @@ MonoBehaviour:
     enemies:
     - prefab: {fileID: 5762032488179027081, guid: 607ac361137c09a42b10fa1d3e4f4919, type: 3}
       amount: 2
-    maxEnemiesAlive: 1
+    maxEnemiesAlive: 10
     spawnInterval: 1
     duration: 300
   currentWaveIndex: 0
@@ -922,10 +922,6 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 499837933}
-    - target: {fileID: 5022270277495408703, guid: 914a115e6c673bf42818dc404bd00802, type: 3}
-      propertyPath: attackCooldown
-      value: 15
-      objectReference: {fileID: 0}
     - target: {fileID: 5376568330624388301, guid: 914a115e6c673bf42818dc404bd00802, type: 3}
       propertyPath: skidThreshold
       value: 3
