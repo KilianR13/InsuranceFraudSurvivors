@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -32,10 +33,19 @@ public class PlayerGameLogic : MonoBehaviour
     [SerializeField] private EXPBar expBar;
     [SerializeField] private GameObject upgradePanel;          // el panel Canvas que contiene CardPanel (GameObject)
     [SerializeField] private UpgradeCardManager cardManager;    // componente que instancia cartas
+    private int pendingLevelUps = 0;
+    private bool upgradeUIActive = false;
+
     public int FireBallBonusDMG = 0;
     public float FireBallFireRateReduction = 0f;
 
+    [Header("UI")]
+    public TextMeshProUGUI moneyEarned;
+    public int overLevelBonus = 0;
+    
+
     public event Action OnSignal;
+    private PlayerMovement_Car playerMovement;
 
     private int expToNextLevel => Mathf.RoundToInt(baseEXPNeeded * Mathf.Pow(expMultiplier, currentLevel - 1));
 
@@ -46,6 +56,8 @@ public class PlayerGameLogic : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        overLevelBonus = 0;
+        playerMovement = GetComponent<PlayerMovement_Car>();
         currentLevel = 1;
         currentEXP = 0;
         hasSword = false;
@@ -92,7 +104,7 @@ public class PlayerGameLogic : MonoBehaviour
     {
         currentEXP += exp;
         expBar.UpdateEXPBar(currentEXP, expToNextLevel);
-        // Debug.Log($"Current EXP: {currentEXP}");
+        moneyEarned.text = $"$ = {currentEXP + overLevelBonus}";
         CheckLevelUp();
     }
 
@@ -102,12 +114,56 @@ public class PlayerGameLogic : MonoBehaviour
         {
             currentEXP -= expToNextLevel;
             currentLevel++;
+            pendingLevelUps++;   // ← Guardamos que hay que mostrar otra mejora
+        }
+
+        // Si no hay un panel activo, empezar la cadena de mejoras
+        if (!upgradeUIActive && pendingLevelUps > 0)
+        {
             OnLevelUp();
         }
     }
+    
+    private bool HasAvailableUpgrades()
+    {
+        return allUpgrades.Any(u => u.CanApply && u.IsAvailable(this));
+    }
+
 
     private void OnLevelUp()
     {
+        if (!HasAvailableUpgrades())
+        {
+            overLevelBonus += 50;
+            pendingLevelUps--;
+
+            // ACTUALIZAR BARRA DE EXP CORRECTAMENTE
+            expBar.UpdateLevel(currentLevel);
+            expBar.UpdateEXPBar(currentEXP, expToNextLevel);
+            expBar.StopRainbow();
+
+            // LIMPIAR UI
+            upgradeUIActive = false;
+            cardManager.ClearCards();
+            if (upgradePanel != null)
+                upgradePanel.SetActive(false);
+
+            Time.timeScale = 1f;
+
+            // SEGUIR PROCESANDO NIVELES SI QUEDAN MÁS POR AÑADIR
+            if (pendingLevelUps > 0)
+            {
+                CheckLevelUp();
+            }
+
+            return;
+        }
+
+
+
+        upgradeUIActive = true;
+        playerMovement.driftSFX.Stop();
+
         expBar.UpdateLevel(currentLevel);
         levelUp.Play();
         expBar.StartRainbow();
@@ -116,7 +172,6 @@ public class PlayerGameLogic : MonoBehaviour
             upgradePanel.SetActive(true);    
         }
         
-
         if (cardManager != null)
         {
             List<UpgradeData> selected = allUpgrades
@@ -128,34 +183,6 @@ public class PlayerGameLogic : MonoBehaviour
 
             cardManager.ShowCards(selected, OnCardSelected);
         }
-        /*
-        if (cardManager != null)
-        {
-            // Filtra upgrades válidas
-            List<UpgradeData> validUpgrades = allUpgrades
-                .Where(u => u.CanApply)
-                .Where(u => u.IsAvailable(this))
-                .ToList();
-
-            // Si hay MENOS de 3, usa todas
-            int amountToPick = Mathf.Min(3, validUpgrades.Count);
-
-            // Barajar lista correctamente (Fisher–Yates)
-            for (int i = 0; i < validUpgrades.Count; i++)
-            {
-                int r = UnityEngine.Random.Range(i, validUpgrades.Count);
-                (validUpgrades[i], validUpgrades[r]) = (validUpgrades[r], validUpgrades[i]);
-            }
-
-            // Tomar las primeras N ya barajadas
-            List<UpgradeData> selected = validUpgrades.Take(amountToPick).ToList();
-
-            // Mostrar cartas
-            cardManager.ShowCards(selected, OnCardSelected);
-        }
-        
-        */
-        
         // Pausar el juego (física, timers, etc.)
         Time.timeScale = 0f;
     }
@@ -173,10 +200,25 @@ public class PlayerGameLogic : MonoBehaviour
         
         // Aquí aplicas la mejora (más adelante). Por ahora solo cerramos.
         if (upgradePanel != null)
+        {
             upgradePanel.SetActive(false);
-        expBar.StopRainbow();
-        // Reanudar el juego
-        Time.timeScale = 1f;
+        }
+        pendingLevelUps--;
+        if (pendingLevelUps > 0)
+        {
+            // Todavía quedan mejoras, pero **NO** llames directamente a OnLevelUp()
+            // Solo prepara el estado para que CheckLevelUp() las invoque correctamente.
+            upgradeUIActive = false;
+            Time.timeScale = 1f;
+            CheckLevelUp();  // ← esto volverá a abrir las cartas SIN romper nada
+        }
+        else
+        {
+            upgradeUIActive = false;
+            expBar.StopRainbow();
+            cardManager.ClearCards();
+            Time.timeScale = 1f;
+        }
     }
 
 

@@ -38,9 +38,6 @@ public class UpgradeCardManager : MonoBehaviour
         onCardPicked?.Invoke(card);
 
         upgradeChosen.Play();
-
-        // Limpiamos y ocultamos las cartas del panel
-        ClearCards();
     }
 
     // Borra las cartas instanciadas (útil para cerrar)

@@ -21,6 +21,9 @@ public class PlayerMovement_Car : MonoBehaviour
     public Transform leftWheel;            // posición de rueda trasera izquierda
     public Transform rightWheel;           // posición de rueda trasera derecha
     public float skidThreshold = 0.2f;    // cuánta velocidad lateral dispara derrape
+    public AudioSource driftSFX;
+    internal bool isDrifting;
+    
 
     private Rigidbody2D rb;
     private float moveInput;
@@ -70,10 +73,18 @@ public class PlayerMovement_Car : MonoBehaviour
             Vector2 sideVel = transform.right * Vector2.Dot(rb.linearVelocity, transform.right);
             rb.linearVelocity = forwardVel + sideVel * (1 - grip);
 
-            bool isDrifting = sideVel.magnitude > skidThreshold;
+            isDrifting = sideVel.magnitude > skidThreshold;
 
             leftTrail.emitting = isDrifting;
             rightTrail.emitting = isDrifting;
+            if (isDrifting && driftSFX.isPlaying == false)
+            {
+                driftSFX.Play();
+            }
+            else if (!isDrifting && driftSFX.isPlaying == true)
+            {
+                driftSFX.Stop();
+            }
         }
 
         
