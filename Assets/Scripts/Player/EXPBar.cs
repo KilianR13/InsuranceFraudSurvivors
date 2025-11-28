@@ -14,8 +14,12 @@ public class EXPBar : MonoBehaviour
 
     private Coroutine rainbowCoroutine;
 
-    private Color normalColor = Color.blue; //00F6FF
+    private Color normalColor = new Color(); //00F6FF
 
+    private void Awake()
+    {
+        ColorUtility.TryParseHtmlString("#00F6FF", out normalColor);
+    }
 
     public void UpdateEXPBar(float currentValue, float maxValue)
     {

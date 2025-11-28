@@ -161,8 +161,6 @@ public class PlayerGameLogic : MonoBehaviour
             return;
         }
 
-
-
         upgradeUIActive = true;
         playerMovement.driftSFX.Stop();
 
@@ -219,6 +217,7 @@ public class PlayerGameLogic : MonoBehaviour
             upgradeUIActive = false;
             expBar.StopRainbow();
             cardManager.ClearCards();
+            expBar.UpdateEXPBar(currentEXP, expToNextLevel);
             Time.timeScale = 1f;
         }
     }
