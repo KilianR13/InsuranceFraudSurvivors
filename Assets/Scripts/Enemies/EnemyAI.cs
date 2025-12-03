@@ -21,11 +21,11 @@ public class EnemyAI : MonoBehaviour
     // private HealthBar healthBar;
     public Sprite normalSprite;   // Giulia 1
     public Sprite whiteSprite;    // Giulia 1_white
+    public GameObject deathEffect;
     private bool activated;
 
     [Header("SFX")]
     public AudioSource hurtSFX;
-    private AudioPlayer audioPlayer;
 
     private SpriteRenderer sr;
 
@@ -81,7 +81,6 @@ public class EnemyAI : MonoBehaviour
     {
         activated = true;
         currentHealth = maxHealth;
-        audioPlayer = FindFirstObjectByType<AudioPlayer>();
         if (sr == null)
         {
             sr = GetComponent<SpriteRenderer>();    
@@ -123,7 +122,19 @@ public class EnemyAI : MonoBehaviour
         activated = false;
         int currentWaveIndex = waveManager != null ? waveManager.currentWaveIndex : waveIndex;
 
-        StartCoroutine(audioPlayer.playEnemyDefeatedSFX());
+        
+        if (deathEffect != null)
+        {
+            GameObject explosion = Instantiate(deathEffect, this.transform.position, Quaternion.identity);
+            Animator bulletAnimator = explosion.GetComponent<Animator>();
+            float animationLength = 1f; // valor por defecto
+            if (bulletAnimator != null)
+            {
+                animationLength = bulletAnimator.GetCurrentAnimatorStateInfo(0).length;
+            }
+            Destroy(explosion, animationLength);
+        }
+        
         if (!poolable || waveIndex < currentWaveIndex) // enemigos de oleadas pasadas
         {
             Destroy(gameObject);
