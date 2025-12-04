@@ -300,6 +300,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement_Car
   acceleration: 25
   maxSpeed: 8
+  minSpeedToSteer: 2
   steering: 300
   drag: 2
   grip: 0.005
@@ -309,7 +310,7 @@ MonoBehaviour:
   rightTrail: {fileID: 649443849837439285}
   leftWheel: {fileID: 5088721910154149487}
   rightWheel: {fileID: 5036267782871662521}
-  skidThreshold: 4
+  skidThreshold: 3
   driftSFX: {fileID: 5676965408964675217}
 --- !u!114 &3310858472393324216
 MonoBehaviour:

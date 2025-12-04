@@ -244,66 +244,29 @@ public class PlayerGameLogic : MonoBehaviour
 
     public void OnCancel()
     {
-        StartCoroutine(fuck());
-        Debug.Log("Pausando");
+        StartCoroutine(TogglePauseMenu());
     }
 
-    private IEnumerator fuck()
+    // Esto es estúpido pero yo lo soy más.
+    // Si funciona, no se toca.
+    private IEnumerator TogglePauseMenu()
     {
         haveCalled = true;
         yield return new WaitForEndOfFrame();
         if (haveCalled)
         {
-            if (!isPaused)
-            {
-                pauseMenu.SetActive(true);
-                isPaused = true;
-                Time.timeScale = 0f;
-            }
-            else
-            {
-                pauseMenu.SetActive(false);
-                isPaused = false;
-                Time.timeScale = 1f;
-            }
+            pauseMenu.SetActive(!pauseMenu.activeSelf);
+            Time.timeScale = pauseMenu.activeSelf? 0f : 1f;
 
 
-            // Opcional: seleccionar primer botón del menú para teclado/gamepad
-            // if (isActive)
+            // Seleccionar primer botón del menú para teclado/gamepad
+            // if (pauseMenu.activeSelf)
             // {
             //     UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(firstButtonInPauseMenu);
             // }
-            Debug.Log($"Pausa {(isPaused ? "activada" : "desactivada")}");
+            Debug.Log($"Pausa {(pauseMenu.activeSelf ? "activada" : "desactivada")}");
             haveCalled = false;
         }
         
     }
-
-    private void togglePauseMenu()
-    {
-        if (!isPaused)
-        {
-            pauseMenu.SetActive(true);
-            isPaused = true;
-            Time.timeScale = 0f;
-        }
-        else
-        {
-            pauseMenu.SetActive(false);
-            isPaused = false;
-            Time.timeScale = 1f;
-        }
-
-
-        // Opcional: seleccionar primer botón del menú para teclado/gamepad
-        // if (isActive)
-        // {
-        //     UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(firstButtonInPauseMenu);
-        // }
-        Debug.Log($"Pausa {(isPaused ? "activada" : "desactivada")}");
-    }
-
-
-
-
 }

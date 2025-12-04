@@ -7,6 +7,7 @@ public class PlayerMovement_Car : MonoBehaviour
     [Header("Car Settings")]
     public float acceleration = 10f;
     public float maxSpeed = 8f;
+    public float minSpeedToSteer = 2f;
     public float steering = 200f;
     public float drag = 2f;
     [Range(0f, 1f)] public float grip = 0.9f;
@@ -59,15 +60,17 @@ public class PlayerMovement_Car : MonoBehaviour
         if (rb.linearVelocity.magnitude > maxSpeed)
             rb.linearVelocity = rb.linearVelocity.normalized * maxSpeed;
 
-        // --- 2️⃣ Giro persistente ---
+        float speed = rb.linearVelocity.magnitude;
+
+
         // Aplica rotación directamente, independientemente de la velocidad o fricción
-        if (Mathf.Abs(steerInput) > 0.01f)
+        if (Mathf.Abs(steerInput) > 0.01f && speed > minSpeedToSteer)
         {
             float turnAmount = steerInput * steering * Time.fixedDeltaTime;
             rb.rotation -= turnAmount;
         }
 
-        if (rb.linearVelocity.sqrMagnitude > 0.001f)
+        if (speed > 0.001f)
         {
             Vector2 forwardVel = transform.up * Vector2.Dot(rb.linearVelocity, transform.up);
             Vector2 sideVel = transform.right * Vector2.Dot(rb.linearVelocity, transform.right);
