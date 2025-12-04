@@ -1130,10 +1130,6 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 499837933}
-    - target: {fileID: 5376568330624388301, guid: 914a115e6c673bf42818dc404bd00802, type: 3}
-      propertyPath: skidThreshold
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 6637530519179374289, guid: 914a115e6c673bf42818dc404bd00802, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
