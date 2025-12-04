@@ -1,8 +1,10 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class PlayerGameLogic : MonoBehaviour
@@ -42,6 +44,9 @@ public class PlayerGameLogic : MonoBehaviour
     [Header("UI")]
     public TextMeshProUGUI moneyEarned;
     public int overLevelBonus = 0;
+    public GameObject pauseMenu;
+    private bool isPaused;
+    private bool haveCalled;
     
 
     public event Action OnSignal;
@@ -56,6 +61,8 @@ public class PlayerGameLogic : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        pauseMenu.SetActive(false);
+        isPaused = false;
         overLevelBonus = 0;
         playerMovement = GetComponent<PlayerMovement_Car>();
         currentLevel = 1;
@@ -222,7 +229,6 @@ public class PlayerGameLogic : MonoBehaviour
         }
     }
 
-
     public void takeDamage(int damage)
     {
         currentHealth -= damage;
@@ -235,4 +241,69 @@ public class PlayerGameLogic : MonoBehaviour
         if (healthBar != null)
             healthBar.UpdateHealthbar(currentHealth, maxHealth);
     }
+
+    public void OnCancel()
+    {
+        StartCoroutine(fuck());
+        Debug.Log("Pausando");
+    }
+
+    private IEnumerator fuck()
+    {
+        haveCalled = true;
+        yield return new WaitForEndOfFrame();
+        if (haveCalled)
+        {
+            if (!isPaused)
+            {
+                pauseMenu.SetActive(true);
+                isPaused = true;
+                Time.timeScale = 0f;
+            }
+            else
+            {
+                pauseMenu.SetActive(false);
+                isPaused = false;
+                Time.timeScale = 1f;
+            }
+
+
+            // Opcional: seleccionar primer botón del menú para teclado/gamepad
+            // if (isActive)
+            // {
+            //     UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(firstButtonInPauseMenu);
+            // }
+            Debug.Log($"Pausa {(isPaused ? "activada" : "desactivada")}");
+            haveCalled = false;
+        }
+        
+    }
+
+    private void togglePauseMenu()
+    {
+        if (!isPaused)
+        {
+            pauseMenu.SetActive(true);
+            isPaused = true;
+            Time.timeScale = 0f;
+        }
+        else
+        {
+            pauseMenu.SetActive(false);
+            isPaused = false;
+            Time.timeScale = 1f;
+        }
+
+
+        // Opcional: seleccionar primer botón del menú para teclado/gamepad
+        // if (isActive)
+        // {
+        //     UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(firstButtonInPauseMenu);
+        // }
+        Debug.Log($"Pausa {(isPaused ? "activada" : "desactivada")}");
+    }
+
+
+
+
 }

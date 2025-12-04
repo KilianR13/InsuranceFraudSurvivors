@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.InputSystem;
 
 public class EnemyWaveManager : MonoBehaviour
 {
@@ -187,4 +188,5 @@ public class EnemyWaveManager : MonoBehaviour
 
         return spawnPos;
     }
+
 }

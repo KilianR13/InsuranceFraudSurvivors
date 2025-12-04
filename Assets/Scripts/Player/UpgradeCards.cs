@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class UpgradeCard : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
+public class UpgradeCard : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler, ISelectHandler, IDeselectHandler, ISubmitHandler
 {
     public TextMeshProUGUI titleText;
     public TextMeshProUGUI descriptionText;
@@ -54,6 +54,25 @@ public class UpgradeCard : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
     }
 
     public void OnPointerExit(PointerEventData eventData)
+    {
+        coolOutline.enabled = false;
+    }
+
+    public void OnSubmit(BaseEventData eventData)
+    {
+        onCardSelected?.Invoke(this);
+    }
+
+    public void OnSelect(BaseEventData eventData)
+    {
+        if (hoverSFX != null)
+        {
+            hoverSFX.Play();
+        }
+        coolOutline.enabled = true;
+    }
+
+    public void OnDeselect(BaseEventData eventData)
     {
         coolOutline.enabled = false;
     }

@@ -1,6 +1,8 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class UpgradeCardManager : MonoBehaviour
 {
@@ -12,6 +14,7 @@ public class UpgradeCardManager : MonoBehaviour
     [SerializeField] private AudioSource upgradeChosen;
 
     private Action<UpgradeCard> onCardPicked; // callback que avisa al jugador
+    UpgradeCard firstCard = null; // Para guardar la primera carta
 
     // Muestra 'count' cartas y llama a onPicked cuando se elige una
     public void ShowCards(List<UpgradeData> upgrades, Action<UpgradeCard> onPicked)
@@ -27,9 +30,25 @@ public class UpgradeCardManager : MonoBehaviour
             if (card != null)
             {
                 card.Setup(upgrade, OnCardSelectedFromUI);  // << REAL DATA
+                if (firstCard == null)
+                {
+                    firstCard = card;    
+                }
             }
         }
+        if (firstCard != null)
+        {
+            // Asegúrate de que tu UpgradeCard tenga un Button o Selectable
+            StartCoroutine(SelectFirstCardNextFrame(firstCard));
+        }
     }
+
+    private IEnumerator SelectFirstCardNextFrame(UpgradeCard firstCard)
+    {
+        yield return null; // espera un frame
+        EventSystem.current.SetSelectedGameObject(firstCard.gameObject);
+    }
+
 
     // Callback interno cuando una carta es seleccionada por click
     private void OnCardSelectedFromUI(UpgradeCard card)

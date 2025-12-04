@@ -344,6 +344,7 @@ MonoBehaviour:
   FireBallFireRateReduction: 0
   moneyEarned: {fileID: 4498127477617624407}
   overLevelBonus: 0
+  pauseMenu: {fileID: 4641008024868215824}
 --- !u!114 &4289009811494200035
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1162,6 +1163,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+--- !u!1 &4641008024868215824 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3392646866614925620, guid: 9e6355db2fa6b944289643095a04169a, type: 3}
+  m_PrefabInstance: {fileID: 8033637147899421988}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &5892222177803268883 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4519457566610757175, guid: 9e6355db2fa6b944289643095a04169a, type: 3}

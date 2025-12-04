@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -9,21 +10,17 @@ public class MainMenuHandler : MonoBehaviour
 
     [Header("LevelSelect")]
     public Button playButton;
-    public Outline playButtonOutline;
     public Button cancelButton;
-    public Outline cancelButtonOutline;
 
     [Header("NormalMenu")]
     public Button levelSelectButton;
-    public Outline LSButtonOutline;
     public Button optionsButton;
-    public Outline optionsButtonOutline;
     public Button quitButton;
-    public Outline quitButtonOutline;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        EventSystem.current.SetSelectedGameObject(levelSelectButton.gameObject);
         stageSelect.SetActive(false);
         mainMenuMusic.Play();
     }
@@ -35,11 +32,13 @@ public class MainMenuHandler : MonoBehaviour
 
     public void openPlayPanel()
     {
+        EventSystem.current.SetSelectedGameObject(playButton.gameObject);
         stageSelect.SetActive(true);
     }
 
     public void closePlayPanel()
     {
+        EventSystem.current.SetSelectedGameObject(levelSelectButton.gameObject);
         stageSelect.SetActive(false);
     }
 
@@ -47,6 +46,7 @@ public class MainMenuHandler : MonoBehaviour
     {
         if (stageSelect.activeSelf)
         {
+            EventSystem.current.SetSelectedGameObject(levelSelectButton.gameObject);
             stageSelect.SetActive(false);    
         }
         
