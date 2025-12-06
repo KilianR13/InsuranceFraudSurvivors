@@ -44,6 +44,22 @@ public class PlayerMovement_Car : MonoBehaviour
         visual = sr ? sr.transform : transform;
     }
 
+    void Start()
+    {
+        var wrap = GetComponent<WorldWrapper>();
+        if (wrap != null)
+        {
+            wrap.changedSides -= playerWarped; // evita dobles suscripciones
+            wrap.changedSides += playerWarped;
+        }
+    }
+
+    private void playerWarped()
+    {
+        leftTrail.emitting = false;
+        rightTrail.emitting = false;
+    }
+
     public void OnMove(InputValue value)
     {
         Vector2 input = value.Get<Vector2>();

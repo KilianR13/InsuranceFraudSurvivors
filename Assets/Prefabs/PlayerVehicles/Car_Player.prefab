@@ -150,6 +150,7 @@ GameObject:
   - component: {fileID: 2040020884514034144}
   - component: {fileID: 1332601026443912167}
   - component: {fileID: 5676965408964675217}
+  - component: {fileID: 2696105773617812948}
   m_Layer: 0
   m_Name: Car_Player
   m_TagString: Player
@@ -600,6 +601,22 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &2696105773617812948
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3246612153441771264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 715cd5ef1fd49c748b555c756afa0b50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldWrapper
+  mapWidth: 864
+  mapHeight: 756
+  padding: 0
+  useRigidbody2D: 1
 --- !u!1 &3576485808171583709
 GameObject:
   m_ObjectHideFlags: 0
@@ -1112,6 +1129,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 389860127432600855, guid: 9e6355db2fa6b944289643095a04169a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3392646866614925620, guid: 9e6355db2fa6b944289643095a04169a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4519457566610757175, guid: 9e6355db2fa6b944289643095a04169a, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6399003901964582147, guid: 9e6355db2fa6b944289643095a04169a, type: 3}

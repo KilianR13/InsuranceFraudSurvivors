@@ -3,9 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.UI;
 
 public class PlayerGameLogic : MonoBehaviour
 {
@@ -45,7 +44,6 @@ public class PlayerGameLogic : MonoBehaviour
     public TextMeshProUGUI moneyEarned;
     public int overLevelBonus = 0;
     public GameObject pauseMenu;
-    private bool isPaused;
     private bool haveCalled;
     
 
@@ -62,7 +60,6 @@ public class PlayerGameLogic : MonoBehaviour
     void Start()
     {
         pauseMenu.SetActive(false);
-        isPaused = false;
         overLevelBonus = 0;
         playerMovement = GetComponent<PlayerMovement_Car>();
         currentLevel = 1;
@@ -106,6 +103,7 @@ public class PlayerGameLogic : MonoBehaviour
             }
         }
     }
+
 
     public void addEXP(int exp)
     {

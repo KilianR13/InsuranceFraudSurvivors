@@ -34,6 +34,47 @@ public class EnemyWaveManager : MonoBehaviour
     private List<GameObject> activeEnemies = new List<GameObject>();
     private bool waveFinished = false;
 
+    void Start()
+    {
+        if (player != null)
+        {
+            var wrap = player.GetComponent<WorldWrapper>();
+            if (wrap != null)
+            {
+                wrap.changedSides -= RespawnEnemiesAroundPlayer; // evita dobles suscripciones
+                wrap.changedSides += RespawnEnemiesAroundPlayer;
+            }
+        }
+    }
+
+    public void RespawnEnemiesAroundPlayer()
+    {
+        Debug.Log("Respawning enemigos alrededor del jugador");
+        
+        float respawnRadius = 40f;
+
+        foreach (var enemy in activeEnemies)
+        {
+            if (enemy == null) continue;
+            // Desactivar temporalmente para resetear correctamente
+            enemy.SetActive(false);
+
+            // Reubicar cerca del jugador
+            Vector3 newPos = player.position + Random.insideUnitSphere * respawnRadius;
+            enemy.transform.position = new Vector3(newPos.x, newPos.y, 0f);
+
+            // Resetear velocidad si tiene Rigidbody2D
+            if (enemy.TryGetComponent(out Rigidbody2D rb))
+            {
+                rb.linearVelocity = Vector2.zero;
+                rb.angularVelocity = 0f;
+            }
+
+            // Reactivar
+            enemy.SetActive(true);
+        }
+    }
+
     void Update()
     {
         if (waves.Count == 0 || spawner == null) return;
