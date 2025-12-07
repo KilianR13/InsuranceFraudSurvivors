@@ -21,6 +21,7 @@ public class WorldWrapper : MonoBehaviour
     public event Action changedSides;
     private bool isOnRightSide = true; // o false según empiece
     private bool isOnTopSide = true; // o false según empiece
+    private Vector3 lastPosition;
 
     private bool changedThisFrame = false;
 
@@ -29,6 +30,7 @@ public class WorldWrapper : MonoBehaviour
     {
         halfWidth = mapWidth * 0.5f;
         halfHeight = mapHeight * 0.5f;
+        lastPosition = transform.position;
 
         if (useRigidbody2D)
             rb2d = GetComponent<Rigidbody2D>();
@@ -53,14 +55,16 @@ public class WorldWrapper : MonoBehaviour
         float maxY =  halfHeight - padding;
         
         // --- HORIZONTAL ---
-    bool crossingX = pos.x < minX || pos.x > maxX;
-    if (crossingX)
+    // --- HORIZONTAL ---
+    if (pos.x < minX || pos.x > maxX)
     {
-        // Determinamos si cruzó de izquierda a derecha o derecha a izquierda
-        bool newRightSide = pos.x > maxX; // cruzó al lado derecho
-        if (newRightSide != isOnRightSide && !changedThisFrame)
+        // Comprobamos si realmente cruzó el borde comparando con la posición anterior
+        bool crossedRight = lastPosition.x <= maxX && pos.x > maxX;
+        bool crossedLeft = lastPosition.x >= minX && pos.x < minX;
+
+        if ((crossedRight || crossedLeft) && !changedThisFrame)
         {
-            isOnRightSide = newRightSide;
+            isOnRightSide = crossedRight;
             changedThisFrame = true;
             changedSides?.Invoke();
             Debug.Log($"Triggereado horizontal: {pos.x}, {pos.y}");
@@ -68,14 +72,14 @@ public class WorldWrapper : MonoBehaviour
     }
 
     // --- VERTICAL ---
-    bool crossingY = pos.y < minY || pos.y > maxY;
-    if (crossingY)
+    if (pos.y < minY || pos.y > maxY)
     {
-        // Determinamos si cruzó de abajo hacia arriba o viceversa
-        bool newTopSide = pos.y > maxY; // cruzó al lado superior
-        if (newTopSide != isOnTopSide && !changedThisFrame)
+        bool crossedTop = lastPosition.y <= maxY && pos.y > maxY;
+        bool crossedBottom = lastPosition.y >= minY && pos.y < minY;
+
+        if ((crossedTop || crossedBottom) && !changedThisFrame)
         {
-            isOnTopSide = newTopSide;
+            isOnTopSide = crossedTop;
             changedThisFrame = true;
             changedSides?.Invoke();
             Debug.Log($"Triggereado vertical: {pos.x}, {pos.y}");
@@ -118,5 +122,6 @@ public class WorldWrapper : MonoBehaviour
                 transform.position = pos;
             }
         }
+        lastPosition = transform.position;
     }
 }
