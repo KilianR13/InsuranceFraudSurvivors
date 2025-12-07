@@ -9,7 +9,7 @@ public class WorldWrapper : MonoBehaviour
 
     [Header("Opciones")]
     [Tooltip("Si > 0 evita el teletransporte justo en el borde (útil si el jugador tiene tamaño)")]
-    public float padding = 0f;
+    public float padding = 5f;
 
     [Tooltip("Si true usará Rigidbody2D para mover al jugador (más limpio para física). Si false usa transform.position.")]
     public bool useRigidbody2D = true;
@@ -43,23 +43,7 @@ public class WorldWrapper : MonoBehaviour
 
     private void WrapPosition()
     {
-        bool newSide = transform.position.x > 0; // ejemplo: lado derecho si x > 0
-
-        if (newSide != isOnRightSide && !changedThisFrame)
-        {
-            isOnRightSide = newSide;
-            changedThisFrame = true;
-            changedSides?.Invoke(); // se dispara solo 1 vez
-        }
-
-        bool newSideY = transform.position.y > 0; // lado superior si y > 0
-        if (newSideY != isOnTopSide && !changedThisFrame)
-        {
-            isOnTopSide = newSideY;
-            changedThisFrame = true;
-            changedSides?.Invoke(); // se dispara solo 1 vez
-        }
-
+        
         Vector3 pos = transform.position;
         bool changed = false;
 
@@ -67,6 +51,37 @@ public class WorldWrapper : MonoBehaviour
         float maxX =  halfWidth - padding;
         float minY = -halfHeight + padding;
         float maxY =  halfHeight - padding;
+        
+        // --- HORIZONTAL ---
+    bool crossingX = pos.x < minX || pos.x > maxX;
+    if (crossingX)
+    {
+        // Determinamos si cruzó de izquierda a derecha o derecha a izquierda
+        bool newRightSide = pos.x > maxX; // cruzó al lado derecho
+        if (newRightSide != isOnRightSide && !changedThisFrame)
+        {
+            isOnRightSide = newRightSide;
+            changedThisFrame = true;
+            changedSides?.Invoke();
+            Debug.Log($"Triggereado horizontal: {pos.x}, {pos.y}");
+        }
+    }
+
+    // --- VERTICAL ---
+    bool crossingY = pos.y < minY || pos.y > maxY;
+    if (crossingY)
+    {
+        // Determinamos si cruzó de abajo hacia arriba o viceversa
+        bool newTopSide = pos.y > maxY; // cruzó al lado superior
+        if (newTopSide != isOnTopSide && !changedThisFrame)
+        {
+            isOnTopSide = newTopSide;
+            changedThisFrame = true;
+            changedSides?.Invoke();
+            Debug.Log($"Triggereado vertical: {pos.x}, {pos.y}");
+        }
+    }
+
 
         if (pos.x < minX)
         {

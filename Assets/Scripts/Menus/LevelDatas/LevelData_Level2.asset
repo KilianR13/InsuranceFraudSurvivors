@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: LevelData_Level2
   m_EditorClassIdentifier: Assembly-CSharp::LevelData
   sceneName: Level1
-  previewImage: {fileID: 0}
-  levelDisplayName: The Town
+  previewImage: {fileID: 21300000, guid: 40c3ad410b1925843b07ebc0726c55b6, type: 3}
+  levelDisplayName: The Outskirts

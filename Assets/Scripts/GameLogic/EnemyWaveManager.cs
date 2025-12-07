@@ -49,30 +49,167 @@ public class EnemyWaveManager : MonoBehaviour
 
     public void RespawnEnemiesAroundPlayer()
     {
-        Debug.Log("Respawning enemigos alrededor del jugador");
-        
+        // float respawnRadius = 40f;
+        // int attemptsPerEnemy = 30;
+
+        // Debug.Log($"Respawning {activeEnemies.Count} enemies via pool around player at {player.position}");
+
+        // List<GameObject> oldActive = new List<GameObject>(activeEnemies);
+        // List<GameObject> newActive = new List<GameObject>();
+
+        // // Limpiamos la lista original (vamos a rellenarla con las nuevas instancias)
+        // // No la vaciamos de inmediato para evitar problemas si algo lee la lista durante el proceso.
+        // activeEnemies.Clear();
+
+        // foreach (var old in oldActive)
+        // {
+        //     if (old == null) continue;
+
+        //     // Obtener prefab original (PoolIdentity preferido, sino Poolable)
+        //     GameObject prefab = null;
+        //     if (old.TryGetComponent<PoolIdentity>(out var id))
+        //         prefab = id.prefab;
+        //     else if (old.TryGetComponent<Poolable>(out var p))
+        //         prefab = p.originalPrefab;
+
+        //     if (prefab == null)
+        //     {
+        //         Debug.LogWarning($"No pude obtener prefab del enemigo {old.name}, destruyéndolo.");
+        //         Destroy(old);
+        //         continue;
+        //     }
+
+        //     // Devolver el antiguo al pool (o desactivarlo según tu SimplePool)
+        //     // Esto debe corresponder con la forma en que tu pool espera devolver objetos.
+        //     // EnemyAI.killEnemy usa SimplePool.Return(p.originalPrefab, gameObject);
+        //     SimplePool.Return(prefab, old);
+
+        //     // Generar una posición válida alrededor del jugador (intenta varios veces)
+        //     Vector3 spawnPos = Vector3.zero;
+        //     bool found = false;
+        //     for (int a = 0; a < attemptsPerEnemy; a++)
+        //     {
+        //         Vector2 offset = Random.insideUnitCircle * respawnRadius;
+        //         Vector3 candidate = player.position + new Vector3(offset.x, offset.y, 0f);
+
+        //         // (Opcional) comprobar no spawnear dentro de la cámara / dentro de obstáculos:
+        //         // si quieres, aquí puedes poner un Physics2D.OverlapCircle para evitar colisiones.
+        //         spawnPos = candidate;
+        //         found = true;
+        //         break;
+        //     }
+
+        //     if (!found) spawnPos = player.position; // fallback
+
+        //     // Spawn inmediato usando tu spawner (usa el pool internamente)
+        //     GameObject spawned = spawner.SpawnEnemy(prefab, spawnPos, currentWaveIndex);
+
+        //     if (spawned == null)
+        //     {
+        //         Debug.LogWarning($"Spawner devolvió null para prefab {prefab.name}");
+        //         continue;
+        //     }
+
+        //     // Configurar AI / flags como al spawnear normalmente
+        //     if (spawned.TryGetComponent<EnemyAI>(out var ai))
+        //     {
+        //         ai.waveIndex = currentWaveIndex;
+        //         ai.poolable = true;
+        //         ai.player = player;
+        //         // Si quieres forzar una recalculación inmediata en la IA:
+        //         // ai.OnRespawn(); // si implementas ese método opcional en EnemyAI
+        //     }
+
+        //     newActive.Add(spawned);
+        // }
+
+        // // Sustituir la lista de enemigos activos por las nuevas instancias
+        // activeEnemies = newActive;
+
+        // Debug.Log($"Respawn completo. Ahora hay {activeEnemies.Count} enemigos activos alrededor del jugador.");
+
         float respawnRadius = 40f;
+        int attemptsPerEnemy = 30;
 
-        foreach (var enemy in activeEnemies)
+        Debug.Log($"Respawning {activeEnemies.Count} enemies via pool around player at {player.position}");
+
+        List<GameObject> oldActive = new List<GameObject>(activeEnemies);
+        List<GameObject> newActive = new List<GameObject>();
+
+        // Limpiamos la lista original
+        activeEnemies.Clear();
+
+        // Obtener referencias del tamaño del mapa desde WorldWrapper
+        WorldWrapper wrapper = player.GetComponent<WorldWrapper>();
+        float halfWidth = wrapper != null ? wrapper.mapWidth * 0.5f : 432f;   // fallback
+        float halfHeight = wrapper != null ? wrapper.mapHeight * 0.5f : 378f; // fallback
+
+        foreach (var old in oldActive)
         {
-            if (enemy == null) continue;
-            // Desactivar temporalmente para resetear correctamente
-            enemy.SetActive(false);
+            if (old == null) continue;
 
-            // Reubicar cerca del jugador
-            Vector3 newPos = player.position + Random.insideUnitSphere * respawnRadius;
-            enemy.transform.position = new Vector3(newPos.x, newPos.y, 0f);
+            // Obtener prefab original (PoolIdentity preferido, sino Poolable)
+            GameObject prefab = null;
+            if (old.TryGetComponent<PoolIdentity>(out var id))
+                prefab = id.prefab;
+            else if (old.TryGetComponent<Poolable>(out var p))
+                prefab = p.originalPrefab;
 
-            // Resetear velocidad si tiene Rigidbody2D
-            if (enemy.TryGetComponent(out Rigidbody2D rb))
+            if (prefab == null)
             {
-                rb.linearVelocity = Vector2.zero;
-                rb.angularVelocity = 0f;
+                Debug.LogWarning($"No pude obtener prefab del enemigo {old.name}, destruyéndolo.");
+                Destroy(old);
+                continue;
             }
 
-            // Reactivar
-            enemy.SetActive(true);
+            // Devolver el antiguo al pool
+            SimplePool.Return(prefab, old);
+
+            // --- Recentrar al jugador respecto al mapa toroidal ---
+            Vector3 playerPos = player.position;
+            if (playerPos.x > halfWidth) playerPos.x -= wrapper.mapWidth;
+            else if (playerPos.x < -halfWidth) playerPos.x += wrapper.mapWidth;
+
+            if (playerPos.y > halfHeight) playerPos.y -= wrapper.mapHeight;
+            else if (playerPos.y < -halfHeight) playerPos.y += wrapper.mapHeight;
+
+            // Generar una posición válida alrededor del jugador
+            Vector3 spawnPos = Vector3.zero;
+            bool found = false;
+            for (int a = 0; a < attemptsPerEnemy; a++)
+            {
+                Vector2 offset = Random.insideUnitCircle * respawnRadius;
+                spawnPos = playerPos + new Vector3(offset.x, offset.y, 0f);
+                found = true;
+            }
+
+            if (!found) spawnPos = playerPos; // fallback
+
+            // Spawn inmediato usando tu spawner (usa el pool internamente)
+            GameObject spawned = spawner.SpawnEnemy(prefab, spawnPos, currentWaveIndex);
+
+            if (spawned == null)
+            {
+                Debug.LogWarning($"Spawner devolvió null para prefab {prefab.name}");
+                continue;
+            }
+
+            // Configurar AI / flags como al spawnear normalmente
+            if (spawned.TryGetComponent<EnemyAI>(out var ai))
+            {
+                ai.waveIndex = currentWaveIndex;
+                ai.poolable = true;
+                ai.player = player;
+            }
+
+            newActive.Add(spawned);
         }
+
+        // Sustituir la lista de enemigos activos por las nuevas instancias
+        activeEnemies = newActive;
+
+        Debug.Log($"Respawn completo. Ahora hay {activeEnemies.Count} enemigos activos alrededor del jugador.");
+
     }
 
     void Update()

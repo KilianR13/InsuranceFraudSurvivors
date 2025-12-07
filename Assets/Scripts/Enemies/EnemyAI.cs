@@ -117,6 +117,16 @@ public class EnemyAI : MonoBehaviour
         sr.sprite = normalSprite;
     }
 
+    public void OnRespawn()
+    {
+        updateTimer = 0f;            // fuerza recálculo inmediato de la dirección
+        targetDirection = Vector2.zero;
+        
+        // Evita que se mueva un frame antes de recalcular
+        transform.position = new Vector3(transform.position.x, transform.position.y, 0f);
+    }
+
+
     public void killEnemy()
     {
         activated = false;
