@@ -33,7 +33,9 @@ public class WorldWrapper : MonoBehaviour
         lastPosition = transform.position;
 
         if (useRigidbody2D)
+        {
             rb2d = GetComponent<Rigidbody2D>();
+        }
     }
 
     void LateUpdate()
@@ -55,36 +57,34 @@ public class WorldWrapper : MonoBehaviour
         float maxY =  halfHeight - padding;
         
         // --- HORIZONTAL ---
-    // --- HORIZONTAL ---
-    if (pos.x < minX || pos.x > maxX)
-    {
-        // Comprobamos si realmente cruzó el borde comparando con la posición anterior
-        bool crossedRight = lastPosition.x <= maxX && pos.x > maxX;
-        bool crossedLeft = lastPosition.x >= minX && pos.x < minX;
-
-        if ((crossedRight || crossedLeft) && !changedThisFrame)
+        if (pos.x < minX || pos.x > maxX)
         {
-            isOnRightSide = crossedRight;
-            changedThisFrame = true;
-            changedSides?.Invoke();
-            Debug.Log($"Triggereado horizontal: {pos.x}, {pos.y}");
+            // Comprueba si realmente cruzó el borde comparando con la posición anterior
+            bool crossedRight = lastPosition.x <= maxX && pos.x > maxX;
+            bool crossedLeft = lastPosition.x >= minX && pos.x < minX;
+
+            if ((crossedRight || crossedLeft) && !changedThisFrame)
+            {
+                isOnRightSide = crossedRight;
+                changedThisFrame = true;
+                changedSides?.Invoke();
+            }
         }
-    }
 
-    // --- VERTICAL ---
-    if (pos.y < minY || pos.y > maxY)
-    {
-        bool crossedTop = lastPosition.y <= maxY && pos.y > maxY;
-        bool crossedBottom = lastPosition.y >= minY && pos.y < minY;
-
-        if ((crossedTop || crossedBottom) && !changedThisFrame)
+        // --- VERTICAL ---
+        if (pos.y < minY || pos.y > maxY)
         {
-            isOnTopSide = crossedTop;
-            changedThisFrame = true;
-            changedSides?.Invoke();
-            Debug.Log($"Triggereado vertical: {pos.x}, {pos.y}");
+            // Comprueba si realmente cruzó el borde comparando con la posición anterior
+            bool crossedTop = lastPosition.y <= maxY && pos.y > maxY;
+            bool crossedBottom = lastPosition.y >= minY && pos.y < minY;
+
+            if ((crossedTop || crossedBottom) && !changedThisFrame)
+            {
+                isOnTopSide = crossedTop;
+                changedThisFrame = true;
+                changedSides?.Invoke();
+            }
         }
-    }
 
 
         if (pos.x < minX)
@@ -115,7 +115,7 @@ public class WorldWrapper : MonoBehaviour
             {
                 // Usa Rigidbody2D para evitar conflictos con la física
                 rb2d.position = new Vector2(pos.x, pos.y);
-                rb2d.linearVelocity = rb2d.linearVelocity; // deja la velocidad intacta (puedes modificar si quieres)
+                rb2d.linearVelocity = rb2d.linearVelocity; // Deja la velocidad intacta
             }
             else
             {
