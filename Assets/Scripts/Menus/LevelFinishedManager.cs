@@ -10,16 +10,19 @@ public class LevelFinishedManager : MonoBehaviour
     void Start()
     {
         // Para prevenir errores
-        if (GameManager.gm.currentStageName != null || GameManager.gm.currentStageName != "")
+        if (GameManager.gm != null)
         {
-            previousLevelName = GameManager.gm.currentStageName;    
-        }
+            if (GameManager.gm.currentStageName != null || GameManager.gm.currentStageName != "")
+            {
+                previousLevelName = GameManager.gm.currentStageName;    
+            }    
+            bigText.text = GameManager.gm.playerWon ? "STAGE COMPLETE!" : "YOU DIED!";
+        }        
         else
         {
             previousLevelName = "MainMenu";
+            bigText.text = "You shouldn't be here.";
         }
-        
-        bigText.text = GameManager.gm.playerWon ? "STAGE COMPLETE!" : "YOU DIED!";
     }
     
     public void restartPreviousLevel()

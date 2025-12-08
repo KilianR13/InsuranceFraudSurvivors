@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -144,6 +145,8 @@ public class EnemyAI : MonoBehaviour
             }
             Destroy(explosion, animationLength);
         }
+
+        GameManager.gm.enemiesDefeated++;
         
         if (!poolable || waveIndex < currentWaveIndex) // enemigos de oleadas pasadas
         {

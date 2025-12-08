@@ -9,30 +9,27 @@ public class GameManager : MonoBehaviour
     [SerializeField] private AudioSource StageCompletedSFX;
     public string currentStageName;
     public bool playerWon = false;
+    public int playerLevel;
+    public int playerScore;
+    public int enemiesDefeated = 0;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        if (gm == null)
-        {
-            gm = this;
-        }
-        else
-        {
-            Destroy(gameObject); // evita duplicados si hay otro GameManager
-        }
+        gm = this;
         currentStageName = SceneManager.GetActiveScene().name;
         Debug.Log(currentStageName);
+        playerLevel = 0;
+        playerScore = 0;
+        enemiesDefeated = 0;
     }
-
-    // public void loseGame()
-    // {
-    //     Time.timeScale = 0f;
-    //     playerDefeatedSFX.Play();
-    //     StartCoroutine(returnToMenu());
-    // }
 
     public void StageCompleted(bool playerWon)
     {
+        if (!playerWon)
+        {
+            playerDefeatedSFX.Play();
+        }
         this.playerWon = playerWon;
         Time.timeScale = 0f;
         StartCoroutine(returnToMenu());

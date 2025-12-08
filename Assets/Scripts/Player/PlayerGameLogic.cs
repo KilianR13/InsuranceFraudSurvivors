@@ -113,6 +113,7 @@ public class PlayerGameLogic : MonoBehaviour
         totalEXP += exp;
         expBar.UpdateEXPBar(currentEXP, expToNextLevel);
         moneyEarned.text = $"$ = {totalEXP + overLevelBonus}";
+        GameManager.gm.playerScore = totalEXP + overLevelBonus;
         CheckLevelUp();
     }
 
@@ -122,6 +123,7 @@ public class PlayerGameLogic : MonoBehaviour
         {
             currentEXP -= expToNextLevel;
             currentLevel++;
+            GameManager.gm.playerLevel = currentLevel;
             pendingLevelUps++;   // ← Guardamos que hay que mostrar otra mejora
         }
 
