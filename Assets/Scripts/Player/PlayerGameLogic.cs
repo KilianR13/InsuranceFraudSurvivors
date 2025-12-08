@@ -6,6 +6,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerGameLogic : MonoBehaviour
 {
@@ -17,7 +18,7 @@ public class PlayerGameLogic : MonoBehaviour
     public float healTimer;
     public int healAmmount;
     private int currentEXP;
-    private int totalEXP;
+    public int totalEXP;
     private int currentLevel;
 
     [Header("Upgrades")]
@@ -154,6 +155,8 @@ public class PlayerGameLogic : MonoBehaviour
         if (!upgradeUIActive && pendingLevelUps > 0)
         {
             playerMovement.engineSFX.Stop();
+            GameManager.gm.gamePaused = true;
+            GameManager.gm.dynamicMusic();
             canPause = false;
             OnLevelUp();
         }
@@ -250,6 +253,8 @@ public class PlayerGameLogic : MonoBehaviour
             cardManager.ClearCards();
             expBar.UpdateEXPBar(currentEXP, expToNextLevel);
             playerMovement.engineSFX.Play();
+            GameManager.gm.gamePaused = false;
+            GameManager.gm.dynamicMusic();
             Time.timeScale = 1f;
             canPause = true;
         }
@@ -275,13 +280,13 @@ public class PlayerGameLogic : MonoBehaviour
     {
         if (canPause)
         {
-            StartCoroutine(TogglePauseMenu()); // Por alguna razón es necesario hacer una Corrutina porque si no, el juego se vuelve loco y llama mil veces al menú de pausa.    
+            togglePauseMenu(); // Por alguna razón es necesario hacer una Corrutina porque si no, el juego se vuelve loco y llama mil veces al menú de pausa.    
         }
     }
 
     // Esto es estúpido pero yo lo soy más.
     // Si funciona, no se toca.
-    private IEnumerator TogglePauseMenu()
+    private IEnumerator TogglePauseMenu_IENUM()
     {
         haveCalled = true;
         yield return new WaitForEndOfFrame();
@@ -293,20 +298,41 @@ public class PlayerGameLogic : MonoBehaviour
             if (pauseMenu.activeSelf)
             {
                 playerMovement.engineSFX.Stop();
+                GameManager.gm.gamePaused = true;
+                GameManager.gm.dynamicMusic();
             }
             else
             {
+                GameManager.gm.gamePaused = false;
+                GameManager.gm.dynamicMusic();
                 playerMovement.engineSFX.Play();
             }
 
             // Seleccionar primer botón del menú para teclado/gamepad
-            // if (pauseMenu.activeSelf)
-            // {
-            //     UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(firstButtonInPauseMenu);
-            // }
+            if (pauseMenu.activeSelf)
+            {
+                // UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(firstButtonInPauseMenu);
+            }
             Debug.Log($"Pausa {(pauseMenu.activeSelf ? "activada" : "desactivada")}");
             haveCalled = false;
         }
         
+    }
+
+    public void togglePauseMenu()
+    {
+        StartCoroutine(TogglePauseMenu_IENUM());
+    }
+
+    public void restartLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        Time.timeScale = 1f;
+    }
+
+    public void returnToMenu()
+    {
+        GameManager.gm.BackgroundMusicSFX.Stop();
+        SceneManager.LoadScene("MainMenu");
     }
 }

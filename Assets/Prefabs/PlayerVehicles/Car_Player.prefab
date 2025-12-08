@@ -334,6 +334,7 @@ MonoBehaviour:
   healthBarGameoObject: {fileID: 5680389111961237268, guid: 8ef82025fb6c5cf438ce35e3711fe11d, type: 3}
   healTimer: 5
   healAmmount: 0
+  totalEXP: 0
   swordUpgrade: {fileID: 2040020884514034144}
   hasSword: 0
   allUpgrades:
@@ -1237,6 +1238,38 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1722843453774053500, guid: 9e6355db2fa6b944289643095a04169a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 3310858472393324216}
+    - target: {fileID: 1722843453774053500, guid: 9e6355db2fa6b944289643095a04169a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: togglePauseMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 1722843453774053500, guid: 9e6355db2fa6b944289643095a04169a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PlayerGameLogic, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1722843453774053500, guid: 9e6355db2fa6b944289643095a04169a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 2154746407721948723, guid: 9e6355db2fa6b944289643095a04169a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 3310858472393324216}
+    - target: {fileID: 2154746407721948723, guid: 9e6355db2fa6b944289643095a04169a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: returnToMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 2154746407721948723, guid: 9e6355db2fa6b944289643095a04169a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PlayerGameLogic, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2154746407721948723, guid: 9e6355db2fa6b944289643095a04169a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 3392646866614925620, guid: 9e6355db2fa6b944289643095a04169a, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -1244,6 +1277,22 @@ PrefabInstance:
     - target: {fileID: 4519457566610757175, guid: 9e6355db2fa6b944289643095a04169a, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4919256221237420094, guid: 9e6355db2fa6b944289643095a04169a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 3310858472393324216}
+    - target: {fileID: 4919256221237420094, guid: 9e6355db2fa6b944289643095a04169a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: restartLevel
+      objectReference: {fileID: 0}
+    - target: {fileID: 4919256221237420094, guid: 9e6355db2fa6b944289643095a04169a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PlayerGameLogic, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4919256221237420094, guid: 9e6355db2fa6b944289643095a04169a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 6399003901964582147, guid: 9e6355db2fa6b944289643095a04169a, type: 3}
       propertyPath: m_Name

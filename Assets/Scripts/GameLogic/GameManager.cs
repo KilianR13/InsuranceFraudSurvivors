@@ -6,12 +6,13 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager gm;
     [SerializeField] private AudioSource playerDefeatedSFX;
-    [SerializeField] private AudioSource StageCompletedSFX;
+    public AudioSource BackgroundMusicSFX;
     public string currentStageName;
     public bool playerWon = false;
     public int playerLevel;
     public int playerScore;
     public int enemiesDefeated = 0;
+    public bool gamePaused;
 
     void Awake()
     {
@@ -29,16 +30,31 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
+        gamePaused = false;
         currentStageName = SceneManager.GetActiveScene().name;
         playerLevel = 0;
         playerScore = 0;
         enemiesDefeated = 0;
         playerWon = true;
-        Debug.Log("Start");
+        BackgroundMusicSFX.volume = 0.4f;
+        BackgroundMusicSFX.Play();
+    }
+
+    public void dynamicMusic()
+    {
+        if (gamePaused)
+        {
+            BackgroundMusicSFX.volume = 0.1f;
+        }
+        else
+        {
+            BackgroundMusicSFX.volume = 0.4f;
+        }
     }
 
     public void StageCompleted(bool playerWon)
     {
+        BackgroundMusicSFX.Stop();
         if (!playerWon)
         {
             playerDefeatedSFX.Play();
@@ -47,14 +63,6 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0f;
         StartCoroutine(returnToMenu());
     }
-    
-    // private IEnumerator StageCompletedTimer()
-    // {
-    //     StageCompletedSFX.Play();
-    //     yield return new WaitForSecondsRealtime(StageCompletedSFX.clip.length);
-    //     SceneManager.LoadScene("LevelFinished");
-    //     Time.timeScale = 1f;
-    // }
 
     private IEnumerator returnToMenu()
     {
