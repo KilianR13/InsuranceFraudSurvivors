@@ -325,8 +325,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 736df4c4200f0c3449febeea6df569bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerGameLogic
-  maxHealth: 10
+  maxHealth: 100
   healthBarGameoObject: {fileID: 5680389111961237268, guid: 8ef82025fb6c5cf438ce35e3711fe11d, type: 3}
+  healTimer: 5
+  healAmmount: 0
   swordUpgrade: {fileID: 2040020884514034144}
   hasSword: 0
   allUpgrades:
@@ -336,6 +338,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 01abd98d63366d14f8a40bc85ee41bd6, type: 2}
   - {fileID: 11400000, guid: 5f455981da4272340b0f832acd868a7f, type: 2}
   - {fileID: 11400000, guid: 51f4b7667284bc24a89251e95ecf3371, type: 2}
+  - {fileID: 11400000, guid: 4adc9d552b5c2d746892e09c207856fa, type: 2}
+  - {fileID: 11400000, guid: f134560649e528140b1176d1b4c3483e, type: 2}
   levelUp: {fileID: 1332601026443912167}
   baseEXPNeeded: 15
   expMultiplier: 1.2

@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 public class LevelFinishedManager : MonoBehaviour
 {
     private string previousLevelName;
+    private int enemiesDefeatedPreviousLevel;
     public TextMeshProUGUI bigText;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -17,6 +18,7 @@ public class LevelFinishedManager : MonoBehaviour
                 previousLevelName = GameManager.gm.currentStageName;    
             }    
             bigText.text = GameManager.gm.playerWon ? "STAGE COMPLETE!" : "YOU DIED!";
+            enemiesDefeatedPreviousLevel = GameManager.gm.enemiesDefeated;
         }        
         else
         {

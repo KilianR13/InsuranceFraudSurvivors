@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -13,6 +14,8 @@ public class PlayerGameLogic : MonoBehaviour
     public GameObject healthBarGameoObject;
     private HealthBar healthBar;
     private int currentHealth;
+    public float healTimer;
+    public int healAmmount;
     private int currentEXP;
     private int totalEXP;
     private int currentLevel;
@@ -66,6 +69,8 @@ public class PlayerGameLogic : MonoBehaviour
         currentLevel = 1;
         currentEXP = 0;
         totalEXP = 0;
+        healTimer = 5f;
+        healAmmount = 0;
         hasSword = false;
         
         foreach (var u in allUpgrades)
@@ -94,16 +99,32 @@ public class PlayerGameLogic : MonoBehaviour
             healthBar = bar.GetComponent<HealthBar>();
             if (healthBar != null)
             {
-                // Inicializar con target y la cámara principal
-                Camera mainCam = Camera.main; // la cámara principal del jugador
-                healthBar.Initialize(transform, mainCam);
-                healthBar.offset = new Vector3(0, 1.5f, 0);   // súbelo 1 unidad
+                // Inicializa la barra de vida de forma dinámica
+                healthBar.Initialize(transform, Camera.main); // Inicializa la barra de vida usando el transform del jugador y la cámara principal.
+                healthBar.offset = new Vector3(0, 1.5f, 0);   // Posiciona la barra de vida encima del jugador.
 
-
-                // Actualizar el valor inicial de vida
+                // Actualiza el valor inicial de vida
                 healthBar.UpdateHealthbar(currentHealth, maxHealth);
             }
         }
+        StartCoroutine(heal());
+    }
+
+    private IEnumerator heal()
+    {
+        yield return new WaitForSecondsRealtime(healTimer);
+        if (currentHealth < maxHealth && healAmmount > 0) // Comprueba que el jugador no está a tope de vida y al menos puede curarse a sí mismo
+        {
+            if ((currentHealth + healAmmount) < maxHealth) // Comprueba que la cantidad de curación no lo pondría más allá del máximo de vida
+            {
+                currentHealth += healAmmount;    
+            }
+            else if ((currentHealth + healAmmount) >= maxHealth) // Este if quizás sea innecesario. Pone la vida al máximo.
+            {
+                currentHealth = maxHealth;
+            }   
+        }
+        healthBar.UpdateHealthbar(currentHealth, maxHealth);
     }
 
 
@@ -206,21 +227,19 @@ public class PlayerGameLogic : MonoBehaviour
         
         healthBar.UpdateHealthbar(currentHealth, maxHealth);
         
-        // Aquí aplicas la mejora (más adelante). Por ahora solo cerramos.
         if (upgradePanel != null)
         {
             upgradePanel.SetActive(false);
         }
         pendingLevelUps--;
-        if (pendingLevelUps > 0)
+        if (pendingLevelUps > 0) // Todavía quedan niveles que subir, y por tanto, faltan mejoras que escoger.
         {
-            // Todavía quedan mejoras, pero **NO** llames directamente a OnLevelUp()
-            // Solo prepara el estado para que CheckLevelUp() las invoque correctamente.
+            // Vuelve a "reiniciar el sistema" como si recién estuviese subiendo de nivel.
             upgradeUIActive = false;
             Time.timeScale = 1f;
-            CheckLevelUp();  // ← esto volverá a abrir las cartas SIN romper nada
+            CheckLevelUp();  // Vuelve a abrir las cartas
         }
-        else
+        else // No quedan niveles que subir.
         {
             upgradeUIActive = false;
             expBar.StopRainbow();
@@ -236,6 +255,7 @@ public class PlayerGameLogic : MonoBehaviour
         
         if (currentHealth <= 0)
         {
+            StopCoroutine(heal());
             GameManager.gm.StageCompleted(false);
             return;
         }
@@ -247,7 +267,7 @@ public class PlayerGameLogic : MonoBehaviour
 
     public void OnCancel()
     {
-        StartCoroutine(TogglePauseMenu());
+        StartCoroutine(TogglePauseMenu()); // Por alguna razón es necesario hacer una Corrutina porque si no, el juego se vuelve loco y llama mil veces al menú de pausa.
     }
 
     // Esto es estúpido pero yo lo soy más.
