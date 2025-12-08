@@ -14,6 +14,7 @@ public class PlayerGameLogic : MonoBehaviour
     private HealthBar healthBar;
     private int currentHealth;
     private int currentEXP;
+    private int totalEXP;
     private int currentLevel;
 
     [Header("Upgrades")]
@@ -64,6 +65,7 @@ public class PlayerGameLogic : MonoBehaviour
         playerMovement = GetComponent<PlayerMovement_Car>();
         currentLevel = 1;
         currentEXP = 0;
+        totalEXP = 0;
         hasSword = false;
         
         foreach (var u in allUpgrades)
@@ -108,8 +110,9 @@ public class PlayerGameLogic : MonoBehaviour
     public void addEXP(int exp)
     {
         currentEXP += exp;
+        totalEXP += exp;
         expBar.UpdateEXPBar(currentEXP, expToNextLevel);
-        moneyEarned.text = $"$ = {currentEXP + overLevelBonus}";
+        moneyEarned.text = $"$ = {totalEXP + overLevelBonus}";
         CheckLevelUp();
     }
 
@@ -196,8 +199,6 @@ public class PlayerGameLogic : MonoBehaviour
     {
         UpgradeData upgrade = card.upgradeData;
 
-        Debug.Log($"Jugador eligió la mejora: {upgrade.id}");
-
         // Registra el stack y aplica la mejora. 
         upgrade.ApplyStack(this);
         
@@ -233,11 +234,13 @@ public class PlayerGameLogic : MonoBehaviour
         
         if (currentHealth <= 0)
         {
-            // GameManager.gm.loseGame();
+            GameManager.gm.StageCompleted(false);
             return;
         }
         if (healthBar != null)
+        {
             healthBar.UpdateHealthbar(currentHealth, maxHealth);
+        }
     }
 
     public void OnCancel()

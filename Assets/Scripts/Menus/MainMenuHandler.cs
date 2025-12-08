@@ -54,8 +54,6 @@ public class MainMenuHandler : MonoBehaviour
 
     public void QuitGame()
     {
-        Debug.Log("Saliendo del juego...");
-
         // Directiva de preprocesador
         #if UNITY_EDITOR
             // Si estamos en el editor de Unity, usamos el comando para detener el juego.

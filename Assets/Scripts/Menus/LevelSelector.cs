@@ -25,7 +25,6 @@ public class LevelSelector : MonoBehaviour
         {
             index = 0;
         }
-        Debug.Log(index);
         UpdateUI();
     }
 
@@ -36,7 +35,6 @@ public class LevelSelector : MonoBehaviour
         {
             index = database.levels.Length - 1;
         }
-        Debug.Log(index);
         UpdateUI();
     }
 

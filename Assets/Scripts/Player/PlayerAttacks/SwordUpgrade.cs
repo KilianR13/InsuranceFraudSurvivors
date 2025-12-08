@@ -40,7 +40,6 @@ public class SwordUpgrade : MonoBehaviour
         Transform attachPoint = currentSword.transform.Find("AttachPoint");
         if (attachPoint == null)
         {
-            Debug.LogError("No se encontró AttachPoint dentro del prefab de la espada");
             return;
         }
 
@@ -58,9 +57,10 @@ public class SwordUpgrade : MonoBehaviour
         {
             Rigidbody2D playerRb = swordSpawnPoint.GetComponentInParent<Rigidbody2D>();
             if (playerRb != null)
+            {
                 swordComp.SetPlayerRb(playerRb);
-            else
-                Debug.LogWarning("No se encontró Rigidbody2D en el jugador para la espada.");
+            }
+                
         }
 
     }

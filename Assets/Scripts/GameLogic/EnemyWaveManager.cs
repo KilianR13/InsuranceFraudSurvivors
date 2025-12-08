@@ -211,7 +211,7 @@ public class EnemyWaveManager : MonoBehaviour
             }
             else
             {
-                GameManager.gm.StageCompleted();
+                GameManager.gm.StageCompleted(true);
             }
         }
     }
@@ -240,7 +240,7 @@ public class EnemyWaveManager : MonoBehaviour
     {
         List<GameObject> toRemove = new();
 
-        var dict = SimplePool.GetInternalDictionary(); // necesitas exponer este método en SimplePool
+        var dict = SimplePool.GetInternalDictionary();
 
         foreach (var kvp in dict)
         {
