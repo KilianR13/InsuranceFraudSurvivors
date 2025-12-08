@@ -24,6 +24,13 @@ public class PlayerMovement_Car : MonoBehaviour
     public float skidThreshold = 0.2f;    // cuánta velocidad lateral dispara derrape
     public AudioSource driftSFX;
     internal bool isDrifting;
+
+    [Header("Engine SFX")]
+    public AudioSource engineSFX;
+    public float minEnginePitch = 0.7f;
+    public float maxEnginePitch = 2.0f;
+    public float engineVolume = 0.8f;
+
     
 
     private Rigidbody2D rb;
@@ -38,8 +45,18 @@ public class PlayerMovement_Car : MonoBehaviour
         rb.linearDamping = drag;
         rb.freezeRotation = false;
 
+        if (engineSFX)
+        {
+            engineSFX.loop = true;
+            engineSFX.volume = 0.1f;  // empieza apagado
+            engineSFX.pitch = minEnginePitch;
+            engineSFX.Play();
+        }
+
         if (!sr)
+        {
             sr = GetComponentInChildren<SpriteRenderer>();
+        }
 
         visual = sr ? sr.transform : transform;
     }
@@ -106,7 +123,26 @@ public class PlayerMovement_Car : MonoBehaviour
             }
         }
 
-        
+        // MOTOR SFX
+        if (engineSFX)
+        {
+            if (speed < 0.1f)
+            {
+                // coche parado → apaga volumen gradualmente
+                engineSFX.volume = Mathf.Lerp(engineSFX.volume, 0.1f, 5f * Time.fixedDeltaTime);
+            }
+            else
+            {
+                // Normaliza velocidad 0 → 1 según maxSpeed
+                float t = Mathf.InverseLerp(0f, maxSpeed, speed);
+
+                // volumen aumenta con velocidad
+                engineSFX.volume = Mathf.Lerp(0.1f, engineVolume, t);
+
+                // pitch aumenta según velocidad
+                engineSFX.pitch = Mathf.Lerp(minEnginePitch, maxEnginePitch, t);
+            }
+        }
 
         visual.localRotation = Quaternion.Euler(0, 0, rb.rotation + rotationOffset);
     }

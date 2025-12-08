@@ -91,7 +91,7 @@ public class PlayerGameLogic : MonoBehaviour
         {
             GameObject bar = Instantiate(healthBarGameoObject);
 
-            // Hacer la barra hija del enemigo
+            // Hacer la barra hija del jugador
             bar.transform.SetParent(transform);
 
             // Ajustar escala para evitar distorsión
@@ -101,7 +101,6 @@ public class PlayerGameLogic : MonoBehaviour
             healthBar = bar.GetComponent<HealthBar>();
             if (healthBar != null)
             {
-                // Inicializa la barra de vida de forma dinámica
                 healthBar.Initialize(transform, Camera.main); // Inicializa la barra de vida usando el transform del jugador y la cámara principal.
                 healthBar.offset = new Vector3(0, 1.5f, 0);   // Posiciona la barra de vida encima del jugador.
 
@@ -109,6 +108,7 @@ public class PlayerGameLogic : MonoBehaviour
                 healthBar.UpdateHealthbar(currentHealth, maxHealth);
             }
         }
+        moneyEarned.text = $"$ = {totalEXP + overLevelBonus}";
         StartCoroutine(heal());
     }
 
@@ -153,6 +153,7 @@ public class PlayerGameLogic : MonoBehaviour
         // Si no hay un panel activo, empezar la cadena de mejoras
         if (!upgradeUIActive && pendingLevelUps > 0)
         {
+            playerMovement.engineSFX.Stop();
             canPause = false;
             OnLevelUp();
         }
@@ -248,6 +249,7 @@ public class PlayerGameLogic : MonoBehaviour
             expBar.StopRainbow();
             cardManager.ClearCards();
             expBar.UpdateEXPBar(currentEXP, expToNextLevel);
+            playerMovement.engineSFX.Play();
             Time.timeScale = 1f;
             canPause = true;
         }
@@ -287,7 +289,15 @@ public class PlayerGameLogic : MonoBehaviour
         {
             pauseMenu.SetActive(!pauseMenu.activeSelf);
             Time.timeScale = pauseMenu.activeSelf? 0f : 1f;
-
+            
+            if (pauseMenu.activeSelf)
+            {
+                playerMovement.engineSFX.Stop();
+            }
+            else
+            {
+                playerMovement.engineSFX.Play();
+            }
 
             // Seleccionar primer botón del menú para teclado/gamepad
             // if (pauseMenu.activeSelf)
