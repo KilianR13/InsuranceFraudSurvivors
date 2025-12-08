@@ -360,7 +360,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAI
   player: {fileID: 0}
-  moveSpeed: 10
+  moveSpeed: 11
   turnSpeed: 80
   stoppingDistance: 0.5
   updateRate: 0.2

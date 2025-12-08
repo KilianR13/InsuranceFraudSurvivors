@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FireballDamageUpgradeData
   id: FIREBALL_DMG_UP
   title: Upgrade Fireball DMG
-  description: Make your fireball deal 5 more damage.
+  description: Make your fireball deal more damage.
   maxStacks: 6
   currentStacks: 0
-  bonusDamage: 5
+  bonusDamage: 3

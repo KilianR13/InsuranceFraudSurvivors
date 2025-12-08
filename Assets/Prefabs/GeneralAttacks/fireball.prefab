@@ -105,4 +105,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FireBall
   speed: 50
   lifetime: 5
-  damage: 2
+  damage: 5
