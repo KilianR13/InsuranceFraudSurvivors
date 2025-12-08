@@ -73,6 +73,12 @@ public static class SimplePool
         poolDict[prefab].Clear();
     }
 
+    public static void ClearAll()
+    {
+        poolDict.Clear();
+    }
+
+
     public static Dictionary<GameObject, Queue<GameObject>> GetInternalDictionary()
     {
         return poolDict;

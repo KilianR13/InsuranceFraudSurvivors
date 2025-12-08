@@ -48,6 +48,7 @@ public class PlayerGameLogic : MonoBehaviour
     public TextMeshProUGUI moneyEarned;
     public int overLevelBonus = 0;
     public GameObject pauseMenu;
+    private bool canPause;
     private bool haveCalled;
     
 
@@ -63,6 +64,7 @@ public class PlayerGameLogic : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        canPause = true;
         pauseMenu.SetActive(false);
         overLevelBonus = 0;
         playerMovement = GetComponent<PlayerMovement_Car>();
@@ -151,6 +153,7 @@ public class PlayerGameLogic : MonoBehaviour
         // Si no hay un panel activo, empezar la cadena de mejoras
         if (!upgradeUIActive && pendingLevelUps > 0)
         {
+            canPause = false;
             OnLevelUp();
         }
     }
@@ -246,6 +249,7 @@ public class PlayerGameLogic : MonoBehaviour
             cardManager.ClearCards();
             expBar.UpdateEXPBar(currentEXP, expToNextLevel);
             Time.timeScale = 1f;
+            canPause = true;
         }
     }
 
@@ -267,7 +271,10 @@ public class PlayerGameLogic : MonoBehaviour
 
     public void OnCancel()
     {
-        StartCoroutine(TogglePauseMenu()); // Por alguna razón es necesario hacer una Corrutina porque si no, el juego se vuelve loco y llama mil veces al menú de pausa.
+        if (canPause)
+        {
+            StartCoroutine(TogglePauseMenu()); // Por alguna razón es necesario hacer una Corrutina porque si no, el juego se vuelve loco y llama mil veces al menú de pausa.    
+        }
     }
 
     // Esto es estúpido pero yo lo soy más.

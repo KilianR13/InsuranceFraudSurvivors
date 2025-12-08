@@ -16,12 +16,26 @@ public class GameManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        gm = this;
+        if (gm == null)
+        {
+            gm = this;    
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+        
+        DontDestroyOnLoad(gm);
+    }
+
+    public void StartGame()
+    {
         currentStageName = SceneManager.GetActiveScene().name;
-        Debug.Log(currentStageName);
         playerLevel = 0;
         playerScore = 0;
         enemiesDefeated = 0;
+        playerWon = true;
+        Debug.Log("Start");
     }
 
     public void StageCompleted(bool playerWon)

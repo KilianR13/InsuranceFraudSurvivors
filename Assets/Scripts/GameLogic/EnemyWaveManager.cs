@@ -33,6 +33,7 @@ public class EnemyWaveManager : MonoBehaviour
 
     void Start()
     {
+        SimplePool.ClearAll();
         if (player != null)
         {
             var wrap = player.GetComponent<WorldWrapper>();
@@ -42,6 +43,7 @@ public class EnemyWaveManager : MonoBehaviour
                 wrap.changedSides += RespawnEnemiesAroundPlayer;
             }
         }
+        GameManager.gm.StartGame();
     }
 
     public void RespawnEnemiesAroundPlayer()
