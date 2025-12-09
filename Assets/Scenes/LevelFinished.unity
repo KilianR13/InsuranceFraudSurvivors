@@ -1124,7 +1124,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 87.45
+  m_fontSize: 87.5
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1284,6 +1284,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b81a9c697e0f0f846ac071c983f58e04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelFinishedManager
+  PlayAgain: {fileID: 1103826012}
   bigText: {fileID: 1423426556}
   playerEXP: {fileID: 1852775240}
   defeatedEnemies: {fileID: 1171284348}

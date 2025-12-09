@@ -1,10 +1,13 @@
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class LevelFinishedManager : MonoBehaviour
 {
     private string previousLevelName;
+    public Button PlayAgain;
     public TextMeshProUGUI bigText;
     public TextMeshProUGUI playerEXP;
     public TextMeshProUGUI defeatedEnemies;
@@ -30,6 +33,7 @@ public class LevelFinishedManager : MonoBehaviour
             defeatedEnemies.text = $"You have defeatd 0 enemies.";
             playerEXP.text = $"Money earned: $0 (poor)";
         }
+        UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(PlayAgain.gameObject);
     }
     
     public void restartPreviousLevel()
