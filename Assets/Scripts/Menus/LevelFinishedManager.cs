@@ -20,7 +20,7 @@ public class LevelFinishedManager : MonoBehaviour
             {
                 previousLevelName = GameManager.gm.currentStageName;    
             }    
-            bigText.text = GameManager.gm.playerWon ? "STAGE COMPLETE!" : "YOU DIED!";
+            bigText.text = GameManager.gm.playerWon ? "STAGE CLEAR!" : "YOU DIED!";
             defeatedEnemies.text = $"You have defeated {GameManager.gm.enemiesDefeated} enemies.";
             playerEXP.text = $"Money earned: ${GameManager.gm.playerScore}";
         }        

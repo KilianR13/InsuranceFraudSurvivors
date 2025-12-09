@@ -303,7 +303,7 @@ MonoBehaviour:
       amount: 100
     maxEnemiesAlive: 30
     spawnInterval: 0.5
-    duration: 60
+    duration: 30
   - name: Wave5
     enemies:
     - prefab: {fileID: 8178609513803999020, guid: f62474948b434e945829d63224ac24ce, type: 3}
@@ -312,14 +312,7 @@ MonoBehaviour:
       amount: 5
     maxEnemiesAlive: 10
     spawnInterval: 1
-    duration: 60
-  - name: Wave6
-    enemies:
-    - prefab: {fileID: 5762032488179027081, guid: 607ac361137c09a42b10fa1d3e4f4919, type: 3}
-      amount: 15
-    maxEnemiesAlive: 15
-    spawnInterval: 1
-    duration: 60
+    duration: 30
   currentWaveIndex: 0
 --- !u!4 &341637403
 Transform:
