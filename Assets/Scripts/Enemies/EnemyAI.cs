@@ -22,7 +22,7 @@ public class EnemyAI : MonoBehaviour
     public Sprite normalSprite;   // Giulia 1
     public Sprite whiteSprite;    // Giulia 1_white
     public GameObject deathEffect;
-    private bool activated;
+    public bool activated;
 
     [Header("SFX")]
     public AudioSource hurtSFX;
@@ -85,11 +85,14 @@ public class EnemyAI : MonoBehaviour
         {
             sr = GetComponent<SpriteRenderer>();    
         }
-        
-
         // Asegurarte de que vuelve con el sprite normal
         sr.sprite = normalSprite;
-
+        // Avisar a la espada de que este enemigo está "nuevo"
+        Sword sword = FindFirstObjectByType<Sword>();
+        if (sword != null)
+        {
+            sword.ClearEnemy(this);
+        }
     }
 
     public void takeDamage(int damage)

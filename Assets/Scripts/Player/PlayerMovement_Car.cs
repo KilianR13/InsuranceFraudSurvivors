@@ -10,6 +10,8 @@ public class PlayerMovement_Car : MonoBehaviour
     public float minSpeedToSteer = 2f;
     public float steering = 200f;
     public float drag = 2f;
+    private float accelInput;
+    private float brakeInput;
     [Range(0f, 1f)] public float grip = 0.9f;
 
     [Header("Visuals")]
@@ -30,6 +32,10 @@ public class PlayerMovement_Car : MonoBehaviour
     public float minEnginePitch = 0.7f;
     public float maxEnginePitch = 2.0f;
     public float engineVolume = 0.8f;
+
+    [Header("Input Settings")]
+    public float deadzone = 0.2f;   // ajustable desde el inspector
+
 
     
 
@@ -80,12 +86,36 @@ public class PlayerMovement_Car : MonoBehaviour
     public void OnMove(InputValue value)
     {
         Vector2 input = value.Get<Vector2>();
-        moveInput = input.y;
+
+        // Zona muerta
+        if (input.magnitude < deadzone)
+        {
+            input = Vector2.zero;
+        }
+        else
+        {
+            input = input.normalized * ((input.magnitude - deadzone) / (1f - deadzone));
+        }
+
+        
         steerInput = input.x;
+    }
+
+    public void OnAccelerate(InputValue value)
+    {
+        Debug.Log(value.ToString());
+        accelInput = value.Get<float>();
+    }
+
+    public void OnBrake(InputValue value)
+    {
+        brakeInput = value.Get<float>();
     }
 
     void FixedUpdate()
     {
+        moveInput = accelInput - brakeInput;   // Valor entre -1 y 1
+
         if (Mathf.Abs(moveInput) > 0.01f)
             rb.AddForce(transform.up * moveInput * acceleration);
 

@@ -152,8 +152,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96423289a62d26f46981d737fecf836c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Sword
-  baseDamage: 5
-  damageMultiplier: 2
+  baseDamage: 8
+  damageMultiplier: 0.6
 --- !u!50 &4154903546597052653
 Rigidbody2D:
   serializedVersion: 5
