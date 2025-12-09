@@ -313,7 +313,6 @@ public class PlayerGameLogic : MonoBehaviour
             {
                 // UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(firstButtonInPauseMenu);
             }
-            Debug.Log($"Pausa {(pauseMenu.activeSelf ? "activada" : "desactivada")}");
             haveCalled = false;
         }
         

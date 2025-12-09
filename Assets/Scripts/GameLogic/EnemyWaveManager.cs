@@ -31,6 +31,8 @@ public class EnemyWaveManager : MonoBehaviour
     private List<GameObject> activeEnemies = new List<GameObject>();
     private bool waveFinished = false;
 
+    public GameObject music;
+
     void Start()
     {
         SimplePool.ClearAll();
@@ -43,7 +45,7 @@ public class EnemyWaveManager : MonoBehaviour
                 wrap.changedSides += RespawnEnemiesAroundPlayer;
             }
         }
-        GameManager.gm.StartGame();
+        GameManager.gm.StartGame(music.GetComponent<AudioSource>());
     }
 
     public void RespawnEnemiesAroundPlayer()

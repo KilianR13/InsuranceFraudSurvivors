@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     public static GameManager gm;
     [SerializeField] private AudioSource playerDefeatedSFX;
     public AudioSource BackgroundMusicSFX;
+    private float originalAudioVolume;
     public string currentStageName;
     public bool playerWon = false;
     public int playerLevel;
@@ -28,7 +29,7 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gm);
     }
 
-    public void StartGame()
+    public void StartGame(AudioSource audio)
     {
         gamePaused = false;
         currentStageName = SceneManager.GetActiveScene().name;
@@ -36,8 +37,11 @@ public class GameManager : MonoBehaviour
         playerScore = 0;
         enemiesDefeated = 0;
         playerWon = true;
-        BackgroundMusicSFX.volume = 0.4f;
+        BackgroundMusicSFX = audio;
+        originalAudioVolume = audio.volume;
+        BackgroundMusicSFX.volume = originalAudioVolume;
         BackgroundMusicSFX.Play();
+        Time.timeScale = 1f;
     }
 
     public void dynamicMusic()
@@ -48,7 +52,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            BackgroundMusicSFX.volume = 0.4f;
+            BackgroundMusicSFX.volume = originalAudioVolume;
         }
     }
 

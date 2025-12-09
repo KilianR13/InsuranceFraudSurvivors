@@ -103,7 +103,6 @@ public class PlayerMovement_Car : MonoBehaviour
 
     public void OnAccelerate(InputValue value)
     {
-        Debug.Log(value.ToString());
         accelInput = value.Get<float>();
     }
 
