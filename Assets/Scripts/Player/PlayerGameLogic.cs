@@ -49,6 +49,7 @@ public class PlayerGameLogic : MonoBehaviour
     public TextMeshProUGUI moneyEarned;
     public int overLevelBonus = 0;
     public GameObject pauseMenu;
+    public GameObject firstButtonInPauseMenu; // Esto es un poco una estupidez pero sirve.
     private bool canPause;
     private bool haveCalled;
     
@@ -311,7 +312,7 @@ public class PlayerGameLogic : MonoBehaviour
             // Seleccionar primer botón del menú para teclado/gamepad
             if (pauseMenu.activeSelf)
             {
-                // UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(firstButtonInPauseMenu);
+                UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(firstButtonInPauseMenu);
             }
             haveCalled = false;
         }

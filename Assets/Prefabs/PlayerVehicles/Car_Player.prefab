@@ -318,6 +318,7 @@ MonoBehaviour:
   minEnginePitch: 0.7
   maxEnginePitch: 2
   engineVolume: 0.5
+  deadzone: 0.2
 --- !u!114 &3310858472393324216
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -357,6 +358,7 @@ MonoBehaviour:
   moneyEarned: {fileID: 4498127477617624407}
   overLevelBonus: 0
   pauseMenu: {fileID: 4641008024868215824}
+  firstButtonInPauseMenu: {fileID: 2695021793129318467}
 --- !u!114 &4289009811494200035
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1311,6 +1313,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9e6355db2fa6b944289643095a04169a, type: 3}
+--- !u!1 &2695021793129318467 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5340022753309601127, guid: 9e6355db2fa6b944289643095a04169a, type: 3}
+  m_PrefabInstance: {fileID: 8033637147899421988}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &3257236750262948770 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4776403843005560454, guid: 9e6355db2fa6b944289643095a04169a, type: 3}

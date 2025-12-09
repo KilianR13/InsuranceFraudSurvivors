@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 public class LevelFinishedManager : MonoBehaviour
 {
     private string previousLevelName;
-    private int enemiesDefeatedPreviousLevel;
     public TextMeshProUGUI bigText;
     public TextMeshProUGUI playerEXP;
     public TextMeshProUGUI defeatedEnemies;
