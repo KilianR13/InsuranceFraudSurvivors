@@ -182892,6 +182892,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   playerDefeatedSFX: {fileID: 1799651876}
   BackgroundMusicSFX: {fileID: 0}
+  playerAnimation: {fileID: 0}
   currentStageName: 
   playerWon: 0
   playerLevel: 0
@@ -183059,7 +183060,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: c9f8b0d7a7e56794ca02ddd74c3def6c, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.4
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 1
   Mute: 0

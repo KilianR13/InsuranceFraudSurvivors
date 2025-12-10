@@ -170,6 +170,7 @@ public class PlayerGameLogic : MonoBehaviour
 
     private void OnLevelUp()
     {
+        expBar.UpdateEXPBar(1,1);
         if (!HasAvailableUpgrades())
         {
             overLevelBonus += 50;
@@ -267,6 +268,7 @@ public class PlayerGameLogic : MonoBehaviour
         if (currentHealth <= 0)
         {
             StopCoroutine(heal());
+            healthBar.UpdateHealthbar(0, maxHealth);
             playerMovement.StopAllCoroutines();
             playerMovement.SilenceAllSound();
             deathAnimation.SetTrigger("PlayerDeath");
@@ -301,6 +303,7 @@ public class PlayerGameLogic : MonoBehaviour
             if (pauseMenu.activeSelf)
             {
                 playerMovement.engineSFX.Stop();
+                playerMovement.driftSFX.Stop();
                 GameManager.gm.gamePaused = true;
                 GameManager.gm.dynamicMusic();
             }

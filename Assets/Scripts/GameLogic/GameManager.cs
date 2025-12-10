@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     public static GameManager gm;
     [SerializeField] private AudioSource playerDefeatedSFX;
     public AudioSource BackgroundMusicSFX;
+    public Animator playerAnimation;
     private float originalAudioVolume;
     public string currentStageName;
     public bool playerWon = false;
@@ -65,7 +66,7 @@ public class GameManager : MonoBehaviour
         }
         this.playerWon = playerWon;
         Time.timeScale = 0f;
-        StartCoroutine(returnToMenu());
+        StartCoroutine(returnToMenu()); 
     }
 
     private IEnumerator returnToMenu()
