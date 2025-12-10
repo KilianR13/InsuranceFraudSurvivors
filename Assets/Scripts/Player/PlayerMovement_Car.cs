@@ -77,6 +77,12 @@ public class PlayerMovement_Car : MonoBehaviour
         }
     }
 
+    public void SilenceAllSound()
+    {
+        engineSFX.Stop();
+        driftSFX.Stop();
+    }
+
     private void playerWarped()
     {
         leftTrail.emitting = false;

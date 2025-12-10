@@ -215,6 +215,9 @@ public class EnemyWaveManager : MonoBehaviour
             }
             else
             {
+                PlayerMovement_Car playerMovement = player.GetComponent<PlayerMovement_Car>();
+                playerMovement.StopAllCoroutines();
+                playerMovement.SilenceAllSound();
                 GameManager.gm.StageCompleted(true);
             }
         }

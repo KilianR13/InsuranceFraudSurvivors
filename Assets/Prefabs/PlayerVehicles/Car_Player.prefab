@@ -333,6 +333,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerGameLogic
   maxHealth: 100
   healthBarGameoObject: {fileID: 5680389111961237268, guid: 8ef82025fb6c5cf438ce35e3711fe11d, type: 3}
+  deathAnimation: {fileID: 2985420943417297788}
   healTimer: 5
   healAmmount: 0
   totalEXP: 0
@@ -1316,6 +1317,11 @@ PrefabInstance:
 --- !u!1 &2695021793129318467 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5340022753309601127, guid: 9e6355db2fa6b944289643095a04169a, type: 3}
+  m_PrefabInstance: {fileID: 8033637147899421988}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &2985420943417297788 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5049501566357941848, guid: 9e6355db2fa6b944289643095a04169a, type: 3}
   m_PrefabInstance: {fileID: 8033637147899421988}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &3257236750262948770 stripped

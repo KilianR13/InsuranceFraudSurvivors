@@ -2,9 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -14,6 +12,7 @@ public class PlayerGameLogic : MonoBehaviour
     public int maxHealth;
     public GameObject healthBarGameoObject;
     private HealthBar healthBar;
+    public Animator deathAnimation;
     private int currentHealth;
     public float healTimer;
     public int healAmmount;
@@ -268,6 +267,9 @@ public class PlayerGameLogic : MonoBehaviour
         if (currentHealth <= 0)
         {
             StopCoroutine(heal());
+            playerMovement.StopAllCoroutines();
+            playerMovement.SilenceAllSound();
+            deathAnimation.SetTrigger("PlayerDeath");
             GameManager.gm.StageCompleted(false);
             return;
         }

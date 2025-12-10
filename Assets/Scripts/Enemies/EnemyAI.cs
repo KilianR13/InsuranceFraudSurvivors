@@ -103,6 +103,7 @@ public class EnemyAI : MonoBehaviour
             StartCoroutine(FlashWhite());    
             if (currentHealth <= 0)
             {
+                StopAllCoroutines();
                 Instantiate(EXPDrop, transform.position, Quaternion.identity);
                 killEnemy();
             }
