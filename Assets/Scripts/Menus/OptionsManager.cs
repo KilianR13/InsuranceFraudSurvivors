@@ -18,6 +18,7 @@ public class OptionsManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
+            return;
         }
         validResolutions = GetUniqueResolutions();
         ApplySettingsFromPrefs();
@@ -50,25 +51,19 @@ public class OptionsManager : MonoBehaviour
         int height = PlayerPrefs.GetInt("res_h", Screen.currentResolution.height);
         bool fullscreen = PlayerPrefs.GetInt("fullscreen", 1) == 1;
 
-        Screen.fullScreenMode = fullscreen 
-            ? FullScreenMode.ExclusiveFullScreen 
-            : FullScreenMode.Windowed;
+        Screen.fullScreenMode = fullscreen ?
+            FullScreenMode.ExclusiveFullScreen :
+            FullScreenMode.Windowed;
 
         Screen.SetResolution(width, height, fullscreen);
     }
 
-    public void SetResolution(int width, int height)
+    public void ApplyResolution(int width, int height, bool fullscreen)
     {
-        PlayerPrefs.SetInt("res_w", width);
-        PlayerPrefs.SetInt("res_h", height);
-        PlayerPrefs.Save();
-        ApplySettingsFromPrefs();
-    }
+        Screen.fullScreenMode = fullscreen ?
+            FullScreenMode.ExclusiveFullScreen :
+            FullScreenMode.Windowed;
 
-    public void SetFullscreen(bool fullscreen)
-    {
-        PlayerPrefs.SetInt("fullscreen", fullscreen ? 1 : 0);
-        PlayerPrefs.Save();
-        ApplySettingsFromPrefs();
+        Screen.SetResolution(width, height, fullscreen);
     }
 }

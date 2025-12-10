@@ -11,108 +11,32 @@ public class OptionsMenu : MonoBehaviour
     public TMP_Dropdown resolutionDropdown;    
     public Toggle fullscreenToggle;
     public Button firstButton;
+
     private int initialWidth;
     private int initialHeight;
     private bool initialFullscreen;
     private int initialDropdownIndex;
 
-    // [Header("Dropdown Joystick Navigation")]
-    // public float inputDelay = 0.2f; // Tiempo mínimo entre pasos de navegación con joystick
-
-    // private float inputTimer = 0f;
-
     private void Start()
     {
         SetupResolutionDropdown();
         LoadUIValues();
+
         resolutionDropdown.onValueChanged.RemoveAllListeners();
         resolutionDropdown.onValueChanged.AddListener(OnResolutionSelected);
     }
 
     void OnEnable()
     {
+        // Guardar estado REAL de la pantalla antes de abrir el menú
         initialWidth = Screen.width;
         initialHeight = Screen.height;
         initialFullscreen = Screen.fullScreen;
 
         initialDropdownIndex = resolutionDropdown.value;
-        // Selecciona automáticamente el botón de Guardar, para comodidad de los usuarios de mando.
+
+        // Seleccionar botón para mando
         EventSystem.current.SetSelectedGameObject(firstButton.gameObject);
-    }
-
-    // ESTO NO FUNCIONA
-    // public void OnDropdownNav(InputValue value)
-    // {
-    //     Debug.Log("Input Recibido");
-    //     float inputY = value.Get<Vector2>().y;
-    //     if (Mathf.Abs(inputY) > 0.2f)
-    //     {
-    //         inputTimer -= Time.unscaledDeltaTime;
-    //         if (inputTimer <= 0f)
-    //         {
-    //             if (inputY > 0f)
-    //                 MoveUp();
-    //             else
-    //                 MoveDown();
-
-    //             inputTimer = inputDelay;
-    //         }
-    //     }
-    //     else
-    //     {
-    //         inputTimer = 0f;
-    //     }
-    // }
-
-    // private void MoveUp()
-    // {
-    //     int index = Mathf.Max(0, resolutionDropdown.value - 1);
-    //     resolutionDropdown.value = index;
-    //     ScrollToSelected(index);
-
-    //     resolutionDropdown.RefreshShownValue(); // FORZAR actualización visual
-    // }
-
-    // private void MoveDown()
-    // {
-    //     int index = Mathf.Min(resolutionDropdown.options.Count - 1, resolutionDropdown.value + 1);
-    //     resolutionDropdown.value = index;
-    //     ScrollToSelected(index);
-
-    //     resolutionDropdown.RefreshShownValue(); // FORZAR actualización visual
-        
-    // }
-
-
-    public void SaveChanges()
-    {
-        // Aplica resolución
-        Resolution selected = OptionsManager.validResolutions[resolutionDropdown.value];
-        optionsManager.SetResolution(selected.width, selected.height);
-
-        // Aplica fullscreen
-        optionsManager.SetFullscreen(fullscreenToggle.isOn);
-
-        // Guarda en PlayerPrefs si quieres persistencia
-        PlayerPrefs.SetInt("fullscreen", fullscreenToggle.isOn ? 1 : 0);
-        PlayerPrefs.Save();
-
-        Debug.Log("Cambios guardados");
-    }
-
-    public void RevertChanges()
-    {
-        // Restaurar resolución real original
-        optionsManager.SetResolution(initialWidth, initialHeight);
-        optionsManager.SetFullscreen(initialFullscreen);
-
-        // Restaurar UI
-        resolutionDropdown.value = initialDropdownIndex;
-        resolutionDropdown.RefreshShownValue();
-
-        fullscreenToggle.isOn = initialFullscreen;
-
-        Debug.Log("Cambios revertidos correctamente");
     }
 
     private void SetupResolutionDropdown()
@@ -120,17 +44,17 @@ public class OptionsMenu : MonoBehaviour
         resolutionDropdown.ClearOptions();
 
         var resolutions = OptionsManager.validResolutions;
-        var options = new List<string>();
+        List<string> options = new List<string>();
 
         int currentIndex = 0;
 
         for (int i = 0; i < resolutions.Length; i++)
         {
-            string resString = resolutions[i].width + " x " + resolutions[i].height;
-            options.Add(resString);
+            string text = $"{resolutions[i].width} x {resolutions[i].height}";
+            options.Add(text);
 
-            // Detectar resolución actual para mostrarla seleccionada
-            if (resolutions[i].width == Screen.width && resolutions[i].height == Screen.height)
+            if (resolutions[i].width == Screen.width &&
+                resolutions[i].height == Screen.height)
             {
                 currentIndex = i;
             }
@@ -145,32 +69,47 @@ public class OptionsMenu : MonoBehaviour
     {
         fullscreenToggle.onValueChanged.RemoveAllListeners();
         fullscreenToggle.isOn = PlayerPrefs.GetInt("fullscreen", 1) == 1;
-        fullscreenToggle.onValueChanged.AddListener(OnFullscreenToggle);
     }
 
     public void OnResolutionSelected(int index)
     {
-        Resolution selected = OptionsManager.validResolutions[index];
-        Debug.Log($"Seleccionado: {selected.width}, {selected.height}");
-        optionsManager.SetResolution(selected.width, selected.height);
-        resolutionDropdown.value = index;
+        // Solo actualizar UI. NO aplicar resolución aquí.
+        Debug.Log($"Resolución seleccionada en UI: {resolutionDropdown.options[index].text}");
     }
 
     public void OnFullscreenToggle(bool value)
     {
-        optionsManager.SetFullscreen(value); // Se llama desde aquí
+        // Solo UI. NO aplicar resoluciones aquí.
     }
 
-    // private void ScrollToSelected(int index)
-    // {
-    //     ScrollRect scrollRect = resolutionDropdown.template.GetComponentInChildren<ScrollRect>();
-    //     if (scrollRect == null) return;
+    public void SaveChanges()
+    {
+        Resolution selected = OptionsManager.validResolutions[resolutionDropdown.value];
+        bool fullscreen = fullscreenToggle.isOn;
 
-    //     int total = resolutionDropdown.options.Count;
-    //     if (total <= 1) return;
+        // Aplicar al juego
+        optionsManager.ApplyResolution(selected.width, selected.height, fullscreen);
 
-    //     float normalizedPos = 1f - (float)index / (total - 1);
-    //     scrollRect.verticalNormalizedPosition = normalizedPos;
-    // }
+        // Guardar prefs
+        PlayerPrefs.SetInt("res_w", selected.width);
+        PlayerPrefs.SetInt("res_h", selected.height);
+        PlayerPrefs.SetInt("fullscreen", fullscreen ? 1 : 0);
+        PlayerPrefs.Save();
 
+        Debug.Log("Cambios guardados correctamente.");
+    }
+
+    public void RevertChanges()
+    {
+        // Restaurar resolución real original
+        optionsManager.ApplyResolution(initialWidth, initialHeight, initialFullscreen);
+
+        // Restaurar UI
+        resolutionDropdown.value = initialDropdownIndex;
+        resolutionDropdown.RefreshShownValue();
+
+        fullscreenToggle.isOn = initialFullscreen;
+
+        Debug.Log("Cambios revertidos sin guardar.");
+    }
 }
