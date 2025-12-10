@@ -7,6 +7,7 @@ public class MainMenuHandler : MonoBehaviour
 {
     public AudioSource mainMenuMusic;
     public GameObject stageSelect;
+    public GameObject optionsMenu;
 
     [Header("LevelSelect")]
     public Button playButton;
@@ -22,12 +23,8 @@ public class MainMenuHandler : MonoBehaviour
     {
         EventSystem.current.SetSelectedGameObject(levelSelectButton.gameObject);
         stageSelect.SetActive(false);
+        optionsMenu.SetActive(false);
         mainMenuMusic.Play();
-    }
-
-    public void load()
-    {
-        SceneManager.LoadScene("Level1");
     }
 
     public void openPlayPanel()
@@ -42,12 +39,26 @@ public class MainMenuHandler : MonoBehaviour
         stageSelect.SetActive(false);
     }
 
+    public void openOptions()
+    {
+        optionsMenu.SetActive(true);
+    }
+
+    public void closeOptions()
+    {
+        EventSystem.current.SetSelectedGameObject(levelSelectButton.gameObject);
+        optionsMenu.SetActive(false);
+    }
+
     public void OnCancel()
     {
         if (stageSelect.activeSelf)
         {
-            EventSystem.current.SetSelectedGameObject(levelSelectButton.gameObject);
-            stageSelect.SetActive(false);    
+            closePlayPanel();   
+        }
+        if (optionsMenu.activeSelf)
+        {
+            closeOptions();
         }
         
     }
