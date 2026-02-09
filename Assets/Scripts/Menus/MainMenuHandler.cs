@@ -63,7 +63,7 @@ public class MainMenuHandler : MonoBehaviour
         
     }
 
-    public void QuitGame()
+    private void QuitGame()
     {
         // Directiva de preprocesador
         #if UNITY_EDITOR
