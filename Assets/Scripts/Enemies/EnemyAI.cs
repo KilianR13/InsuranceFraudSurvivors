@@ -9,18 +9,16 @@ public class EnemyAI : MonoBehaviour
     public float moveSpeed = 5f;
     public float turnSpeed = 200f;
     public float stoppingDistance = 0.5f;
-    public float updateRate = 0.2f; // cada cuánto recalcula la dirección al jugador
+    public float updateRate = 0.2f; // Delay between how often it calculates the player's position
 
     public int maxHealth = 1;
     private int currentHealth;
     public int damage;
 
     [Header("Drops & feedback")]
-    public GameObject EXPDrop;
-    // public GameObject healthBarPrefab;
-    // private HealthBar healthBar;
-    public Sprite normalSprite;   // Giulia 1
-    public Sprite whiteSprite;    // Giulia 1_white
+    public GameObject EXPDrop;      // What type of EXP the enemy drops
+    public Sprite normalSprite;     // Normal sprite
+    public Sprite whiteSprite;      // Sprite for when the player hurts the enemy
     public GameObject deathEffect;
     public bool activated;
 
@@ -30,9 +28,9 @@ public class EnemyAI : MonoBehaviour
     private SpriteRenderer sr;
 
 
-    [HideInInspector] public bool poolable = true; // por defecto sí se puede volver al pool
-    public int waveIndex { get; set; } // propiedad para guardar la oleada a la que pertenece
-    [HideInInspector] public EnemyWaveManager waveManager; // referencia al manager
+    [HideInInspector] public bool poolable = true;      // Can it return to the pool?
+    public int waveIndex { get; set; }                  // Stores what wave this enemy belongs to
+    [HideInInspector] public EnemyWaveManager waveManager; 
 
 
 
@@ -43,7 +41,7 @@ public class EnemyAI : MonoBehaviour
     {
         if (player == null) return;
 
-        // Recalcula la dirección solo cada "updateRate" segundos
+        // Recalculate the direction of the enemy every "updateRate" seconds
         updateTimer -= Time.deltaTime;
         if (updateTimer <= 0f)
         {
@@ -52,12 +50,12 @@ public class EnemyAI : MonoBehaviour
             updateTimer = updateRate;
         }
 
-        // Gira suavemente hacia la dirección calculada
+        // Steer towards the objective
         float targetAngle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg - 90f;
         float angle = Mathf.MoveTowardsAngle(transform.eulerAngles.z, targetAngle, turnSpeed * Time.deltaTime);
         transform.rotation = Quaternion.Euler(0, 0, angle);
 
-        // Movimiento hacia adelante
+        // Movement forward. No brain, only player
         float distance = Vector2.Distance(transform.position, player.position);
         float speed = distance > stoppingDistance ? moveSpeed : 0f;
         transform.position += transform.up * speed * Time.deltaTime;
@@ -76,7 +74,7 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
-    // Cuando el pool reactiva el enemigo
+    // Pool reactivates the enemy
     void OnEnable()
     {
         activated = true;
@@ -85,9 +83,10 @@ public class EnemyAI : MonoBehaviour
         {
             sr = GetComponent<SpriteRenderer>();    
         }
-        // Asegurarte de que vuelve con el sprite normal
+        // Making sure the enemy has the correct sprite
         sr.sprite = normalSprite;
-        // Avisar a la espada de que este enemigo está "nuevo"
+
+        // In case the player has the sword, ensures that the enemy can be hit by it.
         Sword sword = FindFirstObjectByType<Sword>();
         if (sword != null)
         {
@@ -117,16 +116,15 @@ public class EnemyAI : MonoBehaviour
     private IEnumerator FlashWhite()
     {
         sr.sprite = whiteSprite;
-        yield return new WaitForSeconds(0.08f);  // Ajustable
+        yield return new WaitForSeconds(0.08f);  // This could be adjusted if the player doesn't notice it enough.
         sr.sprite = normalSprite;
     }
 
     public void OnRespawn()
     {
-        updateTimer = 0f;            // fuerza recálculo inmediato de la dirección
+        updateTimer = 0f;            // Just to make sure the enemy knows where the player is.
         targetDirection = Vector2.zero;
         
-        // Evita que se mueva un frame antes de recalcular
         transform.position = new Vector3(transform.position.x, transform.position.y, 0f);
     }
 
@@ -136,12 +134,12 @@ public class EnemyAI : MonoBehaviour
         activated = false;
         int currentWaveIndex = waveManager != null ? waveManager.currentWaveIndex : waveIndex;
 
-        
+        // I may remove the death effect. It's really noisy when there are many enemies on screen.
         if (deathEffect != null)
         {
-            GameObject explosion = Instantiate(deathEffect, this.transform.position, Quaternion.identity);
+            GameObject explosion = Instantiate(deathEffect, transform.position, Quaternion.identity);
             Animator bulletAnimator = explosion.GetComponent<Animator>();
-            float animationLength = 1f; // valor por defecto
+            float animationLength = 1f;
             if (bulletAnimator != null)
             {
                 animationLength = bulletAnimator.GetCurrentAnimatorStateInfo(0).length;
@@ -151,13 +149,13 @@ public class EnemyAI : MonoBehaviour
 
         GameManager.gm.enemiesDefeated++;
         
-        if (!poolable || waveIndex < currentWaveIndex) // enemigos de oleadas pasadas
+        if (!poolable || waveIndex < currentWaveIndex) // If the enemy is from a different wave than the current one.
         {
-            Destroy(gameObject);
+            Destroy(gameObject); // They are permanently destroyed.
             return;
         }
 
-        if (poolable)
+        if (poolable) // If they are from the current wave, aka can be returned to the pool.
         {
             Poolable p = GetComponent<Poolable>();
             if (p != null && p.originalPrefab != null)

@@ -6,7 +6,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager gm;
     [SerializeField] private AudioSource playerDefeatedSFX;
-    public AudioSource BackgroundMusicSFX;
+    [Tooltip("DO NOT ASSIGN MANUALLY")]
+    public AudioSource BackgroundMusicSFX; // This music is applied by the enemy wave manager when the game starts. Need to find a better way.
     public Animator playerAnimation;
     private float originalAudioVolume;
     public string currentStageName;

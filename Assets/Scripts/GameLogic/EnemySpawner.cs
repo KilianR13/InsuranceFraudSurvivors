@@ -8,19 +8,19 @@ public class EnemySpawner : MonoBehaviour
     {
         GameObject enemy = SimplePool.Get(prefab, position, Quaternion.identity);
 
-        // Guardar prefab original en Poolable (tu código)
+        // Guardar prefab original en Poolable
         Poolable p = enemy.GetComponent<Poolable>();
         if (p == null) p = enemy.AddComponent<Poolable>();
         p.originalPrefab = prefab;
 
-        // NUEVO — Identidad del pool con la WAVE ID
+        // Identidad del pool con la WAVE ID
         PoolIdentity id = enemy.GetComponent<PoolIdentity>();
         if (id == null) id = enemy.AddComponent<PoolIdentity>();
 
         id.prefab = prefab;     // Prefab original
         id.waveId = waveId;     // Oleada a la que pertenece
 
-        // Asignar AI
+        // Asignar el jugador a la IA del enemigo
         var ai = enemy.GetComponent<EnemyAI>();
         if (ai != null)
             ai.player = player;

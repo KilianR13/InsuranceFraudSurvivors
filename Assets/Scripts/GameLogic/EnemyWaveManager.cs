@@ -8,13 +8,12 @@ public class EnemyWaveManager : MonoBehaviour
     public class EnemyEntry
     {
         public GameObject prefab;
-        public int amount; // cuántos debe haber en esta oleada
+        public int amount; // Cuántos enemigos por oleada
     }
 
     [System.Serializable]
     public class Wave
     {
-        public string name;
         public List<EnemyEntry> enemies = new List<EnemyEntry>(); 
         public int maxEnemiesAlive;
         public float spawnInterval;
@@ -22,7 +21,6 @@ public class EnemyWaveManager : MonoBehaviour
     }
 
     public Transform player;
-    public EnemySpawner spawner;
     public List<Wave> waves = new List<Wave>();
 
     public int currentWaveIndex = 0;
@@ -36,124 +34,36 @@ public class EnemyWaveManager : MonoBehaviour
     void Start()
     {
         SimplePool.ClearAll();
-        if (player != null)
-        {
-            var wrap = player.GetComponent<WorldWrapper>();
-            if (wrap != null)
-            {
-                wrap.changedSides -= RespawnEnemiesAroundPlayer; // Evita dobles suscripciones
-                wrap.changedSides += RespawnEnemiesAroundPlayer;
-            }
-        }
         GameManager.gm.StartGame(music.GetComponent<AudioSource>());
     }
 
-    public void RespawnEnemiesAroundPlayer()
+    public GameObject SpawnEnemy(GameObject prefab, Vector3 position, int waveId)
     {
-        float respawnRadius = 50f; // Espacio de seguridad para el jugador, para que le de tiempo a la cámara a llegar y el jugador pueda reaccionar a enemigos.
-        int attemptsPerEnemy = 30;
+        GameObject enemy = SimplePool.Get(prefab, position, Quaternion.identity);
 
-        List<GameObject> oldActive = new List<GameObject>(activeEnemies);
-        List<GameObject> newActive = new List<GameObject>();
+        // Guardar prefab original en Poolable
+        Poolable p = enemy.GetComponent<Poolable>();
+        if (p == null) p = enemy.AddComponent<Poolable>();
+        p.originalPrefab = prefab;
 
-        // Limpia la lista original. No es ideal, pero el propio pool respawneará los enemigos necesarios si se borran algunos inactivos.
-        activeEnemies.Clear();
+        // Identidad del pool con la WAVE ID
+        PoolIdentity id = enemy.GetComponent<PoolIdentity>();
+        if (id == null) id = enemy.AddComponent<PoolIdentity>();
 
-        // Obtiene referencias del tamaño del mapa desde WorldWrapper
-        WorldWrapper wrapper = player.GetComponent<WorldWrapper>();
-        float halfWidth = wrapper != null ? wrapper.mapWidth * 0.5f : 432f;   // fallback
-        float halfHeight = wrapper != null ? wrapper.mapHeight * 0.5f : 378f; // fallback
+        id.prefab = prefab;     // Prefab original
+        id.waveId = waveId;     // Oleada a la que pertenece
 
-        foreach (var old in oldActive)
-        {
-            if (old == null) // Si encuentra un valor nulo, se lo salta.
-            {
-                continue;
-            }
+        // Asignar el jugador a la IA del enemigo
+        var ai = enemy.GetComponent<EnemyAI>();
+        if (ai != null)
+            ai.player = player;
 
-            // Obtener prefab original (PoolIdentity preferido, y si no, Poolable)
-            GameObject prefab = null;
-            if (old.TryGetComponent<PoolIdentity>(out var id))
-            {
-                prefab = id.prefab;
-            }
-            else if (old.TryGetComponent<Poolable>(out var p))
-            {
-                prefab = p.originalPrefab;
-            }
-
-            // Si no puede obtener el prefab, destruye el objeto para evitar errores.
-            if (prefab == null)
-            {
-                Destroy(old);
-                continue;
-            }
-
-            // Devolver el antiguo al pool
-            SimplePool.Return(prefab, old);
-
-            // Recentra al 
-            Vector3 playerPos = player.position;
-            if (playerPos.x > halfWidth)
-            {
-                playerPos.x -= wrapper.mapWidth;  
-            }
-            else if (playerPos.x < -halfWidth)
-            {
-                playerPos.x += wrapper.mapWidth;  
-            } 
-
-            if (playerPos.y > halfHeight)
-            {
-                playerPos.y -= wrapper.mapHeight;
-            } 
-            else if (playerPos.y < -halfHeight)
-            {
-                playerPos.y += wrapper.mapHeight;
-            }
-
-            // Generar una posición válida alrededor del jugador
-            Vector3 spawnPos = Vector3.zero;
-            bool found = false;
-            for (int a = 0; a < attemptsPerEnemy; a++)
-            {
-                Vector2 offset = Random.insideUnitCircle * respawnRadius;
-                spawnPos = playerPos + new Vector3(offset.x, offset.y, 0f);
-                found = true;
-            }
-
-            if (!found)
-            {
-                spawnPos = playerPos; // fallback  
-            } 
-
-            // Spawn inmediato usando tu spawner (usa el pool internamente)
-            GameObject spawned = spawner.SpawnEnemy(prefab, spawnPos, currentWaveIndex);
-
-            if (spawned == null)
-            {
-                continue;
-            }
-
-            // Configurar AI / flags como al spawnear normalmente
-            if (spawned.TryGetComponent<EnemyAI>(out var ai))
-            {
-                ai.waveIndex = currentWaveIndex;
-                ai.poolable = true;
-                ai.player = player;
-            }
-
-            newActive.Add(spawned);
-        }
-
-        // Sustituir la lista de enemigos activos por las nuevas instancias
-        activeEnemies = newActive;
-
+        return enemy;
     }
 
     void Update()
     {
-        if (waves.Count == 0 || spawner == null) return;
+        if (waves.Count == 0) return;
 
         // Detener spawn si la oleada terminó
         if (waveFinished) return;
@@ -172,7 +82,7 @@ public class EnemyWaveManager : MonoBehaviour
             spawnTimer = 0f;
             Vector3 spawnPos = GetSpawnPositionOutsideCamera(10f);
             GameObject prefabToSpawn = ChooseEnemyPrefab(currentWave);
-            var enemy = spawner.SpawnEnemy(prefabToSpawn, spawnPos, currentWaveIndex);
+            var enemy = SpawnEnemy(prefabToSpawn, spawnPos, currentWaveIndex);
 
 
             EnemyAI ai = enemy.GetComponent<EnemyAI>();
