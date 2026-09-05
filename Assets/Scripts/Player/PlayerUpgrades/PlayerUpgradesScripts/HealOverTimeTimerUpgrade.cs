@@ -7,7 +7,7 @@ public class HealOverTimeTimer  : UpgradeData
 
     public override bool IsAvailable(PlayerGameLogic player)
     {
-        // Siempre está disponible
+        // Always available.
         return true;
     }
 

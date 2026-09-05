@@ -157,10 +157,10 @@ public class EnemyAI : MonoBehaviour
 
         if (poolable) // If they are from the current wave, aka can be returned to the pool.
         {
-            Poolable p = GetComponent<Poolable>();
-            if (p != null && p.originalPrefab != null)
+            PoolIdentity p = GetComponent<PoolIdentity>();
+            if (p != null && p.prefab != null)
             {
-                SimplePool.Return(p.originalPrefab, gameObject);
+                SimplePool.Return(p.prefab, gameObject);
             }
             else
             {

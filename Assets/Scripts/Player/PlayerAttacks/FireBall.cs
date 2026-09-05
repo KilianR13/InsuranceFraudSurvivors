@@ -9,6 +9,10 @@ public class FireBall : MonoBehaviour
     public int damage;   // Se asigna al crear la fireball
     private bool hasTarget = false;
 
+    /*
+        THIS ALL NEEDS TO CHANGE
+    */
+
     public void SetTarget(Transform newTarget)
     {
         target = newTarget;

@@ -1,7 +1,8 @@
 using UnityEngine;
-using System.Collections.Generic;
-using System.Linq;
 
+/// <summary>
+/// Dogshit.
+/// </summary>
 public class AutoAttackFireball : MonoBehaviour
 {
     [Header("Ataque")]

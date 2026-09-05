@@ -2,6 +2,6 @@ using UnityEngine;
 
 public class PoolIdentity : MonoBehaviour
 {
-    public int waveId;           // A qué oleada pertenece
-    public GameObject prefab;    // Su prefab original para retornarlo correctamente
+    public int waveId;           // Wave this enemy belongs to.
+    public GameObject prefab;    // Prefab used to create enemies.
 }

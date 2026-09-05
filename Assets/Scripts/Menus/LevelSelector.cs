@@ -3,13 +3,16 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
 
+/// <summary>
+/// Handle the logic behind the level selector.
+/// </summary>
 public class LevelSelector : MonoBehaviour
 {
-    public LevelDatabase database;
+    public LevelDatabase database;          // Should be able to add as many levels as I wish with the database.
 
     [Header("UI")]
-    public Image previewImage;
-    public TextMeshProUGUI levelNameText;
+    public Image previewImage;              // This will change during runtime with the images in the database.
+    public TextMeshProUGUI levelNameText;   // So will this.
 
     private int index = 0;
 

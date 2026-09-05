@@ -19,11 +19,11 @@ public class PlayerMovement_Car : MonoBehaviour
     public float rotationOffset = 0f;
 
     [Header("Skid Marks")]
-    [SerializeField] private TrailRenderer leftTrail;
-    [SerializeField] private TrailRenderer rightTrail;
-    public Transform leftWheel;            // posición de rueda trasera izquierda
-    public Transform rightWheel;           // posición de rueda trasera derecha
-    public float skidThreshold = 0.2f;    // cuánta velocidad lateral dispara derrape
+    [SerializeField] private TrailRenderer leftTrail;   // Rear left wheel's trail
+    [SerializeField] private TrailRenderer rightTrail;  // Rear right wheel's trail
+    public Transform leftWheel;                         // Rear left wheel
+    public Transform rightWheel;                        // Rear right wheel
+    public float skidThreshold = 0.2f;                  // How much side velocity is required to start "drifting"
     public AudioSource driftSFX;
     internal bool isDrifting;
 
@@ -34,7 +34,7 @@ public class PlayerMovement_Car : MonoBehaviour
     public float engineVolume = 0.8f;
 
     [Header("Input Settings")]
-    public float deadzone = 0.2f;   // ajustable desde el inspector
+    public float deadzone = 0.2f;   // This is a bad practice. Should implement in options menu
 
 
     
@@ -54,7 +54,7 @@ public class PlayerMovement_Car : MonoBehaviour
         if (engineSFX)
         {
             engineSFX.loop = true;
-            engineSFX.volume = 0.1f;  // empieza apagado
+            engineSFX.volume = 0.1f;  // Makes sure the base volume of the engine is 0.1f
             engineSFX.pitch = minEnginePitch;
             engineSFX.Play();
         }
@@ -105,19 +105,19 @@ public class PlayerMovement_Car : MonoBehaviour
 
     void FixedUpdate()
     {
-        moveInput = accelInput - brakeInput;   // Valor entre -1 y 1
+        moveInput = accelInput - brakeInput;   // This input will always be between 1 and -1
 
         if (Mathf.Abs(moveInput) > 0.01f)
             rb.AddForce(transform.up * moveInput * acceleration);
 
-        // Limita la velocidad máxima
+        // Limits max speed
         if (rb.linearVelocity.magnitude > maxSpeed)
             rb.linearVelocity = rb.linearVelocity.normalized * maxSpeed;
 
         float speed = rb.linearVelocity.magnitude;
 
 
-        // Aplica rotación directamente, independientemente de la velocidad o fricción
+        // Apply rotation to the vehicle, but only when moving above the speed of minSpeedToSteer
         if (Mathf.Abs(steerInput) > 0.01f && speed > minSpeedToSteer)
         {
             float turnAmount = steerInput * steering * Time.fixedDeltaTime;
@@ -144,23 +144,23 @@ public class PlayerMovement_Car : MonoBehaviour
             }
         }
 
-        // MOTOR SFX
+        // If the player's car has an engine SFX
         if (engineSFX)
         {
             if (speed < 0.1f)
             {
-                // coche parado → apaga volumen gradualmente
+                // Lowers the volume to it's minimum setting when it's stopped.
                 engineSFX.volume = Mathf.Lerp(engineSFX.volume, 0.1f, 5f * Time.fixedDeltaTime);
             }
             else
             {
-                // Normaliza velocidad 0 → 1 según maxSpeed
+                // Normalizes the speed according to the maxSpeed setting
                 float t = Mathf.InverseLerp(0f, maxSpeed, speed);
 
-                // volumen aumenta con velocidad
+                // The volume increases alongside velocity
                 engineSFX.volume = Mathf.Lerp(0.1f, engineVolume, t);
 
-                // pitch aumenta según velocidad
+                // So does the pitch of the engine
                 engineSFX.pitch = Mathf.Lerp(minEnginePitch, maxEnginePitch, t);
             }
         }

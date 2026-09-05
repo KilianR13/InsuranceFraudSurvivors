@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// Class that handles the logic of the visual effect to make the player believe the map is infinite.
+/// </summary>
 public class InfiniteMap : MonoBehaviour
 {
     [Header("Player")]

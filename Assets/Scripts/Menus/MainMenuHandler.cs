@@ -1,8 +1,10 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+/// <summary>
+/// Handler of the main menu's opening and closing of options and level selection, and music. Doesn't handle the logic.
+/// </summary>
 public class MainMenuHandler : MonoBehaviour
 {
     public AudioSource mainMenuMusic;
@@ -18,7 +20,6 @@ public class MainMenuHandler : MonoBehaviour
     public Button optionsButton;
     public Button quitButton;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         EventSystem.current.SetSelectedGameObject(levelSelectButton.gameObject);

@@ -6,7 +6,7 @@ public class SwordUnlockUpgrade  : UpgradeData
 
     public override bool IsAvailable(PlayerGameLogic player)
     {
-        // Solo aparece si el jugador NO tiene ya el arma
+        // Only available if the player DOES NOT have the weapon.
         return !player.hasSword;
     }
 

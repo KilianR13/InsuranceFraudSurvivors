@@ -3,12 +3,11 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "SwordUpgradeMultiplier", menuName = "PlayerUpgrades/Upgrade Sword Multiplier")]
 public class SwordUpgradeMultiplier  : UpgradeData
 {
-
     public float swordMultiplierIncrease;
 
     public override bool IsAvailable(PlayerGameLogic player)
     {
-        // Solo aparece si el jugador NO tiene ya el arma
+        // Only available if the player has the weapon.
         return player.hasSword;
     }
 

@@ -14,7 +14,7 @@ public class EXPBar : MonoBehaviour
 
     private Coroutine rainbowCoroutine;
 
-    private Color normalColor = new Color(); //00F6FF
+    private Color normalColor = new Color();
 
     private void Awake()
     {
@@ -57,7 +57,7 @@ public class EXPBar : MonoBehaviour
 
         while (true)
         {
-            hue += Time.unscaledDeltaTime * 0.5f; // Usamos unscaledDeltaTime
+            hue += Time.unscaledDeltaTime * 0.5f; // Using unscaledDeltaTime so it doesn't stop when we level up.
             if (hue > 1f) hue = 0f;
 
             fillImage.color = Color.HSVToRGB(hue, 1f, 1f);

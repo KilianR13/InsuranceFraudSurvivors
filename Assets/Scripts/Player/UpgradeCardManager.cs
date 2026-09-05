@@ -7,16 +7,21 @@ using UnityEngine.EventSystems;
 public class UpgradeCardManager : MonoBehaviour
 {
     [Header("References")]
-    public GameObject cardPrefab;   // prefab de la carta (CardUI)
-    public Transform cardParent;    // panel donde se instancian (layout horizontal)
+    public GameObject cardPrefab;   // Prefab of the card (CardUI)
+    public Transform cardParent;    // Panel where the cards will appear.
 
     [Header("SFX")]
     [SerializeField] private AudioSource upgradeChosen;
 
-    private Action<UpgradeCard> onCardPicked; // callback que avisa al jugador
-    UpgradeCard firstCard = null; // Para guardar la primera carta
+    private Action<UpgradeCard> onCardPicked;   // Callback that will reach the player.
+    UpgradeCard firstCard = null;               // Saving the first card for controller purposes.
 
     // Muestra 'count' cartas y llama a onPicked cuando se elige una
+    /// <summary>
+    /// Shows cards randomly picked, obtained from the pram "upgrades".
+    /// </summary>
+    /// <param name="upgrades">List of upgrades chosen for the player during the level up.</param>
+    /// <param name="onPicked"></param>
     public void ShowCards(List<UpgradeData> upgrades, Action<UpgradeCard> onPicked)
     {
         ClearCards();
@@ -29,7 +34,7 @@ public class UpgradeCardManager : MonoBehaviour
 
             if (card != null)
             {
-                card.Setup(upgrade, OnCardSelectedFromUI);  // << REAL DATA
+                card.Setup(upgrade, OnCardSelectedFromUI); 
                 if (firstCard == null)
                 {
                     firstCard = card;    
@@ -38,28 +43,31 @@ public class UpgradeCardManager : MonoBehaviour
         }
         if (firstCard != null)
         {
-            // Asegúrate de que tu UpgradeCard tenga un Button o Selectable
             StartCoroutine(SelectFirstCardNextFrame(firstCard));
         }
     }
 
     private IEnumerator SelectFirstCardNextFrame(UpgradeCard firstCard)
     {
-        yield return null; // espera un frame
+        yield return null; // Waits for 1 frame.
         EventSystem.current.SetSelectedGameObject(firstCard.gameObject);
     }
 
 
-    // Callback interno cuando una carta es seleccionada por click
+    /// <summary>
+    /// Internal callback to invoke onCardPicked, reaching PlayerGameLogic.
+    /// </summary>
+    /// <param name="card">Upgrade Card selected by the player</param>
     private void OnCardSelectedFromUI(UpgradeCard card)
     {
-        // Llamamos al callback del cliente (PlayerGameLogic)
         onCardPicked?.Invoke(card);
 
         upgradeChosen.Play();
     }
 
-    // Borra las cartas instanciadas (útil para cerrar)
+    /// <summary>
+    /// Clears the cards.
+    /// </summary>
     public void ClearCards()
     {
         if (cardParent == null) return;

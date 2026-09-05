@@ -6,6 +6,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Handles extensive logic about the player.
+/// </summary>
 public class PlayerGameLogic : MonoBehaviour
 {
     [Header("Health")]
@@ -33,11 +36,11 @@ public class PlayerGameLogic : MonoBehaviour
 
 
     [Header("Level System")]
-    [SerializeField] private int baseEXPNeeded = 30;              // EXP necesaria para subir del nivel 1 al 2
-    [SerializeField] private float expMultiplier = 1.5f;    // Cada nivel siguiente requiere más EXP
+    [SerializeField] private int baseEXPNeeded = 30;            // Base EXP required to go from level 1 to level 2.
+    [SerializeField] private float expMultiplier = 1.5f;        // Multiplier to make following levels require exponentially more EXP.
     [SerializeField] private EXPBar expBar;
-    [SerializeField] private GameObject upgradePanel;          // el panel Canvas que contiene CardPanel (GameObject)
-    [SerializeField] private UpgradeCardManager cardManager;    // componente que instancia cartas
+    [SerializeField] private GameObject upgradePanel;           // The Canvas that will contain the GameObject with "CardPanel"
+    [SerializeField] private UpgradeCardManager cardManager;    // Card Manager that will instatiate the Upgrade Cards.
     private int pendingLevelUps = 0;
     private bool upgradeUIActive = false;
 
@@ -48,7 +51,7 @@ public class PlayerGameLogic : MonoBehaviour
     public TextMeshProUGUI moneyEarned;
     public int overLevelBonus = 0;
     public GameObject pauseMenu;
-    public GameObject firstButtonInPauseMenu; // Esto es un poco una estupidez pero sirve.
+    public GameObject firstButtonInPauseMenu; // Controller purposes.
     private bool canPause;
     private bool haveCalled;
     
@@ -62,7 +65,7 @@ public class PlayerGameLogic : MonoBehaviour
     {
         OnSignal?.Invoke();
     }
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    
     void Start()
     {
         canPause = true;
@@ -92,42 +95,48 @@ public class PlayerGameLogic : MonoBehaviour
         {
             GameObject bar = Instantiate(healthBarGameoObject);
 
-            // Hacer la barra hija del jugador
+            // Makes the healthbar a child of the player.
             bar.transform.SetParent(transform);
 
-            // Ajustar escala para evitar distorsión
+            // Required to make the healthbar look nice.
             bar.transform.localScale = Vector3.one * 0.015f;
 
-            // Obtener componente y configurar
+            // Configures the healthbar
             healthBar = bar.GetComponent<HealthBar>();
             if (healthBar != null)
             {
-                healthBar.Initialize(transform, Camera.main); // Inicializa la barra de vida usando el transform del jugador y la cámara principal.
-                healthBar.offset = new Vector3(0, 1.5f, 0);   // Posiciona la barra de vida encima del jugador.
+                healthBar.Initialize(transform, Camera.main);   // Uses the player's transform and camera to initialize the healthbar.
+                healthBar.offset = new Vector3(0, 1.5f, 0);     // Positions the healthbar slightly above the player.
 
-                // Actualiza el valor inicial de vida
+                // Updates the healthbar.
                 healthBar.UpdateHealthbar(currentHealth, maxHealth);
             }
         }
-        moneyEarned.text = $"$ = {totalEXP + overLevelBonus}";
+        moneyEarned.text = $"$ = {totalEXP + overLevelBonus}"; // Debug.
         StartCoroutine(heal());
     }
 
+    /// <summary>
+    /// Function that heals the player. Runs on forever until the player dies or finishes the game.
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator heal()
     {
+        while (true) {
         yield return new WaitForSecondsRealtime(healTimer);
-        if (currentHealth < maxHealth && healAmmount > 0) // Comprueba que el jugador no está a tope de vida y al menos puede curarse a sí mismo
+        if (currentHealth < maxHealth && healAmmount > 0)   // Checks if the player can heal themselves or needs to.
         {
-            if ((currentHealth + healAmmount) < maxHealth) // Comprueba que la cantidad de curación no lo pondría más allá del máximo de vida
+            if ((currentHealth + healAmmount) < maxHealth)
             {
                 currentHealth += healAmmount;    
             }
-            else if ((currentHealth + healAmmount) >= maxHealth) // Este if quizás sea innecesario. Pone la vida al máximo.
+            else
             {
                 currentHealth = maxHealth;
             }   
         }
         healthBar.UpdateHealthbar(currentHealth, maxHealth);
+        }
     }
 
 
@@ -148,10 +157,10 @@ public class PlayerGameLogic : MonoBehaviour
             currentEXP -= expToNextLevel;
             currentLevel++;
             GameManager.gm.playerLevel = currentLevel;
-            pendingLevelUps++;   // ← Guardamos que hay que mostrar otra mejora
+            pendingLevelUps++;   // Like this we can store multiple level ups in a row!
         }
 
-        // Si no hay un panel activo, empezar la cadena de mejoras
+        // If the panel is not currently active and there's at least 1 level up pending, starts the level up chain.
         if (!upgradeUIActive && pendingLevelUps > 0)
         {
             playerMovement.engineSFX.Stop();
@@ -167,21 +176,23 @@ public class PlayerGameLogic : MonoBehaviour
         return allUpgrades.Any(u => u.CanApply && u.IsAvailable(this));
     }
 
-
+    /// <summary>
+    /// Function called when the player levels up. Handles many, many things.
+    /// </summary>
     private void OnLevelUp()
     {
         expBar.UpdateEXPBar(1,1);
         if (!HasAvailableUpgrades())
         {
-            overLevelBonus += 50;
+            overLevelBonus += 50; // Extra money for the player to spend on upgrades!
             pendingLevelUps--;
 
-            // Actualiza la barra de EXP
+            // Updates the EXP bar.
             expBar.UpdateLevel(currentLevel);
             expBar.UpdateEXPBar(currentEXP, expToNextLevel);
             expBar.StopRainbow();
 
-            // Limpia la UI
+            // Removes all the upgrade UI from the screen.
             upgradeUIActive = false;
             cardManager.ClearCards();
             if (upgradePanel != null)
@@ -191,7 +202,7 @@ public class PlayerGameLogic : MonoBehaviour
 
             Time.timeScale = 1f;
 
-            // Si hay más niveles que procesar, vuelve a comprobar el checklevelup.
+            // If there are more pending levels, checks level up to begin the process once again.
             if (pendingLevelUps > 0)
             {
                 CheckLevelUp();
@@ -214,15 +225,15 @@ public class PlayerGameLogic : MonoBehaviour
         if (cardManager != null)
         {
             List<UpgradeData> selected = allUpgrades
-                .Where(u => u.CanApply) // Filtra las mejoras dependiendo de si el jugador puede tener más copias de la misma mejora.
-                .Where(u => u.IsAvailable(this)) // Filtra las mejoras dependiendo de si están disponibles (Si el jugador tiene el arma o no).
-                .OrderBy(x => UnityEngine.Random.value)
-                .Take(3)
-                .ToList();
+                .Where(u => u.CanApply)                 // Filters the upgrades deppending if the player can get more upgrades for the weapon.
+                .Where(u => u.IsAvailable(this))        // Filters deppending if the player has a weapon, and thus, can upgrade it.
+                .OrderBy(x => UnityEngine.Random.value) // Randomizes the order of the available upgrades.
+                .Take(3)                                // Takes 3 of them.
+                .ToList();                              // Turns them into a list.
 
             cardManager.ShowCards(selected, OnCardSelected);
         }
-        // Pausar el juego (física, timers, etc.)
+        // Pauses the game while the player selects a card.
         Time.timeScale = 0f;
     }
 
@@ -230,7 +241,7 @@ public class PlayerGameLogic : MonoBehaviour
     {
         UpgradeData upgrade = card.upgradeData;
 
-        // Registra el stack y aplica la mejora. 
+        // Registers the stack and applies the upgrade.
         upgrade.ApplyStack(this);
         
         healthBar.UpdateHealthbar(currentHealth, maxHealth);
@@ -240,14 +251,15 @@ public class PlayerGameLogic : MonoBehaviour
             upgradePanel.SetActive(false);
         }
         pendingLevelUps--;
-        if (pendingLevelUps > 0) // Todavía quedan niveles que subir, y por tanto, faltan mejoras que escoger.
+
+        if (pendingLevelUps > 0) // There are 1 or more level ups pending.
         {
-            // Vuelve a "reiniciar el sistema" como si recién estuviese subiendo de nivel.
+            // "Restarts" the upgrade system, so to speak.
             upgradeUIActive = false;
             Time.timeScale = 1f;
-            CheckLevelUp();  // Vuelve a abrir las cartas
+            CheckLevelUp();  // Reopens the chance to pick an upgrade.
         }
-        else // No quedan niveles que subir.
+        else // There are no more level ups pending.
         {
             upgradeUIActive = false;
             expBar.StopRainbow();
@@ -261,18 +273,17 @@ public class PlayerGameLogic : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Handles the player taking damage.
+    /// </summary>
+    /// <param name="damage">Ammount of damage the player is taking</param>
     public void takeDamage(int damage)
     {
         currentHealth -= damage;
         
         if (currentHealth <= 0)
         {
-            StopCoroutine(heal());
-            healthBar.UpdateHealthbar(0, maxHealth);
-            playerMovement.StopAllCoroutines();
-            playerMovement.SilenceAllSound();
-            deathAnimation.SetTrigger("PlayerDeath");
-            GameManager.gm.StageCompleted(false);
+            PlayerDeath();
             return;
         }
         if (healthBar != null)
@@ -281,16 +292,32 @@ public class PlayerGameLogic : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Function that handles the player's death.
+    /// </summary>
+    private void PlayerDeath()
+    {
+        StopCoroutine(heal());
+        healthBar.UpdateHealthbar(0, maxHealth);
+        playerMovement.StopAllCoroutines();
+        playerMovement.SilenceAllSound();
+        deathAnimation.SetTrigger("PlayerDeath");
+        GameManager.gm.StageCompleted(false);
+    }
+
     public void OnCancel()
     {
         if (canPause)
         {
-            togglePauseMenu(); // Por alguna razón es necesario hacer una Corrutina porque si no, el juego se vuelve loco y llama mil veces al menú de pausa.    
+            togglePauseMenu(); // Yes, a coroutine is needed here.
+            // StartCoroutine(TogglePauseMenu_IENUM()); CAN'T JUST DO THIS?
         }
     }
 
-    // Esto es estúpido pero yo lo soy más.
-    // Si funciona, no se toca.
+    /// <summary>
+    /// Incredibly stupid coroutine. Handles the pause menu.
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator TogglePauseMenu_IENUM()
     {
         haveCalled = true;
@@ -314,7 +341,7 @@ public class PlayerGameLogic : MonoBehaviour
                 playerMovement.engineSFX.Play();
             }
 
-            // Seleccionar primer botón del menú para teclado/gamepad
+            // Selects the first button in the pause menu for gamepad purposes.
             if (pauseMenu.activeSelf)
             {
                 UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(firstButtonInPauseMenu);
@@ -331,6 +358,9 @@ public class PlayerGameLogic : MonoBehaviour
 
     public void restartLevel()
     {
+        playerMovement.StopAllCoroutines();
+        playerMovement.SilenceAllSound();
+        StopAllCoroutines();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         Time.timeScale = 1f;
     }
@@ -338,6 +368,9 @@ public class PlayerGameLogic : MonoBehaviour
     public void returnToMenu()
     {
         GameManager.gm.BackgroundMusicSFX.Stop();
+        playerMovement.StopAllCoroutines();
+        playerMovement.SilenceAllSound();
+        StopAllCoroutines();
         SceneManager.LoadScene("MainMenu");
     }
 }

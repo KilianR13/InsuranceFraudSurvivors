@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections.Generic;
-using UnityEngine.InputSystem;
 
 public class EnemyWaveManager : MonoBehaviour
 {
@@ -8,7 +7,7 @@ public class EnemyWaveManager : MonoBehaviour
     public class EnemyEntry
     {
         public GameObject prefab;
-        public int amount; // Cuántos enemigos por oleada
+        public int chances; // Chance of this enemy instance being chosen randomly to be spawned
     }
 
     [System.Serializable]
@@ -41,19 +40,14 @@ public class EnemyWaveManager : MonoBehaviour
     {
         GameObject enemy = SimplePool.Get(prefab, position, Quaternion.identity);
 
-        // Guardar prefab original en Poolable
-        Poolable p = enemy.GetComponent<Poolable>();
-        if (p == null) p = enemy.AddComponent<Poolable>();
-        p.originalPrefab = prefab;
-
-        // Identidad del pool con la WAVE ID
+        // Gets the Pool Identity ID
         PoolIdentity id = enemy.GetComponent<PoolIdentity>();
         if (id == null) id = enemy.AddComponent<PoolIdentity>();
 
-        id.prefab = prefab;     // Prefab original
-        id.waveId = waveId;     // Oleada a la que pertenece
+        id.prefab = prefab;     // Original Prefab
+        id.waveId = waveId;     // Wave it belongs to
 
-        // Asignar el jugador a la IA del enemigo
+        // The AI gets assigned a reference of the player.
         var ai = enemy.GetComponent<EnemyAI>();
         if (ai != null)
             ai.player = player;
@@ -65,18 +59,18 @@ public class EnemyWaveManager : MonoBehaviour
     {
         if (waves.Count == 0) return;
 
-        // Detener spawn si la oleada terminó
+        // Fallback in case the rest of the code to go back doesn't work
         if (waveFinished) return;
 
         Wave currentWave = waves[currentWaveIndex];
         waveTimer += Time.deltaTime;
         spawnTimer += Time.deltaTime;
 
-        // Limpia enemigos muertos de esta oleada
+        // Removes enemies that are null or that aren't active already
         activeEnemies.RemoveAll(e => e == null || !e.activeSelf);
         int aliveFromThisWave = activeEnemies.Count;
 
-        // Spawn enemigos mientras haya espacio
+        // Starts spawning enemies if the max enemy cap isn't met
         if (aliveFromThisWave < currentWave.maxEnemiesAlive && spawnTimer >= currentWave.spawnInterval)
         {
             spawnTimer = 0f;
@@ -95,12 +89,12 @@ public class EnemyWaveManager : MonoBehaviour
             activeEnemies.Add(enemy);
         }
 
-        // Comprobar fin de oleada
+        // Checks if the timer for the current wave has finished or not
         if (waveTimer >= currentWave.duration)
         {
             waveFinished = true;
 
-            // Marcar enemigos vivos como no poolable
+            // All enemies alive from that wave are marked as non-poolable, to be deleted later when they die
             foreach (var e in activeEnemies)
             {
                 if (e != null && e.TryGetComponent(out EnemyAI ai))
@@ -109,12 +103,12 @@ public class EnemyWaveManager : MonoBehaviour
                 }
             }
 
-            // Limpiar enemigos muertos del pool
+            // Clears the pool
             ClearWaveEnemies(currentWaveIndex);
 
-            Debug.Log($"Oleada {currentWaveIndex} terminada");
+            Debug.Log($"Wave {currentWaveIndex} finished");
 
-            // Avanzar a la siguiente oleada si existe
+            // If there's another wave, advances to the next one.
             if (waves.Count > currentWaveIndex + 1)
             {
                 currentWaveIndex++;
@@ -123,7 +117,7 @@ public class EnemyWaveManager : MonoBehaviour
                 spawnTimer = 0f;
                 activeEnemies.Clear();
             }
-            else
+            else // If not, stops the game. Should polish this and make it like in Vampire Survivors, with an invincible enemy.
             {
                 PlayerMovement_Car playerMovement = player.GetComponent<PlayerMovement_Car>();
                 playerMovement.StopAllCoroutines();
@@ -136,23 +130,23 @@ public class EnemyWaveManager : MonoBehaviour
     private GameObject ChooseEnemyPrefab(Wave wave)
     {
         int total = 0;
-        foreach (var e in wave.enemies)
-            total += e.amount;
+        foreach (var e in wave.enemies) // Counts how many chances available are for enemies to spawn in this wave
+            total += e.chances;
 
-        int r = Random.Range(0, total);
+        int r = Random.Range(0, total); // Picks a random number between 0 and the number of chances total
         int sum = 0;
 
         foreach (var e in wave.enemies)
         {
-            sum += e.amount;
+            sum += e.chances;
             if (r < sum)
-                return e.prefab;
+                return e.prefab; // Chooses randomly an enemy
         }
 
-        return wave.enemies[0].prefab; // fallback
+        return wave.enemies[0].prefab; // Fallback
     }
 
-
+    // Function to mark and remove enemies from previous waves
     private void ClearWaveEnemies(int waveIndex)
     {
         List<GameObject> toRemove = new();
@@ -173,7 +167,6 @@ public class EnemyWaveManager : MonoBehaviour
             }
         }
 
-        // Destruir físicamente y sacar del pool
         foreach (var obj in toRemove)
         {
             PoolIdentity id = obj.GetComponent<PoolIdentity>();
@@ -182,6 +175,7 @@ public class EnemyWaveManager : MonoBehaviour
         }
     }
 
+    // Function to spawn the enemies outside the player's field of view
     private Vector3 GetSpawnPositionOutsideCamera(float minDistanceFromPlayer)
     {
         Camera cam = Camera.main;

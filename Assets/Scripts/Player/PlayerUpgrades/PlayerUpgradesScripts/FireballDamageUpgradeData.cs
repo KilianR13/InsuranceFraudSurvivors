@@ -7,7 +7,7 @@ public class FireballDamageUpgradeData : UpgradeData
 
     public override bool IsAvailable(PlayerGameLogic player)
     {
-        // Solo aparece si el jugador NO tiene ya el arma
+        // Only appears if the player has the weapon.
         return true;
     }
 

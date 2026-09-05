@@ -1,5 +1,4 @@
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class EXPScript : MonoBehaviour
@@ -17,18 +16,19 @@ public class EXPScript : MonoBehaviour
     
     void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.CompareTag("Player") && pickable)
+        if (collider.CompareTag("Player") && pickable) // Checks if what collided with this was the player, and if it can be picked up
         {
-            pickable = false;
+            pickable = false; // Set as false to prevent multiple pickups before the sound effect finishes playing
             PlayerGameLogic player = collider.GetComponentInParent<PlayerGameLogic>();
-            if (player != null)
+            if (player != null) // Making sure to avoid errors
             {
-                player.addEXP(expWorth);
+                player.addEXP(expWorth); // Adds the EXP to the player.
                 StartCoroutine(waitForSFX());
             }
         }
     }
 
+    // Plays the pick up sfx, goes invisible, and when the sound finishes, it's deleted.
     private IEnumerator waitForSFX()
     {   
         PickUpSFX.Play();

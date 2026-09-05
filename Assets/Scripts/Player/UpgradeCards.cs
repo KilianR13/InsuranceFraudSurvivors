@@ -3,6 +3,9 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+/// <summary>
+/// Upgrade the player can pick.
+/// </summary>
 public class UpgradeCard : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler, ISelectHandler, IDeselectHandler, ISubmitHandler
 {
     public TextMeshProUGUI titleText;
@@ -21,16 +24,11 @@ public class UpgradeCard : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
         coolOutline.enabled = false;
     }
 
-    // Setup para strings (se mantiene)
-    public void Setup(string title, string description, System.Action<UpgradeCard> callback)
-    {
-        titleText.text = title;
-        descriptionText.text = description;
-        onCardSelected = callback;
-        upgradeData = null;
-    }
-
-    // Setup para UpgradeData REAL
+    /// <summary>
+    /// Assigns the necessary data to be displayed on this Card. The information for the card is obtained from the Data.
+    /// </summary>
+    /// <param name="data">Data about the upgrade</param>
+    /// <param name="callback">Action of selecting the Card.</param>
     public void Setup(UpgradeData data, System.Action<UpgradeCard> callback)
     {
         upgradeData = data;
