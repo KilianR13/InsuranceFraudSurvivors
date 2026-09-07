@@ -17,4 +17,4 @@ MonoBehaviour:
   description: Reduce the cooldown of your healing.
   maxStacks: 8
   currentStacks: 0
-  HealTimerDown: 0.5
+  HealTimerDown: 0.3

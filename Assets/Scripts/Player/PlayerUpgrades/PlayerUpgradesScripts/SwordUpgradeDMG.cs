@@ -4,15 +4,16 @@ using UnityEngine;
 public class SwordUpgradeDMG  : UpgradeData
 {
     public int swordDamageIncrease;
+    public GameObject swordPrefab;
 
     public override bool IsAvailable(PlayerGameLogic player)
     {
         // Only available if the player has the weapon.
-        return player.hasSword;
+        return player.weaponHandler.HasWeapon(swordPrefab);
     }
 
     public override void Apply(PlayerGameLogic player)
     {
-        player.swordUpgrade.SwordUpgradeDMG(swordDamageIncrease);
+        // player.swordUpgrade.SwordUpgradeDMG(swordDamageIncrease);
     }
 }

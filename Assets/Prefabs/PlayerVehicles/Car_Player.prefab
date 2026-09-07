@@ -69,6 +69,55 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 1.5, y: 2.5}
   m_Direction: 0
+--- !u!1 &982377306365361191
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6005034278938235879}
+  - component: {fileID: 1011106369661173039}
+  m_Layer: 0
+  m_Name: WeaponManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6005034278938235879
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 982377306365361191}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1830273388157214192}
+  m_Father: {fileID: 2893038597859865627}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1011106369661173039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 982377306365361191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e5fe15d9b463e1418c34d0f58de02a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerWeaponHandler
+  currentWeapons: []
+  maxWeapons: 6
+  StartingWeapon: {fileID: 0}
+  swordAttachPoint: {fileID: 1830273388157214192}
 --- !u!1 &2970405601796366427
 GameObject:
   m_ObjectHideFlags: 0
@@ -124,12 +173,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3004877183333432946}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
+  m_LocalRotation: {x: -0, y: -0, z: -0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0.8, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2893038597859865627}
+  m_Father: {fileID: 6005034278938235879}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
 --- !u!1 &3246612153441771264
 GameObject:
@@ -146,8 +195,6 @@ GameObject:
   - component: {fileID: 5376568330624388301}
   - component: {fileID: 3310858472393324216}
   - component: {fileID: 4289009811494200035}
-  - component: {fileID: 5022270277495408703}
-  - component: {fileID: 2040020884514034144}
   - component: {fileID: 1332601026443912167}
   - component: {fileID: 5676965408964675217}
   - component: {fileID: 8976675268549641617}
@@ -171,10 +218,10 @@ Transform:
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children:
+  - {fileID: 6005034278938235879}
   - {fileID: 580173713355562805}
   - {fileID: 835709395653758475}
   - {fileID: 4747867348241869562}
-  - {fileID: 1830273388157214192}
   - {fileID: 7643798051883583539}
   - {fileID: 5088721910154149487}
   - {fileID: 5036267782871662521}
@@ -337,8 +384,7 @@ MonoBehaviour:
   healTimer: 5
   healAmmount: 0
   totalEXP: 0
-  swordUpgrade: {fileID: 2040020884514034144}
-  hasSword: 0
+  weaponHandler: {fileID: 1011106369661173039}
   allUpgrades:
   - {fileID: 11400000, guid: 35d8a2290aed90649ae8607bcc1cd396, type: 2}
   - {fileID: 11400000, guid: d7b09b24e19852342aabeea7947e97f2, type: 2}
@@ -390,36 +436,6 @@ MonoBehaviour:
   m_DefaultActionMap: 
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &5022270277495408703
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3246612153441771264}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6bfbcb71b235daf469b204cdf78d5452, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AutoAttackFireball
-  attackRange: 20
-  attackCooldown: 1.5
-  fireballPrefab: {fileID: 5272944387553640330, guid: f130ff0a4e061e146aac4aee60edac51, type: 3}
-  firePoint: {fileID: 4747867348241869562}
---- !u!114 &2040020884514034144
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3246612153441771264}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d8604d9d25f6aa4eb5f129bf99d701f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SwordUpgrade
-  swordPrefab: {fileID: 4845601921339126416, guid: fd687b795b7e9464682e24e6a638eaf2, type: 3}
-  swordSpawnPoint: {fileID: 1830273388157214192}
 --- !u!82 &1332601026443912167
 AudioSource:
   m_ObjectHideFlags: 0

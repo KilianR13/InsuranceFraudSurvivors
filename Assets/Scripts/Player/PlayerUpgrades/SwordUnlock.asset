@@ -16,4 +16,5 @@ MonoBehaviour:
   title: A sword!
   description: How, and why? Eh, who cares? Obtain a badass sword!
   maxStacks: 1
-  currentStacks: 0
+  currentStacks: 1
+  swordPrefab: {fileID: 4845601921339126416, guid: fd687b795b7e9464682e24e6a638eaf2, type: 3}

@@ -18,3 +18,4 @@ MonoBehaviour:
   maxStacks: 15
   currentStacks: 0
   swordMultiplierIncrease: 0.1
+  swordPrefab: {fileID: 4845601921339126416, guid: fd687b795b7e9464682e24e6a638eaf2, type: 3}

@@ -13,6 +13,6 @@ public class FireballDamageUpgradeData : UpgradeData
 
     public override void Apply(PlayerGameLogic player)
     {
-        player.FireBallBonusDMG += bonusDamage;
+        // player.FireBallBonusDMG += bonusDamage;
     }
 }

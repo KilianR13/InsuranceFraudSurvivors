@@ -15,8 +15,8 @@ public class FireBallFireRate  : UpgradeData
 
     public override void Apply(PlayerGameLogic player)
     {
-        player.FireBallFireRateReduction = FireBallFireRateDown;
+        // player.FireBallFireRateReduction = FireBallFireRateDown;
         
-        player.upgradeFireRateFireballs();
+        // player.upgradeFireRateFireballs();
     }
 }

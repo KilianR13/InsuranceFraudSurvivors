@@ -24,8 +24,7 @@ public class PlayerGameLogic : MonoBehaviour
     private int currentLevel;
 
     [Header("Upgrades")]
-    [SerializeField] public SwordUpgrade swordUpgrade;
-    public bool hasSword = false;
+    public PlayerWeaponHandler weaponHandler;
 
     [Header("Available Upgrades")]
     public List<UpgradeData> allUpgrades = new List<UpgradeData>();
@@ -44,8 +43,6 @@ public class PlayerGameLogic : MonoBehaviour
     private int pendingLevelUps = 0;
     private bool upgradeUIActive = false;
 
-    public int FireBallBonusDMG = 0;
-    public float FireBallFireRateReduction = 0f;
 
     [Header("UI")]
     public TextMeshProUGUI moneyEarned;
@@ -56,15 +53,11 @@ public class PlayerGameLogic : MonoBehaviour
     private bool haveCalled;
     
 
-    public event Action OnSignal;
+    // public event Action OnSignal;
     private PlayerMovement_Car playerMovement;
 
     private int expToNextLevel => Mathf.RoundToInt(baseEXPNeeded * Mathf.Pow(expMultiplier, currentLevel - 1));
 
-    public void upgradeFireRateFireballs()
-    {
-        OnSignal?.Invoke();
-    }
     
     void Start()
     {
@@ -77,7 +70,6 @@ public class PlayerGameLogic : MonoBehaviour
         totalEXP = 0;
         healTimer = 5f;
         healAmmount = 0;
-        hasSword = false;
         
         foreach (var u in allUpgrades)
         {
@@ -111,6 +103,10 @@ public class PlayerGameLogic : MonoBehaviour
                 // Updates the healthbar.
                 healthBar.UpdateHealthbar(currentHealth, maxHealth);
             }
+        }
+        if (weaponHandler == null)
+        {
+            weaponHandler = GetComponentInChildren<PlayerWeaponHandler>();    
         }
         moneyEarned.text = $"$ = {totalEXP + overLevelBonus}"; // Debug.
         StartCoroutine(heal());
@@ -271,6 +267,16 @@ public class PlayerGameLogic : MonoBehaviour
             Time.timeScale = 1f;
             canPause = true;
         }
+    }
+
+    public void AddWeapon()
+    {
+        
+    }
+
+    public void ApplyUpgrade()
+    {
+        // weaponHandler.UpgradeWeapon
     }
 
     /// <summary>
