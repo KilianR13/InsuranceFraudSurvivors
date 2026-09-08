@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b74baaee7fde7964cb09eaedb042addd, type: 3}
+  m_Name: FireballUnlock
+  m_EditorClassIdentifier: Assembly-CSharp::FireballUnlock
+  id: Unlock_Fireball
+  title: Unlock Fireballs
+  description: Throw fireballs!
+  maxStacks: 1
+  currentStacks: 0
+  fireballInstancerPrefab: {fileID: 9016210015504464573, guid: 070e488679791174b9ace35229a02209, type: 3}

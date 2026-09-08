@@ -946,6 +946,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1011106369661173039, guid: 914a115e6c673bf42818dc404bd00802, type: 3}
+      propertyPath: maxWeapons
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1011106369661173039, guid: 914a115e6c673bf42818dc404bd00802, type: 3}
       propertyPath: StartingWeapon
       value: 
       objectReference: {fileID: 9016210015504464573, guid: 070e488679791174b9ace35229a02209, type: 3}

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Weapon_Fireball : MonoBehaviour
+public class Weapon_Fireball : Weapon
 {
     [Header("Base stats")]
     public float attackRange = 5f;
@@ -9,7 +9,7 @@ public class Weapon_Fireball : MonoBehaviour
     [Header("References")]
     public GameObject fireballPrefab;
 
-    [Header("UpgradedStats")]
+    [Header("Upgraded Stats")]
     public int bonusDamage = 0;
     public float bonusSpeed = 0f;
 
@@ -75,6 +75,40 @@ public class Weapon_Fireball : MonoBehaviour
             fireball.damage += bonusDamage;
             fireball.speed += bonusSpeed;
             fireball.SetDirection(direction);
+        }
+    }
+
+    protected override void ApplyUpgrade()
+    {
+        switch (currentLevel)
+        {
+            case 1:
+                bonusDamage += 3;
+                break;
+            case 2:
+                bonusSpeed += 1f;
+                break;
+            case 3:
+                bonusSpeed += 3f;
+                break;
+            case 4:
+                attackCooldown -= 0.3f;
+                break;
+            case 5:
+                bonusDamage += 3;
+                break;
+            case 6:
+                bonusDamage += 4;
+                break;
+            case 7:
+                bonusSpeed += 6f;
+                break;
+            case 8:
+                attackCooldown -= 0.5f;
+                break;
+            default:
+                Debug.LogError("Wtf?");
+                break;
         }
     }
 }

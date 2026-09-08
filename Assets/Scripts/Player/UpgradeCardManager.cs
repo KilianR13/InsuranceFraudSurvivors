@@ -22,7 +22,7 @@ public class UpgradeCardManager : MonoBehaviour
     /// </summary>
     /// <param name="upgrades">List of upgrades chosen for the player during the level up.</param>
     /// <param name="onPicked"></param>
-    public void ShowCards(List<UpgradeData> upgrades, Action<UpgradeCard> onPicked)
+    public void ShowCards(List<UpgradeData> upgrades, Action<UpgradeCard> onPicked, PlayerWeaponHandler weaponHandler)
     {
         ClearCards();
         onCardPicked = onPicked;
@@ -34,7 +34,7 @@ public class UpgradeCardManager : MonoBehaviour
 
             if (card != null)
             {
-                card.Setup(upgrade, OnCardSelectedFromUI); 
+                card.Setup(upgrade, OnCardSelectedFromUI, weaponHandler); 
                 if (firstCard == null)
                 {
                     firstCard = card;    

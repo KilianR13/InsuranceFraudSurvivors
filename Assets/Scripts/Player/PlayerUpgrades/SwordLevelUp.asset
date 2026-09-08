@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fa544866de495b84c90430f0fd13d150, type: 3}
-  m_Name: SwordUpgradeDMG
+  m_Name: SwordLevelUp
   m_EditorClassIdentifier: Assembly-CSharp::SwordUpgradeDMG
-  id: SWORD_DMG_UP
-  title: Sword Damage Up
-  description: Increase the base damage of your sword!
-  maxStacks: 8
-  currentStacks: 0
-  swordDamageIncrease: 1
+  id: SWORD_LVL_UP
+  title: Sword Level Up!
+  description: 
+  level: 0
+  maxStacks: 6
+  currentStacks: 6
   swordPrefab: {fileID: 4845601921339126416, guid: fd687b795b7e9464682e24e6a638eaf2, type: 3}

@@ -8,7 +8,7 @@ public class SwordUnlockUpgrade  : UpgradeData
     public override bool IsAvailable(PlayerGameLogic player)
     {
         // Only available if the player DOES NOT have the weapon.
-        return !player.weaponHandler.HasWeapon(swordPrefab);
+        return !player.weaponHandler.HasWeapon(swordPrefab) && !player.weaponHandler.weaponsListMaxxed;
     }
 
     public override void Apply(PlayerGameLogic player)

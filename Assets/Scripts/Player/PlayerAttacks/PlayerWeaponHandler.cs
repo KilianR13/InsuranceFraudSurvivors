@@ -9,10 +9,11 @@ public class PlayerWeaponHandler : MonoBehaviour
 {
     public static PlayerWeaponHandler Instance { get; private set; }
     public List<GameObject> currentWeapons = new List<GameObject>();
-    [Range(0, 6)]
+    [Range(1, 6)]
     public int maxWeapons;
     [SerializeField] private GameObject StartingWeapon;
     [SerializeField] private Transform swordAttachPoint;
+    public bool weaponsListMaxxed;
 
     
     void Start()
@@ -26,18 +27,34 @@ public class PlayerWeaponHandler : MonoBehaviour
         {
             InstantiateWeapon(StartingWeapon);
         }
+        if (currentWeapons.Count == maxWeapons)
+        {
+            weaponsListMaxxed = true;
+        }
+        else
+        {
+            weaponsListMaxxed = false;
+        }
     }
 
     public void AddWeapon(GameObject newWeapon)
     {
+        if (weaponsListMaxxed) return;
+
         if (currentWeapons.Count < maxWeapons)
         {
             currentWeapons.Add(newWeapon);
+            if (currentWeapons.Count == maxWeapons)
+            {
+                weaponsListMaxxed = true;
+            }
         }
     }
 
     public void InstantiateWeapon(GameObject newWeapon)
     {
+        if (weaponsListMaxxed) return; // Fallback
+
         if (HasWeapon(newWeapon))
         {   
             Debug.LogError("Player tried to get weapon they already have");
@@ -50,6 +67,8 @@ public class PlayerWeaponHandler : MonoBehaviour
 
     public void InstantiateSword(GameObject newWeapon_Sword)
     {
+        if (weaponsListMaxxed) return; // Fallback
+        
         if (HasWeapon(newWeapon_Sword)) 
         {
             Debug.LogError("Player tried to get weapon (sword) they already have");
@@ -126,6 +145,12 @@ public class PlayerWeaponHandler : MonoBehaviour
 
     public void UpgradeWeapon(GameObject upgradeableWeapon)
     {
-        // var response = currentWeapons.Find(r => upgradeableWeapon);
+        GameObject weaponGO = GetWeapon(upgradeableWeapon);
+        if (weaponGO == null) return;
+
+        Weapon weapon = weaponGO.GetComponent<Weapon>();
+        if (weapon == null) return;
+
+        weapon.LevelUp();
     }
 }

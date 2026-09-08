@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +26,7 @@ public class PlayerGameLogic : MonoBehaviour
     public PlayerWeaponHandler weaponHandler;
 
     [Header("Available Upgrades")]
-    public List<UpgradeData> allUpgrades = new List<UpgradeData>();
+    public UpgradeDatabase upgradeDB;
 
     [Header("SFX")]
     [SerializeField] private AudioSource levelUp;
@@ -71,7 +70,7 @@ public class PlayerGameLogic : MonoBehaviour
         healTimer = 5f;
         healAmmount = 0;
         
-        foreach (var u in allUpgrades)
+        foreach (var u in upgradeDB.upgradeData)
         {
             u.currentStacks = 0;
         }
@@ -169,7 +168,7 @@ public class PlayerGameLogic : MonoBehaviour
     
     private bool HasAvailableUpgrades()
     {
-        return allUpgrades.Any(u => u.CanApply && u.IsAvailable(this));
+        return upgradeDB.upgradeData.Any(u => u.CanApply && u.IsAvailable(this));
     }
 
     /// <summary>
@@ -220,14 +219,14 @@ public class PlayerGameLogic : MonoBehaviour
         
         if (cardManager != null)
         {
-            List<UpgradeData> selected = allUpgrades
+            List<UpgradeData> selected = upgradeDB.upgradeData
                 .Where(u => u.CanApply)                 // Filters the upgrades deppending if the player can get more upgrades for the weapon.
                 .Where(u => u.IsAvailable(this))        // Filters deppending if the player has a weapon, and thus, can upgrade it.
                 .OrderBy(x => UnityEngine.Random.value) // Randomizes the order of the available upgrades.
                 .Take(3)                                // Takes 3 of them.
                 .ToList();                              // Turns them into a list.
 
-            cardManager.ShowCards(selected, OnCardSelected);
+            cardManager.ShowCards(selected, OnCardSelected, weaponHandler);
         }
         // Pauses the game while the player selects a card.
         Time.timeScale = 0f;

@@ -118,6 +118,7 @@ MonoBehaviour:
   maxWeapons: 6
   StartingWeapon: {fileID: 0}
   swordAttachPoint: {fileID: 1830273388157214192}
+  weaponsListMaxxed: 0
 --- !u!1 &2970405601796366427
 GameObject:
   m_ObjectHideFlags: 0
@@ -385,23 +386,13 @@ MonoBehaviour:
   healAmmount: 0
   totalEXP: 0
   weaponHandler: {fileID: 1011106369661173039}
-  allUpgrades:
-  - {fileID: 11400000, guid: 35d8a2290aed90649ae8607bcc1cd396, type: 2}
-  - {fileID: 11400000, guid: d7b09b24e19852342aabeea7947e97f2, type: 2}
-  - {fileID: 11400000, guid: f5309cd35be8c7d44813f29dec308fcb, type: 2}
-  - {fileID: 11400000, guid: 01abd98d63366d14f8a40bc85ee41bd6, type: 2}
-  - {fileID: 11400000, guid: 5f455981da4272340b0f832acd868a7f, type: 2}
-  - {fileID: 11400000, guid: 51f4b7667284bc24a89251e95ecf3371, type: 2}
-  - {fileID: 11400000, guid: 4adc9d552b5c2d746892e09c207856fa, type: 2}
-  - {fileID: 11400000, guid: f134560649e528140b1176d1b4c3483e, type: 2}
+  upgradeDB: {fileID: 11400000, guid: 424aa3361a9f670488be3b84f457a900, type: 2}
   levelUp: {fileID: 1332601026443912167}
   baseEXPNeeded: 15
   expMultiplier: 1.2
   expBar: {fileID: 3728868536333273505}
   upgradePanel: {fileID: 5892222177803268883}
   cardManager: {fileID: 3257236750262948770}
-  FireBallBonusDMG: 0
-  FireBallFireRateReduction: 0
   moneyEarned: {fileID: 4498127477617624407}
   overLevelBonus: 0
   pauseMenu: {fileID: 4641008024868215824}

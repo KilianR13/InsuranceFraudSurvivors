@@ -30,13 +30,10 @@ public class FireBall_Prefab : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("FIREBALL TOCÓ: " + collision.gameObject.name);
-        Debug.Log("LAYER: " + LayerMask.LayerToName(collision.gameObject.layer));
         EnemyAI enemy = collision.GetComponentInParent<EnemyAI>();
 
         if (enemy != null)
         {
-            Debug.Log("ENCONTRÓ ENEMIGO: " + enemy.gameObject.name);
             enemy.takeDamage(damage);
             Destroy(gameObject);
         }

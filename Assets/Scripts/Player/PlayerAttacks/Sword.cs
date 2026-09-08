@@ -4,10 +4,10 @@ using UnityEngine;
 /// <summary>
 /// Class of the Sword weapon and it's methods.
 /// </summary>
-public class Sword : MonoBehaviour
+public class Sword : Weapon
 {
     [SerializeField] public int baseDamage = 5;
-    [SerializeField] public float damageMultiplier = 0.3f; // Multiplier to multiply the player's speed to increase the damage of the sword.
+    [SerializeField] public float damageMultiplier = 0.6f; // Multiplier to multiply the player's speed to increase the damage of the sword.
     private Rigidbody2D playerRb;
 
     // We save a HashSet of the enemy we just hit so we can prevent hitting the same enemy multiple times. Maybe it's unnecesary.
@@ -75,6 +75,34 @@ public class Sword : MonoBehaviour
         if (enemy != null && damagedEnemies.Contains(enemy))
         {
             damagedEnemies.Remove(enemy);
+        }
+    }
+
+    protected override void ApplyUpgrade()
+    {
+        switch (currentLevel)
+        {
+            case 1:
+                baseDamage += 3;
+                break;
+            case 2:
+                damageMultiplier += 0.2f;
+                break;
+            case 3:
+                baseDamage += 3;
+                break;
+            case 4:
+                baseDamage += 6;
+                break;
+            case 5:
+                damageMultiplier += 0.5f;
+                break;
+            case 6:
+                baseDamage += 6;
+                break;
+            default:
+                Debug.LogError("Wtf?");
+                break;
         }
     }
 }
