@@ -18,7 +18,7 @@ public class SwordLevelUp  : UpgradeData
         if (swordObject == null)
             return description;
 
-        Weapon weapon = swordObject.GetComponent<Weapon>();
+        Equippable weapon = swordObject.GetComponent<Equippable>();
 
         if (weapon == null)
             return description;

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Weapon_Fireball : Weapon
+public class Weapon_Fireball : Equippable
 {
     [Header("Base stats")]
     public float attackRange = 5f;

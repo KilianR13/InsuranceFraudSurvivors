@@ -148,7 +148,7 @@ public class PlayerWeaponHandler : MonoBehaviour
         GameObject weaponGO = GetWeapon(upgradeableWeapon);
         if (weaponGO == null) return;
 
-        Weapon weapon = weaponGO.GetComponent<Weapon>();
+        Equippable weapon = weaponGO.GetComponent<Equippable>();
         if (weapon == null) return;
 
         weapon.LevelUp();

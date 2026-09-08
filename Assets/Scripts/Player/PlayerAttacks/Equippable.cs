@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class Weapon : MonoBehaviour
+public abstract class Equippable : MonoBehaviour
 {
     [SerializeField] protected int currentLevel = 0;
     [SerializeField] protected int maxLevel = 8;

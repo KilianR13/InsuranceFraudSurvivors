@@ -4,7 +4,7 @@ using UnityEngine;
 /// <summary>
 /// Class of the Sword weapon and it's methods.
 /// </summary>
-public class Sword : Weapon
+public class Sword : Equippable
 {
     [SerializeField] public int baseDamage = 5;
     [SerializeField] public float damageMultiplier = 0.6f; // Multiplier to multiply the player's speed to increase the damage of the sword.

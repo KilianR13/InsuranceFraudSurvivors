@@ -24,6 +24,7 @@ public class PlayerGameLogic : MonoBehaviour
 
     [Header("Upgrades")]
     public PlayerWeaponHandler weaponHandler;
+    public PlayerItemHandler itemHandler;
 
     [Header("Available Upgrades")]
     public UpgradeDatabase upgradeDB;
