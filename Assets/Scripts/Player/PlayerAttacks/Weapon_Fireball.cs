@@ -26,7 +26,7 @@ public class Weapon_Fireball : Equippable
             if (nearestEnemy != null)
             {
                 Shoot(nearestEnemy);
-                cooldownTimer = attackCooldown;
+                cooldownTimer = attackCooldown * (1f - PlayerGlobalStats.Instance.CooldownMultiplier);
             }
         }
     }
@@ -92,7 +92,7 @@ public class Weapon_Fireball : Equippable
                 bonusSpeed += 3f;
                 break;
             case 4:
-                attackCooldown -= 0.3f;
+                attackCooldown -= 0.2f;
                 break;
             case 5:
                 bonusDamage += 3;
@@ -104,7 +104,7 @@ public class Weapon_Fireball : Equippable
                 bonusSpeed += 6f;
                 break;
             case 8:
-                attackCooldown -= 0.5f;
+                attackCooldown -= 0.3f;
                 break;
             default:
                 Debug.LogError("Wtf?");

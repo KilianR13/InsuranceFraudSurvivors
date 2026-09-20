@@ -54,7 +54,7 @@ public class PlayerGameLogic : MonoBehaviour
     
 
     // public event Action OnSignal;
-    private PlayerMovement_Car playerMovement;
+    public PlayerMovement_Car playerMovement;
 
     private int expToNextLevel => Mathf.RoundToInt(baseEXPNeeded * Mathf.Pow(expMultiplier, currentLevel - 1));
 
@@ -78,7 +78,7 @@ public class PlayerGameLogic : MonoBehaviour
         
         expBar.UpdateEXPBar(currentEXP, expToNextLevel);
         expBar.UpdateLevel(currentLevel);
-        currentHealth = maxHealth;
+        currentHealth = calculateMaxHealth();
         if (upgradePanel != null)
         {
             upgradePanel.SetActive(false);    
@@ -101,15 +101,24 @@ public class PlayerGameLogic : MonoBehaviour
                 healthBar.offset = new Vector3(0, 1.5f, 0);     // Positions the healthbar slightly above the player.
 
                 // Updates the healthbar.
-                healthBar.UpdateHealthbar(currentHealth, maxHealth);
+                healthBar.UpdateHealthbar(currentHealth, calculateMaxHealth());
             }
         }
         if (weaponHandler == null)
         {
             weaponHandler = GetComponentInChildren<PlayerWeaponHandler>();    
         }
+        if (itemHandler == null)
+        {
+            itemHandler = GetComponentInChildren<PlayerItemHandler>();
+        }
         moneyEarned.text = $"$ = {totalEXP + overLevelBonus}"; // Debug.
         StartCoroutine(heal());
+    }
+
+    private int calculateMaxHealth()
+    {
+        return Mathf.RoundToInt(maxHealth * (1f + PlayerGlobalStats.Instance.MaxHealthMultiplier));
     }
 
     /// <summary>
@@ -119,19 +128,19 @@ public class PlayerGameLogic : MonoBehaviour
     private IEnumerator heal()
     {
         while (true) {
-        yield return new WaitForSecondsRealtime(healTimer);
-        if (currentHealth < maxHealth && healAmmount > 0)   // Checks if the player can heal themselves or needs to.
-        {
-            if ((currentHealth + healAmmount) < maxHealth)
+            yield return new WaitForSecondsRealtime(healTimer);
+            if (currentHealth < calculateMaxHealth() && healAmmount > 0)   // Checks if the player can heal themselves or needs to.
             {
-                currentHealth += healAmmount;    
+                if ((currentHealth + healAmmount) < calculateMaxHealth())
+                {
+                    currentHealth += healAmmount;    
+                }
+                else
+                {
+                    currentHealth = calculateMaxHealth();
+                }   
             }
-            else
-            {
-                currentHealth = maxHealth;
-            }   
-        }
-        healthBar.UpdateHealthbar(currentHealth, maxHealth);
+            healthBar.UpdateHealthbar(currentHealth, calculateMaxHealth());
         }
     }
 
@@ -223,11 +232,11 @@ public class PlayerGameLogic : MonoBehaviour
             List<UpgradeData> selected = upgradeDB.upgradeData
                 .Where(u => u.CanApply)                 // Filters the upgrades deppending if the player can get more upgrades for the weapon.
                 .Where(u => u.IsAvailable(this))        // Filters deppending if the player has a weapon, and thus, can upgrade it.
-                .OrderBy(x => UnityEngine.Random.value) // Randomizes the order of the available upgrades.
+                .OrderBy(x => Random.value)             // Randomizes the order of the available upgrades.
                 .Take(3)                                // Takes 3 of them.
                 .ToList();                              // Turns them into a list.
 
-            cardManager.ShowCards(selected, OnCardSelected, weaponHandler);
+            cardManager.ShowCards(selected, OnCardSelected, this);
         }
         // Pauses the game while the player selects a card.
         Time.timeScale = 0f;
@@ -240,7 +249,7 @@ public class PlayerGameLogic : MonoBehaviour
         // Registers the stack and applies the upgrade.
         upgrade.ApplyStack(this);
         
-        healthBar.UpdateHealthbar(currentHealth, maxHealth);
+        healthBar.UpdateHealthbar(currentHealth, calculateMaxHealth());
         
         if (upgradePanel != null)
         {
@@ -294,7 +303,7 @@ public class PlayerGameLogic : MonoBehaviour
         }
         if (healthBar != null)
         {
-            healthBar.UpdateHealthbar(currentHealth, maxHealth);
+            healthBar.UpdateHealthbar(currentHealth, calculateMaxHealth());
         }
     }
 
@@ -304,7 +313,7 @@ public class PlayerGameLogic : MonoBehaviour
     private void PlayerDeath()
     {
         StopCoroutine(heal());
-        healthBar.UpdateHealthbar(0, maxHealth);
+        healthBar.UpdateHealthbar(0, calculateMaxHealth());
         playerMovement.StopAllCoroutines();
         playerMovement.SilenceAllSound();
         deathAnimation.SetTrigger("PlayerDeath");

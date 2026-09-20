@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &9016210015504464573
+--- !u!1 &4373137558551620546
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,56 +8,53 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5346940471275621308}
-  - component: {fileID: -185344606351338995}
+  - component: {fileID: 5904625671238651575}
+  - component: {fileID: 3014780604944999807}
   m_Layer: 0
-  m_Name: FireballHandler
+  m_Name: Item_Speed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5346940471275621308
+--- !u!4 &5904625671238651575
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9016210015504464573}
+  m_GameObject: {fileID: 4373137558551620546}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.85811, y: 0.70834, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-185344606351338995
+--- !u!114 &3014780604944999807
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9016210015504464573}
+  m_GameObject: {fileID: 4373137558551620546}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 638edf193a2c8ac4f8b3e93914413f09, type: 3}
+  m_Script: {fileID: 11500000, guid: fb48f1e380155ad4985b7bf31d638421, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Weapon_Fireball
+  m_EditorClassIdentifier: Assembly-CSharp::Item_Speed
   currentLevel: 0
   maxLevel: 8
-  itemSlot: 4
+  itemSlot: 5
   upgradeDescriptions:
-  - Damage +3
-  - Flight Speed +1
-  - Flight Speed +3
-  - Cooldown -0.3
-  - Damage +3
-  - Damage +4
-  - Flight Speed +6
-  - Cooldown -0.5
-  attackRange: 20
-  attackCooldown: 1.5
-  fireballPrefab: {fileID: 5272944387553640330, guid: f130ff0a4e061e146aac4aee60edac51, type: 3}
-  bonusDamage: 0
-  bonusSpeed: 0
+  - +10% acceleration
+  - +10% top speed
+  - +20% acceleration
+  - +20% top speed
+  - +30% top speed
+  - +20% acceleration
+  - +30% acceleration
+  - +30% top speed
+  accelMultiplier: 0.2
+  maxSpeedMultiplier: 0.1

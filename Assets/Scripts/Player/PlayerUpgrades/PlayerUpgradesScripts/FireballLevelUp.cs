@@ -10,9 +10,9 @@ public class FireballLevelUp  : UpgradeData
         return player.weaponHandler.HasWeapon(fireballInstancerPrefab);
     }
 
-    public override string GetDescription(PlayerWeaponHandler weaponHandler)
+    public override string GetDescription(PlayerGameLogic player)
     {
-        GameObject swordObject = weaponHandler.GetWeapon(fireballInstancerPrefab);
+        GameObject swordObject = player.weaponHandler.GetWeapon(fireballInstancerPrefab);
 
         if (swordObject == null)
             return description;

@@ -45,7 +45,8 @@ public class Sword : Equippable
         if (enemy != null && !damagedEnemies.Contains(enemy))
         {
             float speed = playerRb != null ? playerRb.linearVelocity.magnitude : 0f;
-            int finalDamage = baseDamage + Mathf.RoundToInt(speed * damageMultiplier);
+            int finalDamage = Mathf.RoundToInt(baseDamage * (1f + PlayerGlobalStats.Instance.DamageMultiplier)) + 
+                              Mathf.RoundToInt(speed * damageMultiplier);
             enemy.takeDamage(finalDamage);
             damagedEnemies.Add(enemy);
         }

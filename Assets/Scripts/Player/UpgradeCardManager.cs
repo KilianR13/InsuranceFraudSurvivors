@@ -16,13 +16,14 @@ public class UpgradeCardManager : MonoBehaviour
     private Action<UpgradeCard> onCardPicked;   // Callback that will reach the player.
     UpgradeCard firstCard = null;               // Saving the first card for controller purposes.
 
-    // Muestra 'count' cartas y llama a onPicked cuando se elige una
+    
     /// <summary>
     /// Shows cards randomly picked, obtained from the pram "upgrades".
     /// </summary>
     /// <param name="upgrades">List of upgrades chosen for the player during the level up.</param>
-    /// <param name="onPicked"></param>
-    public void ShowCards(List<UpgradeData> upgrades, Action<UpgradeCard> onPicked, PlayerWeaponHandler weaponHandler)
+    /// <param name="onPicked">Action called when the player picks the card</param>
+    /// <param name="player">Reference to the player so the cars can reach the weapon and item handlers</param>
+    public void ShowCards(List<UpgradeData> upgrades, Action<UpgradeCard> onPicked, PlayerGameLogic player)
     {
         ClearCards();
         onCardPicked = onPicked;
@@ -34,7 +35,7 @@ public class UpgradeCardManager : MonoBehaviour
 
             if (card != null)
             {
-                card.Setup(upgrade, OnCardSelectedFromUI, weaponHandler); 
+                card.Setup(upgrade, OnCardSelectedFromUI, player); 
                 if (firstCard == null)
                 {
                     firstCard = card;    

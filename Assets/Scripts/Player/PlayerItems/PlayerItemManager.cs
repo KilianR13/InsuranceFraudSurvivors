@@ -5,7 +5,7 @@ public class PlayerItemHandler : MonoBehaviour
 {
     public static PlayerItemHandler Instance { get; private set; }
     public List<GameObject> currentItems = new List<GameObject>();
-    [Range(1, 6)]
+    [Range(1, 5)]
     public int maxItems;
     public bool itemsListMaxxed;
 
@@ -30,8 +30,20 @@ public class PlayerItemHandler : MonoBehaviour
         }
     }
 
+    public void InstantiateItem(GameObject newItemPrefab)
+    {
+        if (HasItem(newItemPrefab))
+        {
+            Debug.LogError("This shouldnt be possible");
+            return;
+        }
+        GameObject passiveItem = Instantiate(newItemPrefab, transform.position, Quaternion.identity);
+        passiveItem.transform.SetParent(transform);
+        AddItem(newItemPrefab);
+    }
+
     /// <summary>
-    /// Checks if the asked-for weapon is in the list.
+    /// Checks if the asked-for item is in the list.
     /// </summary>
     /// <param name="itemPrefab">Reference item to check the list</param>
     /// <returns>Boolean. If true, the item is in the list.</returns>

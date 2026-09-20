@@ -34,7 +34,7 @@ public class FireBall_Prefab : MonoBehaviour
 
         if (enemy != null)
         {
-            enemy.takeDamage(damage);
+            enemy.takeDamage(Mathf.RoundToInt(damage * (1f + PlayerGlobalStats.Instance.DamageMultiplier)));
             Destroy(gameObject);
         }
     }

@@ -115,10 +115,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerWeaponHandler
   currentWeapons: []
-  maxWeapons: 6
   StartingWeapon: {fileID: 0}
   swordAttachPoint: {fileID: 1830273388157214192}
-  weaponsListMaxxed: 0
 --- !u!1 &2970405601796366427
 GameObject:
   m_ObjectHideFlags: 0
@@ -355,6 +353,8 @@ MonoBehaviour:
   steering: 300
   drag: 2
   grip: 0.005
+  accelMultiplier: 0
+  maxSpeedMultiplier: 0
   sr: {fileID: 394915901387341467}
   rotationOffset: 0
   leftTrail: {fileID: 2981795058655826768}
@@ -387,6 +387,7 @@ MonoBehaviour:
   healAmmount: 0
   totalEXP: 0
   weaponHandler: {fileID: 1011106369661173039}
+  itemHandler: {fileID: 0}
   upgradeDB: {fileID: 11400000, guid: 424aa3361a9f670488be3b84f457a900, type: 2}
   levelUp: {fileID: 1332601026443912167}
   baseEXPNeeded: 15
@@ -398,6 +399,7 @@ MonoBehaviour:
   overLevelBonus: 0
   pauseMenu: {fileID: 4641008024868215824}
   firstButtonInPauseMenu: {fileID: 2695021793129318467}
+  playerMovement: {fileID: 0}
 --- !u!114 &4289009811494200035
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1012,6 +1014,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6002325247937167704}
+  - component: {fileID: 4619870186087790474}
   m_Layer: 0
   m_Name: ItemManager
   m_TagString: Untagged
@@ -1034,6 +1037,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2893038597859865627}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4619870186087790474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6316573478037885666}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ef184b27cae4cb43b0e3390788fddea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerItemHandler
+  currentItems: []
+  maxItems: 5
+  itemsListMaxxed: 0
 --- !u!1 &9199067392897720542
 GameObject:
   m_ObjectHideFlags: 0

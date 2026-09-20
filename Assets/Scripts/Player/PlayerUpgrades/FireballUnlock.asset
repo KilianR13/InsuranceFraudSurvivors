@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b74baaee7fde7964cb09eaedb042addd, type: 3}
   m_Name: FireballUnlock
   m_EditorClassIdentifier: Assembly-CSharp::FireballUnlock
-  id: Unlock_Fireball
+  id: FIREBALL_UNLOCK
   title: Unlock Fireballs
   description: Throw fireballs!
   maxStacks: 1

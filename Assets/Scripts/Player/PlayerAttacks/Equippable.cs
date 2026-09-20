@@ -1,9 +1,20 @@
 using UnityEngine;
 
+public enum ItemSlotType
+{
+    Front,
+    Back,
+    Side,
+    Top,
+    Special,
+    PassiveItem
+}
+
 public abstract class Equippable : MonoBehaviour
 {
     [SerializeField] protected int currentLevel = 0;
     [SerializeField] protected int maxLevel = 8;
+    public ItemSlotType itemSlot;
     public string[] upgradeDescriptions; // This is probably a bad practice...
 
     public int CurrentLevel => currentLevel;

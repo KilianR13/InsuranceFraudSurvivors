@@ -9,16 +9,14 @@ public class PlayerWeaponHandler : MonoBehaviour
 {
     public static PlayerWeaponHandler Instance { get; private set; }
     public List<GameObject> currentWeapons = new List<GameObject>();
-    [Range(1, 6)]
-    public int maxWeapons;
     [SerializeField] private GameObject StartingWeapon;
     [SerializeField] private Transform swordAttachPoint;
-    public bool weaponsListMaxxed;
 
     
     void Start()
     {
         Instance = this;
+        if (StartingWeapon == null) return;
         if (StartingWeapon.name == "sword") // Oh god this is AWWWWWWWWFUUUUUUUUUUULL KILL ME NOW
         {
             InstantiateSword(StartingWeapon);
@@ -27,6 +25,7 @@ public class PlayerWeaponHandler : MonoBehaviour
         {
             InstantiateWeapon(StartingWeapon);
         }
+        /*
         if (currentWeapons.Count == maxWeapons)
         {
             weaponsListMaxxed = true;
@@ -35,31 +34,44 @@ public class PlayerWeaponHandler : MonoBehaviour
         {
             weaponsListMaxxed = false;
         }
+        */
     }
 
     public void AddWeapon(GameObject newWeapon)
     {
-        if (weaponsListMaxxed) return;
+        Equippable equippable = newWeapon.GetComponent<Equippable>();
 
-        if (currentWeapons.Count < maxWeapons)
+        if (equippable == null)
+            return;
+
+        if (IsSlotOccupied(equippable.itemSlot))
         {
-            currentWeapons.Add(newWeapon);
-            if (currentWeapons.Count == maxWeapons)
-            {
-                weaponsListMaxxed = true;
-            }
+            Debug.LogError("Player tried to equip a weapon in an occupied slot.");
+            return;
         }
+
+        currentWeapons.Add(newWeapon);
     }
 
     public void InstantiateWeapon(GameObject newWeapon)
     {
-        if (weaponsListMaxxed) return; // Fallback
-
         if (HasWeapon(newWeapon))
         {   
             Debug.LogError("Player tried to get weapon they already have");
             return;
         } 
+
+        Equippable equippable = newWeapon.GetComponent<Equippable>();
+
+        if (equippable == null)
+            return;
+
+        if (IsSlotOccupied(equippable.itemSlot))
+        {
+            Debug.LogError("Player tried to equip a weapon in an occupied slot.");
+            return;
+        }
+
         GameObject weapon = Instantiate(newWeapon, transform.position, Quaternion.identity);
         weapon.transform.SetParent(transform);
         AddWeapon(weapon);
@@ -67,11 +79,20 @@ public class PlayerWeaponHandler : MonoBehaviour
 
     public void InstantiateSword(GameObject newWeapon_Sword)
     {
-        if (weaponsListMaxxed) return; // Fallback
-        
         if (HasWeapon(newWeapon_Sword)) 
         {
             Debug.LogError("Player tried to get weapon (sword) they already have");
+            return;
+        }
+
+        Equippable equippable = newWeapon_Sword.GetComponent<Equippable>();
+
+        if (equippable == null)
+            return;
+
+        if (IsSlotOccupied(equippable.itemSlot))
+        {
+            Debug.LogError("Player tried to equip a weapon in an occupied slot.");
             return;
         }
 
@@ -107,6 +128,36 @@ public class PlayerWeaponHandler : MonoBehaviour
             }  
         }
         AddWeapon(currentSword);
+    }
+
+    public bool IsSlotOccupied(ItemSlotType slot)
+    {
+        foreach (GameObject weapon in currentWeapons)
+        {
+            Equippable equippable = weapon.GetComponent<Equippable>();
+
+            if (equippable != null && equippable.itemSlot == slot)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public GameObject GetWeaponInSlot(ItemSlotType slot)
+    {
+        foreach (GameObject weapon in currentWeapons)
+        {
+            Equippable equippable = weapon.GetComponent<Equippable>();
+
+            if (equippable != null && equippable.itemSlot == slot)
+            {
+                return weapon;
+            }
+        }
+
+        return null;
     }
 
     /// <summary>

@@ -155,6 +155,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Sword
   currentLevel: 0
   maxLevel: 6
+  itemSlot: 2
   upgradeDescriptions:
   - Damage +3
   - Speed Multiplier +0.2

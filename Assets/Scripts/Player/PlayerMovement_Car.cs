@@ -14,6 +14,9 @@ public class PlayerMovement_Car : MonoBehaviour
     private float brakeInput;
     [Range(0f, 1f)] public float grip = 0.9f;
 
+    // [Header("Upgraded stats")]
+    private float finalMaxSpeed;
+
     [Header("Visuals")]
     public SpriteRenderer sr;
     public float rotationOffset = 0f;
@@ -108,11 +111,16 @@ public class PlayerMovement_Car : MonoBehaviour
         moveInput = accelInput - brakeInput;   // This input will always be between 1 and -1
 
         if (Mathf.Abs(moveInput) > 0.01f)
-            rb.AddForce(transform.up * moveInput * acceleration);
+        {
+            float finalAcceleration = acceleration * (1f + PlayerGlobalStats.Instance.AccelMultiplier);
+            rb.AddForce(transform.up * moveInput * finalAcceleration);
+        }
+        
+        finalMaxSpeed = maxSpeed * (1f + PlayerGlobalStats.Instance.MaxSpeedMultiplier);
 
         // Limits max speed
-        if (rb.linearVelocity.magnitude > maxSpeed)
-            rb.linearVelocity = rb.linearVelocity.normalized * maxSpeed;
+        if (rb.linearVelocity.magnitude > finalMaxSpeed)
+            rb.linearVelocity = rb.linearVelocity.normalized * finalMaxSpeed;
 
         float speed = rb.linearVelocity.magnitude;
 
@@ -155,7 +163,7 @@ public class PlayerMovement_Car : MonoBehaviour
             else
             {
                 // Normalizes the speed according to the maxSpeed setting
-                float t = Mathf.InverseLerp(0f, maxSpeed, speed);
+                float t = Mathf.InverseLerp(0f, finalMaxSpeed, speed);
 
                 // The volume increases alongside velocity
                 engineSFX.volume = Mathf.Lerp(0.1f, engineVolume, t);

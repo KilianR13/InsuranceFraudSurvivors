@@ -29,11 +29,12 @@ public class UpgradeCard : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
     /// </summary>
     /// <param name="data">Data about the upgrade</param>
     /// <param name="callback">Action of selecting the Card.</param>
-    public void Setup(UpgradeData data, System.Action<UpgradeCard> callback, PlayerWeaponHandler weaponHandler)
+    /// <param name="player">Reference to the player so the card can reach the weapon and item handler.</param>
+    public void Setup(UpgradeData data, System.Action<UpgradeCard> callback, PlayerGameLogic player)
     {
         upgradeData = data;
         titleText.text = data.title;
-        descriptionText.text = data.GetDescription(weaponHandler);
+        descriptionText.text = data.GetDescription(player);
         onCardSelected = callback;
     }
 

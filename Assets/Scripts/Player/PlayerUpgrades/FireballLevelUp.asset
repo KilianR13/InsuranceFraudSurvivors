@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52cffde565cc9324f80aa2bf3713404b, type: 3}
   m_Name: FireballLevelUp
   m_EditorClassIdentifier: Assembly-CSharp::FireballLevelUp
-  id: FIREBALL_LVL_UP
+  id: FIREBALL_UPGRADE
   title: Fireball Level Up!
   description: 
   maxStacks: 8

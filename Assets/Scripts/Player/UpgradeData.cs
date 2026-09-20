@@ -26,7 +26,7 @@ public abstract class UpgradeData : ScriptableObject
         return true; // True by default, always available. Changed manually on the scriptable object.
     }
 
-    public virtual string GetDescription(PlayerWeaponHandler weaponHandler)
+    public virtual string GetDescription(PlayerGameLogic player)
     {
         return description;
     }

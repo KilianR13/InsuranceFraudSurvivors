@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cacc3e73e41b9b44a5e54b0659ed27d, type: 3}
   m_Name: SwordUnlock
   m_EditorClassIdentifier: Assembly-CSharp::SwordSpawnUpgrade
-  id: SWORD_UPGRADE
+  id: SWORD_UNLOCK
   title: A sword!
   description: How, and why? Eh, who cares? Obtain a badass sword!
   maxStacks: 1
-  currentStacks: 1
+  currentStacks: 0
   swordPrefab: {fileID: 4845601921339126416, guid: fd687b795b7e9464682e24e6a638eaf2, type: 3}

@@ -11,9 +11,9 @@ public class SwordLevelUp  : UpgradeData
         return player.weaponHandler.HasWeapon(swordPrefab);
     }
 
-    public override string GetDescription(PlayerWeaponHandler weaponHandler)
+    public override string GetDescription(PlayerGameLogic player)
     {
-        GameObject swordObject = weaponHandler.GetWeapon(swordPrefab);
+        GameObject swordObject = player.weaponHandler.GetWeapon(swordPrefab);
 
         if (swordObject == null)
             return description;

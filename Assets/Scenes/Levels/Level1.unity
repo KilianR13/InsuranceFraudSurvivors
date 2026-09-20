@@ -734,37 +734,6 @@ MonoBehaviour:
   patternWidth: 24.5
   patternHeight: 21.5
   gridSize: 4
---- !u!1 &829608738
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 829608739}
-  m_Layer: 0
-  m_Name: Item_MaxHealth
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &829608739
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 829608738}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &927393966 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2893038597859865627, guid: 914a115e6c673bf42818dc404bd00802, type: 3}
@@ -983,7 +952,7 @@ PrefabInstance:
     - target: {fileID: 1011106369661173039, guid: 914a115e6c673bf42818dc404bd00802, type: 3}
       propertyPath: StartingWeapon
       value: 
-      objectReference: {fileID: 9016210015504464573, guid: 070e488679791174b9ace35229a02209, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 2696105773617812948, guid: 914a115e6c673bf42818dc404bd00802, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -1676,4 +1645,3 @@ SceneRoots:
   - {fileID: 267109684}
   - {fileID: 509044473}
   - {fileID: 268751575}
-  - {fileID: 829608739}

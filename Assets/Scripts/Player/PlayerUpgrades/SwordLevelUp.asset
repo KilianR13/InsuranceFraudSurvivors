@@ -12,10 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa544866de495b84c90430f0fd13d150, type: 3}
   m_Name: SwordLevelUp
   m_EditorClassIdentifier: Assembly-CSharp::SwordUpgradeDMG
-  id: SWORD_LVL_UP
+  id: SWORD_UPGRADE
   title: Sword Level Up!
   description: 
-  level: 0
   maxStacks: 6
-  currentStacks: 6
+  currentStacks: 0
   swordPrefab: {fileID: 4845601921339126416, guid: fd687b795b7e9464682e24e6a638eaf2, type: 3}
