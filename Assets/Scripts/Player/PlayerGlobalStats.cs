@@ -19,6 +19,11 @@ public class PlayerGlobalStats : MonoBehaviour
     void Awake()
     {
         Instance = this;
+        CooldownMultiplier = 1f - PermanentUpgradeManager.Instance.data.Permanent_CooldownReduction;
+        DamageMultiplier = 1f * PermanentUpgradeManager.Instance.data.Permanent_DamageMultiplier;
+        MaxHealthMultiplier = 1f * PermanentUpgradeManager.Instance.data.Permanent_MaxHealthMultiplier;
+        AccelMultiplier = 1f * PermanentUpgradeManager.Instance.data.Permanent_AccelMultiplier;
+        MaxSpeedMultiplier = 1f * PermanentUpgradeManager.Instance.data.Permanent_MaxSpeedMultiplier;
     }
 
 }

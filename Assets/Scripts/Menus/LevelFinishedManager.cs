@@ -34,6 +34,8 @@ public class LevelFinishedManager : MonoBehaviour
             defeatedEnemies.text = $"You have defeated 0 enemies.";
             playerEXP.text = $"Money earned: $0 (poor)";
         }
+        PermanentUpgradeManager.Instance.data.PlayerMoney += GameManager.gm.playerScore;
+        PermanentUpgradeManager.Instance.Save();
         UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(PlayAgain.gameObject);
     }
     
