@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f76bf02b7fca1054d861f257128cc22a, type: 3}
+  m_Name: ItemExtraEXPUnlock
+  m_EditorClassIdentifier: Assembly-CSharp::ItemExtraEXPUnlock
+  id: ITEM_EXTRAEXP_UNLOCK
+  title: Paper Crown
+  description: You feel more important. +10% to all money.
+  maxStacks: 1
+  currentStacks: 0
+  itemExtraEXPPrefab: {fileID: 6806566835454391254, guid: 999a47411a956a24696ccc289397101b, type: 3}

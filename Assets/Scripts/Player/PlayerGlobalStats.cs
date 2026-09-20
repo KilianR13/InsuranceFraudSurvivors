@@ -14,6 +14,8 @@ public class PlayerGlobalStats : MonoBehaviour
     public float AccelMultiplier = 1f;
     [Range(1f, 5f)]
     public float MaxSpeedMultiplier = 1f;
+    [Range(1f, 5f)]
+    public float EXPMultiplier = 1f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -24,6 +26,7 @@ public class PlayerGlobalStats : MonoBehaviour
         MaxHealthMultiplier = 1f * PermanentUpgradeManager.Instance.data.Permanent_MaxHealthMultiplier;
         AccelMultiplier = 1f * PermanentUpgradeManager.Instance.data.Permanent_AccelMultiplier;
         MaxSpeedMultiplier = 1f * PermanentUpgradeManager.Instance.data.Permanent_MaxSpeedMultiplier;
+        EXPMultiplier = 1f * PermanentUpgradeManager.Instance.data.Permanent_EXPMultiplier;
     }
 
 }

@@ -147,8 +147,9 @@ public class PlayerGameLogic : MonoBehaviour
 
     public void addEXP(int exp)
     {
-        currentEXP += exp;
-        totalEXP += exp;
+        int obtainedEXP = Mathf.RoundToInt(exp * (1f + PlayerGlobalStats.Instance.EXPMultiplier));
+        currentEXP += obtainedEXP;
+        totalEXP += obtainedEXP;
         expBar.UpdateEXPBar(currentEXP, expToNextLevel);
         moneyEarned.text = $"$ = {totalEXP + overLevelBonus}";
         GameManager.gm.playerScore = totalEXP + overLevelBonus;
