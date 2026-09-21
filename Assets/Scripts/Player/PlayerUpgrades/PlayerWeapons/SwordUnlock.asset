@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: SwordUnlock
   m_EditorClassIdentifier: Assembly-CSharp::SwordSpawnUpgrade
   id: SWORD_UNLOCK
-  title: A sword!
-  description: How, and why? Eh, who cares? Obtain a badass sword!
+  title: Lateral Sword
+  description: Wield a massive sword from the side of your car!
   maxStacks: 1
   currentStacks: 0
   swordPrefab: {fileID: 4845601921339126416, guid: fd687b795b7e9464682e24e6a638eaf2, type: 3}

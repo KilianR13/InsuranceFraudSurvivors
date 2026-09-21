@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FireballUnlock
   id: FIREBALL_UNLOCK
   title: Unlock Fireballs
-  description: Throw fireballs!
+  description: Throw fireballs like a mage!
   maxStacks: 1
   currentStacks: 0
   fireballInstancerPrefab: {fileID: 9016210015504464573, guid: 070e488679791174b9ace35229a02209, type: 3}

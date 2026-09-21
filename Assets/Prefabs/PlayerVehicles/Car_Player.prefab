@@ -353,8 +353,6 @@ MonoBehaviour:
   steering: 300
   drag: 2
   grip: 0.005
-  accelMultiplier: 0
-  maxSpeedMultiplier: 0
   sr: {fileID: 394915901387341467}
   rotationOffset: 0
   leftTrail: {fileID: 2981795058655826768}
@@ -387,7 +385,7 @@ MonoBehaviour:
   healAmmount: 0
   totalEXP: 0
   weaponHandler: {fileID: 1011106369661173039}
-  itemHandler: {fileID: 0}
+  itemHandler: {fileID: 4619870186087790474}
   upgradeDB: {fileID: 11400000, guid: 424aa3361a9f670488be3b84f457a900, type: 2}
   levelUp: {fileID: 1332601026443912167}
   baseEXPNeeded: 15
@@ -399,7 +397,7 @@ MonoBehaviour:
   overLevelBonus: 0
   pauseMenu: {fileID: 4641008024868215824}
   firstButtonInPauseMenu: {fileID: 2695021793129318467}
-  playerMovement: {fileID: 0}
+  playerMovement: {fileID: 5376568330624388301}
 --- !u!114 &4289009811494200035
 MonoBehaviour:
   m_ObjectHideFlags: 0

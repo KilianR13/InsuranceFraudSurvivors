@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemDamageUnlock
   id: ITEM_DAMAGE_UNLOCK
   title: Weapon polish!
-  description: Polish your weapons, making more damage!
+  description: Polish your weapons, making them deal more damage!
   maxStacks: 1
   currentStacks: 0
   itemDamagePrefab: {fileID: 0}

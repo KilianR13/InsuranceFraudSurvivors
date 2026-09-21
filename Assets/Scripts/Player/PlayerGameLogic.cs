@@ -16,7 +16,7 @@ public class PlayerGameLogic : MonoBehaviour
     private HealthBar healthBar;
     public Animator deathAnimation;
     private int currentHealth;
-    public float healTimer;
+    public float healTimer = 5f;
     public int healAmmount;
     private int currentEXP;
     public int totalEXP;
@@ -64,11 +64,14 @@ public class PlayerGameLogic : MonoBehaviour
         canPause = true;
         pauseMenu.SetActive(false);
         overLevelBonus = 0;
-        playerMovement = GetComponent<PlayerMovement_Car>();
+        if (playerMovement == null) 
+        {
+            playerMovement = GetComponent<PlayerMovement_Car>();
+        }
         currentLevel = 1;
         currentEXP = 0;
         totalEXP = 0;
-        healTimer = 5f;
+        // healTimer = 5f; just in case
         healAmmount = 0;
         
         foreach (var u in upgradeDB.upgradeData)

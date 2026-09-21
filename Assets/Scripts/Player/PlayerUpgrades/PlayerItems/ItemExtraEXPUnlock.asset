@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemExtraEXPUnlock
   id: ITEM_EXTRAEXP_UNLOCK
   title: Paper Crown
-  description: You feel more important. +10% to all money.
+  description: You feel more important. +10% to all money!
   maxStacks: 1
   currentStacks: 0
   itemExtraEXPPrefab: {fileID: 6806566835454391254, guid: 999a47411a956a24696ccc289397101b, type: 3}

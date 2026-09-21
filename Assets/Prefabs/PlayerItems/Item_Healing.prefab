@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &6806566835454391254
+--- !u!1 &6769177336219203955
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,22 +8,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2652611754698638681}
-  - component: {fileID: 4976677262067893997}
+  - component: {fileID: 2082970017679853846}
+  - component: {fileID: 4009648268906063293}
   m_Layer: 0
-  m_Name: Item_ExtraEXP
+  m_Name: Item_Healing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2652611754698638681
+--- !u!4 &2082970017679853846
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6806566835454391254}
+  m_GameObject: {fileID: 6769177336219203955}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -32,25 +32,30 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4976677262067893997
+--- !u!114 &4009648268906063293
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6806566835454391254}
+  m_GameObject: {fileID: 6769177336219203955}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2bc1c2b7ce072aa438db79abba66fac2, type: 3}
+  m_Script: {fileID: 11500000, guid: 37e249bf0707b334487332f473162a25, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Item_ExtraEXP
+  m_EditorClassIdentifier: Assembly-CSharp::Item_Healing
   currentLevel: 0
-  maxLevel: 5
+  maxLevel: 9
   itemSlot: 5
   upgradeDescriptions:
-  - +5% EXP
-  - +5% EXP
-  - +5% EXP
-  - +5% EXP
-  - +10% EXP
-  EXPMultiplier: 0.1
+  - +2 HP healed
+  - +2 HP healed
+  - Healing 0.2s faster
+  - +3 HP healed
+  - Healing 0.3s faster
+  - +3 HP healed
+  - Healing 0.5s faster
+  - +4 HP healed
+  - Healing 0.7s faster
+  healingTimerReduction: 0.3
+  healingAmmountIncrease: 1

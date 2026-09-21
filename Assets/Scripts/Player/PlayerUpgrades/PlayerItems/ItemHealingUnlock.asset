@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a46f67b769739a4499e76497271f45b2, type: 3}
+  m_Name: ItemHealingUnlock
+  m_EditorClassIdentifier: Assembly-CSharp::ItemHealingUnlock
+  id: ITEM_HEALING_UNLOCK
+  title: Repair On Wheels!
+  description: Your car slowly repairs itself!
+  maxStacks: 1
+  currentStacks: 0
+  ItemHealingPrefab: {fileID: 6769177336219203955, guid: 5face2e35fa09994d9071fcf839aca91, type: 3}

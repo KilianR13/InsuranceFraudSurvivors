@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: FireballLevelUp
   m_EditorClassIdentifier: Assembly-CSharp::FireballLevelUp
   id: FIREBALL_UPGRADE
-  title: Fireball Level Up!
+  title: Stronger Fireballs!
   description: 
   maxStacks: 8
   currentStacks: 0

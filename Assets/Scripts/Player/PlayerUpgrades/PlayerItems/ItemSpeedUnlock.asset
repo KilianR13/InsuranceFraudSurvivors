@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemSpeedUnlock
   id: ITEM_SPEED_UNLOCK
   title: Maintenance
-  description: Make your car faster!
+  description: Make your car go faster!
   maxStacks: 1
   currentStacks: 0
   itemSpeedPrefab: {fileID: 4373137558551620546, guid: 929179a51d09b8741979fbc8b60b8799, type: 3}
