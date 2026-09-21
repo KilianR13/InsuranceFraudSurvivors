@@ -57,6 +57,7 @@ public class PlayerGameLogic : MonoBehaviour
     public PlayerMovement_Car playerMovement;
 
     private int expToNextLevel => Mathf.RoundToInt(baseEXPNeeded * Mathf.Pow(expMultiplier, currentLevel - 1));
+    private Transform EXPMagnet;
 
     
     void Start()
@@ -115,6 +116,10 @@ public class PlayerGameLogic : MonoBehaviour
         {
             itemHandler = GetComponentInChildren<PlayerItemHandler>();
         }
+
+        EXPMagnet = transform.Find("PlayerEXPBox");
+        EXPMagnet.localScale = Vector3.one * PlayerGlobalStats.Instance.EXPMagnetSize;
+
         moneyEarned.text = $"$ = {totalEXP + overLevelBonus}"; // Debug.
         StartCoroutine(heal());
     }

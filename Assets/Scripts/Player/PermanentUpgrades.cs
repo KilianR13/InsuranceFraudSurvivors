@@ -8,6 +8,7 @@ public class PermanentUpgradeData
     public float Permanent_AccelMultiplier = 1f;
     public float Permanent_MaxSpeedMultiplier = 1f;
     public float Permanent_EXPMultiplier = 1f;
+    public float Permanent_EXPMagnetSize = 1f;
 
     public int PlayerMoney = 0;
 }

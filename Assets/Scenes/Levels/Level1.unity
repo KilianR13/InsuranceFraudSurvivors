@@ -769,6 +769,7 @@ MonoBehaviour:
   AccelMultiplier: 1
   MaxSpeedMultiplier: 1
   EXPMultiplier: 5
+  EXPMagnetSize: 1
 --- !u!4 &812121004
 Transform:
   m_ObjectHideFlags: 0
