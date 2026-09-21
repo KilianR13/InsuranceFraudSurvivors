@@ -3,15 +3,17 @@ using UnityEngine;
 public class Item_ExtraEXP : Equippable
 {
     [SerializeField] private float EXPMultiplier = 0.1f;
+    private float baseEXPMultiplier;
 
     void Start()
     {
+        baseEXPMultiplier = PlayerGlobalStats.Instance.EXPMultiplier;
         UpdateGlobalStats();
     }
 
     void UpdateGlobalStats()
     {
-        PlayerGlobalStats.Instance.EXPMultiplier += EXPMultiplier;
+        PlayerGlobalStats.Instance.EXPMultiplier = baseEXPMultiplier + EXPMultiplier;
     }
 
     protected override void ApplyUpgrade()

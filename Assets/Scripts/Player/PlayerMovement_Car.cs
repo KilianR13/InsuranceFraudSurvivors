@@ -112,11 +112,11 @@ public class PlayerMovement_Car : MonoBehaviour
 
         if (Mathf.Abs(moveInput) > 0.01f)
         {
-            float finalAcceleration = acceleration * (1f + PlayerGlobalStats.Instance.AccelMultiplier);
+            float finalAcceleration = acceleration * PlayerGlobalStats.Instance.AccelMultiplier;
             rb.AddForce(transform.up * moveInput * finalAcceleration);
         }
         
-        finalMaxSpeed = maxSpeed * (1f + PlayerGlobalStats.Instance.MaxSpeedMultiplier);
+        finalMaxSpeed = maxSpeed * PlayerGlobalStats.Instance.MaxSpeedMultiplier;
 
         // Limits max speed
         if (rb.linearVelocity.magnitude > finalMaxSpeed)

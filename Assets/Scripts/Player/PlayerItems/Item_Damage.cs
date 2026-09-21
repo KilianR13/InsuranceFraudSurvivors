@@ -3,16 +3,18 @@ using UnityEngine;
 public class Item_Damage : Equippable
 {
     [SerializeField] private float damageMultiplier = 0.1f;
+    private float baseDamageMultiplier;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        baseDamageMultiplier = PlayerGlobalStats.Instance.DamageMultiplier;
         UpdateGlobalStats();
     }
 
     void UpdateGlobalStats()
     {
-        PlayerGlobalStats.Instance.DamageMultiplier += damageMultiplier;
+        PlayerGlobalStats.Instance.DamageMultiplier = baseDamageMultiplier + damageMultiplier;
     }
 
     protected override void ApplyUpgrade()

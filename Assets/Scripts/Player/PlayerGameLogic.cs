@@ -121,7 +121,7 @@ public class PlayerGameLogic : MonoBehaviour
 
     private int calculateMaxHealth()
     {
-        return Mathf.RoundToInt(maxHealth * (1f + PlayerGlobalStats.Instance.MaxHealthMultiplier));
+        return Mathf.RoundToInt(maxHealth * PlayerGlobalStats.Instance.MaxHealthMultiplier);
     }
 
     /// <summary>
@@ -150,7 +150,7 @@ public class PlayerGameLogic : MonoBehaviour
 
     public void addEXP(int exp)
     {
-        int obtainedEXP = Mathf.RoundToInt(exp * (1f + PlayerGlobalStats.Instance.EXPMultiplier));
+        int obtainedEXP = Mathf.RoundToInt(exp * PlayerGlobalStats.Instance.EXPMultiplier);
         currentEXP += obtainedEXP;
         totalEXP += obtainedEXP;
         expBar.UpdateEXPBar(currentEXP, expToNextLevel);

@@ -26,7 +26,7 @@ public class Weapon_Fireball : Equippable
             if (nearestEnemy != null)
             {
                 Shoot(nearestEnemy);
-                cooldownTimer = attackCooldown * (1f - PlayerGlobalStats.Instance.CooldownMultiplier);
+                cooldownTimer = attackCooldown * PlayerGlobalStats.Instance.CooldownMultiplier;
             }
         }
     }

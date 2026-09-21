@@ -5,17 +5,21 @@ public class Item_Speed : Equippable
     [SerializeField] private float accelMultiplier = 0.2f;
 
     [SerializeField] private float maxSpeedMultiplier = 0.1f;
+    private float baseAccelMultiplier;
+    private float baseMaxSpeedMultiplier;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        baseAccelMultiplier = PlayerGlobalStats.Instance.AccelMultiplier;
+        baseMaxSpeedMultiplier = PlayerGlobalStats.Instance.MaxSpeedMultiplier;
         UpdatePlayerMovement();
     }
 
     void UpdatePlayerMovement()
     {   
-        PlayerGlobalStats.Instance.AccelMultiplier += accelMultiplier;
-        PlayerGlobalStats.Instance.MaxSpeedMultiplier += maxSpeedMultiplier;
+        PlayerGlobalStats.Instance.AccelMultiplier = baseAccelMultiplier + accelMultiplier;
+        PlayerGlobalStats.Instance.MaxSpeedMultiplier = baseMaxSpeedMultiplier + maxSpeedMultiplier;
     }
 
     protected override void ApplyUpgrade()

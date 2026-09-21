@@ -5,21 +5,26 @@ public class Item_Healing : Equippable
     [SerializeField] private float healingTimerReduction = 0.3f;
     [SerializeField] private int healingAmmountIncrease = 1;
 
+    private float originalHealingTimer;
+    private int originalHealingAmmount;
+
     private PlayerGameLogic player;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         player = transform.parent.GetComponentInParent<PlayerGameLogic>();
+        originalHealingAmmount = player.healAmmount;
+        originalHealingTimer = player.healTimer;
         UpdatePlayerStats();
     }
 
     void UpdatePlayerStats()
     {
-        player.healAmmount += healingAmmountIncrease;
+        player.healAmmount = originalHealingAmmount + healingAmmountIncrease;
         if (player.healTimer > 0.5f && !((player.healTimer - healingTimerReduction) < 0.5f))
         {
-            player.healTimer -= healingTimerReduction;    
+            player.healTimer = originalHealingTimer - healingTimerReduction;    
         }
         else
         {

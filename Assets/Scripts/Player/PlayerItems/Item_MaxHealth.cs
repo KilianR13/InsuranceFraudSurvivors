@@ -3,16 +3,19 @@ using UnityEngine;
 public class Item_MaxHealth : Equippable
 {
     [SerializeField] private float MaxHPMultipler = 0.1f;
+    private float baseMaxHPMultiplier;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        baseMaxHPMultiplier = PlayerGlobalStats.Instance.MaxHealthMultiplier;
         UpdatePlayerStats();
     }
 
     void UpdatePlayerStats()
     {
-        PlayerGlobalStats.Instance.MaxHealthMultiplier += MaxHPMultipler;
+        PlayerGlobalStats.Instance.MaxHealthMultiplier = baseMaxHPMultiplier + MaxHPMultipler;
     }
 
     protected override void ApplyUpgrade()

@@ -17,4 +17,4 @@ MonoBehaviour:
   description: 
   maxStacks: 3
   currentStacks: 0
-  itemDamagePrefab: {fileID: 0}
+  itemDamagePrefab: {fileID: 7327963800341838912, guid: 946b88700cc944f408362b2d21406687, type: 3}

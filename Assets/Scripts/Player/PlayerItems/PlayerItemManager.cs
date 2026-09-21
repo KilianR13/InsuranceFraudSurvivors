@@ -39,7 +39,7 @@ public class PlayerItemHandler : MonoBehaviour
         }
         GameObject passiveItem = Instantiate(newItemPrefab, transform.position, Quaternion.identity);
         passiveItem.transform.SetParent(transform);
-        AddItem(newItemPrefab);
+        AddItem(passiveItem);
     }
 
     /// <summary>
@@ -51,7 +51,7 @@ public class PlayerItemHandler : MonoBehaviour
     {
         foreach (GameObject item in currentItems)
         {
-            if (item.name == itemPrefab.name + "(Clone)") // This is awful. But pray that it works...
+            if (item.name == itemPrefab.name + "(Clone)") // This is awful. But pray that it works...  + "(Clone)"
             {
                 return true;
             }

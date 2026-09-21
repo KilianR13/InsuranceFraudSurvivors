@@ -20,13 +20,22 @@ public class PlayerGlobalStats : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
-        Instance = this;
-        CooldownMultiplier = 1f - PermanentUpgradeManager.Instance.data.Permanent_CooldownReduction;
-        DamageMultiplier = 1f * PermanentUpgradeManager.Instance.data.Permanent_DamageMultiplier;
-        MaxHealthMultiplier = 1f * PermanentUpgradeManager.Instance.data.Permanent_MaxHealthMultiplier;
-        AccelMultiplier = 1f * PermanentUpgradeManager.Instance.data.Permanent_AccelMultiplier;
-        MaxSpeedMultiplier = 1f * PermanentUpgradeManager.Instance.data.Permanent_MaxSpeedMultiplier;
-        EXPMultiplier = 1f * PermanentUpgradeManager.Instance.data.Permanent_EXPMultiplier;
+        if (Instance == null)
+        {
+            Instance = this;    
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+        DontDestroyOnLoad(Instance);
+
+        // CooldownMultiplier = 1f - PermanentUpgradeManager.Instance.data.Permanent_CooldownReduction;
+        // DamageMultiplier = 1f * PermanentUpgradeManager.Instance.data.Permanent_DamageMultiplier;
+        // MaxHealthMultiplier = 1f * PermanentUpgradeManager.Instance.data.Permanent_MaxHealthMultiplier;
+        // AccelMultiplier = 1f * PermanentUpgradeManager.Instance.data.Permanent_AccelMultiplier;
+        // MaxSpeedMultiplier = 1f * PermanentUpgradeManager.Instance.data.Permanent_MaxSpeedMultiplier;
+        // EXPMultiplier = 1f * PermanentUpgradeManager.Instance.data.Permanent_EXPMultiplier;
     }
 
 }
