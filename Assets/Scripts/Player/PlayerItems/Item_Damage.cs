@@ -21,14 +21,14 @@ public class Item_Damage : Equippable
     {
         switch (currentLevel)
         {
-            case 1:
-                damageMultiplier += 0.1f;
-                break;
             case 2:
-                damageMultiplier += 0.1f;
+                damageMultiplier += 0.1f; // 20% extra damage
                 break;
             case 3:
-                damageMultiplier += 0.2f;
+                damageMultiplier += 0.1f; // 30% extra damage
+                break;
+            case 4:
+                damageMultiplier += 0.2f; // 40% extra damage
                 break;
             default:
                 Debug.LogError("Wtf?");

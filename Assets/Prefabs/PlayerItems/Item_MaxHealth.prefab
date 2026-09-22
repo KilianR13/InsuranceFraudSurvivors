@@ -44,14 +44,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63b119c45d723d64cb611f4b246ee23d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Item_MaxHealth
-  currentLevel: 0
+  currentLevel: 1
   maxLevel: 6
   itemSlot: 5
   upgradeDescriptions:
   - +5% Max HP
   - +5% Max HP
   - +10% Max HP
-  - +5% Max HP
-  - +5% Max HP
+  - +10% Max HP
   - +10% Max HP
   MaxHPMultipler: 0.1

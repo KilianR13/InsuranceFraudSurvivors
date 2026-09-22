@@ -26,28 +26,28 @@ public class Item_Speed : Equippable
     {
         switch (currentLevel)
         {
-            case 1:
+            case 2:
                 accelMultiplier += 0.1f;
                 break;
-            case 2:
+            case 3:
                 maxSpeedMultiplier += 0.1f;
                 break;
-            case 3:
-                accelMultiplier += 0.2f;
-                break;
             case 4:
-                maxSpeedMultiplier += 0.2f;
+                accelMultiplier += 0.2f;
                 break;
             case 5:
-                maxSpeedMultiplier += 0.3f;
+                maxSpeedMultiplier += 0.2f;
                 break;
             case 6:
-                accelMultiplier += 0.2f;
+                maxSpeedMultiplier += 0.3f;
                 break;
             case 7:
-                accelMultiplier += 0.3f;
+                accelMultiplier += 0.2f;
                 break;
             case 8:
+                accelMultiplier += 0.3f;
+                break;
+            case 9:
                 maxSpeedMultiplier += 0.3f;
                 break;
             default:

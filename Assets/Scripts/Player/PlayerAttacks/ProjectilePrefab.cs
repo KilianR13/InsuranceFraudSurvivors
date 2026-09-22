@@ -1,10 +1,14 @@
 using UnityEngine;
 
-public class FireBall_Prefab : MonoBehaviour
+public class ProjectilePrefab : MonoBehaviour
 {
-    public float speed = 10f;
+    public float speed;
+    public int damage;
     public float lifetime = 5f;
-    public int damage = 10;
+
+    [HideInInspector]
+    public int maxEnemyPenetration;
+    private int enemiesPenetrated = 0;
 
     private Vector3 direction;
 
@@ -18,7 +22,7 @@ public class FireBall_Prefab : MonoBehaviour
         transform.position += direction * speed * Time.deltaTime;
 
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0f, 0f, angle);
+        transform.rotation = Quaternion.Euler(0f, 0f, angle - 90f);
 
         lifetime -= Time.deltaTime;
 
@@ -34,8 +38,12 @@ public class FireBall_Prefab : MonoBehaviour
 
         if (enemy != null)
         {
-            enemy.takeDamage(Mathf.RoundToInt(damage * (1f + PlayerGlobalStats.Instance.DamageMultiplier)));
-            Destroy(gameObject);
+            enemy.takeDamage(damage);
+            enemiesPenetrated++;
+            if (enemiesPenetrated == maxEnemyPenetration)
+            {
+                Destroy(gameObject);    
+            }
         }
     }
 }

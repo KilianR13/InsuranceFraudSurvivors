@@ -22,20 +22,17 @@ public class Item_MaxHealth : Equippable
     {
         switch (currentLevel)
         {
-            case 1:
+            case 2:
                 MaxHPMultipler += 0.05f; // 15% extra Max HP
                 break;
-            case 2:
+            case 3:
                 MaxHPMultipler += 0.05f; // 20% extra Max HP
                 break;
-            case 3:
+            case 4:
                 MaxHPMultipler += 0.1f;  // 30% extra Max HP
                 break;
-            case 4:
-                MaxHPMultipler += 0.05f; // 35% extra Max HP
-                break;
             case 5:
-                MaxHPMultipler += 0.05f; // 40% extra Max HP
+                MaxHPMultipler += 0.1f;  // 40% extra Max HP
                 break;
             case 6:
                 MaxHPMultipler += 0.1f;  // 50% extra Max HP

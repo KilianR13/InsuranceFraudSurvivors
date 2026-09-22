@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37e249bf0707b334487332f473162a25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Item_Healing
-  currentLevel: 0
+  currentLevel: 1
   maxLevel: 9
   itemSlot: 5
   upgradeDescriptions:
@@ -55,7 +55,6 @@ MonoBehaviour:
   - Healing 0.3s faster
   - +3 HP healed
   - Healing 0.5s faster
-  - +4 HP healed
-  - Healing 0.7s faster
+  - +4 HP healed 0.7s faster
   healingTimerReduction: 0.3
   healingAmmountIncrease: 1

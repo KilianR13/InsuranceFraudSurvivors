@@ -44,8 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb48f1e380155ad4985b7bf31d638421, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Item_Speed
-  currentLevel: 0
-  maxLevel: 8
+  currentLevel: 1
+  maxLevel: 9
   itemSlot: 5
   upgradeDescriptions:
   - +10% acceleration

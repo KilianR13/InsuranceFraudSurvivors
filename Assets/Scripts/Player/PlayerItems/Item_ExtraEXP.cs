@@ -20,19 +20,19 @@ public class Item_ExtraEXP : Equippable
     {
         switch (currentLevel)
         {
-            case 1:
+            case 2:
                 EXPMultiplier += 0.05f; // 15%
                 break;
-            case 2:
+            case 3:
                 EXPMultiplier += 0.05f; // 20%
                 break;
-            case 3:
+            case 4:
                 EXPMultiplier += 0.05f; // 25%
                 break;
-            case 4:
+            case 5:
                 EXPMultiplier += 0.05f; // 30%
                 break;
-            case 5:
+            case 6:
                 EXPMultiplier += 0.1f;  // 40%
                 break;
             default:

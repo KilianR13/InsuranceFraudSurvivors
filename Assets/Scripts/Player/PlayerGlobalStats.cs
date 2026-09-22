@@ -8,6 +8,8 @@ public class PlayerGlobalStats : MonoBehaviour
     public float CooldownMultiplier = 1f;
     [Range(1f, 100f)]
     public float DamageMultiplier = 1f;
+    public float ProjectileSpeedMultiplier = 1f;
+    public int ProjectilePenetration = 0;
     [Range(1f, 100f)]
     public float MaxHealthMultiplier = 1f;
     [Range(1f, 5f)]
@@ -17,6 +19,7 @@ public class PlayerGlobalStats : MonoBehaviour
     [Range(1f, 5f)]
     public float EXPMultiplier = 1f;
     public float EXPMagnetSize = 1f;
+    
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()

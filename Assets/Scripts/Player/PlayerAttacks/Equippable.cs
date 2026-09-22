@@ -12,7 +12,7 @@ public enum ItemSlotType
 
 public abstract class Equippable : MonoBehaviour
 {
-    [SerializeField] protected int currentLevel = 0;
+    [SerializeField] protected int currentLevel = 1;
     [SerializeField] protected int maxLevel = 8;
     public ItemSlotType itemSlot;
     public string[] upgradeDescriptions; // This is probably a bad practice...
@@ -37,7 +37,7 @@ public abstract class Equippable : MonoBehaviour
         // if (currentLevel >= upgradeDescriptions.Length)
         //     return "MAX LEVEL";
 
-        return upgradeDescriptions[currentLevel];
+        return upgradeDescriptions[currentLevel - 1];
     }
 
     protected abstract void ApplyUpgrade();

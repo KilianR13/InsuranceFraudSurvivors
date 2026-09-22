@@ -44,8 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03f365476891e3143b346ae3e02b13a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Item_Damage
-  currentLevel: 0
-  maxLevel: 3
+  currentLevel: 1
+  maxLevel: 4
   itemSlot: 5
   upgradeDescriptions:
   - +10% DMG

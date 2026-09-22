@@ -24,23 +24,20 @@ public class Item_IncreasedRange : Equippable
     {
         switch (currentLevel)
         {
-            case 1:
+            case 2:
                 sizeMultiplier += 0.1f;  // 30% extra range
                 break;
-            case 2:
+            case 3:
                 sizeMultiplier += 0.1f;  // 40% extra range
                 break;
-            case 3:
+            case 4:
                 sizeMultiplier += 0.1f;  // 50% extra range
                 break;
-            case 4:
-                sizeMultiplier += 0.1f;  // 65% extra range
-                break;
             case 5:
-                sizeMultiplier += 0.2f;  // 80% extra range
+                sizeMultiplier += 0.2f;  // 70% extra range
                 break;
             case 6:
-                sizeMultiplier += 0.2f;  // 100% extra range
+                sizeMultiplier += 0.3f;  // 100% extra range
                 break;
             default:
                 Debug.LogError("Wtf?");

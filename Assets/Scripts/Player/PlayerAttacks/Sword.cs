@@ -83,22 +83,22 @@ public class Sword : Equippable
     {
         switch (currentLevel)
         {
-            case 1:
-                baseDamage += 3;
-                break;
             case 2:
-                damageMultiplier += 0.2f;
+                baseDamage += 3;
                 break;
             case 3:
-                baseDamage += 3;
+                damageMultiplier += 0.2f;
                 break;
             case 4:
-                baseDamage += 6;
+                baseDamage += 3;
                 break;
             case 5:
-                damageMultiplier += 0.5f;
+                baseDamage += 6;
                 break;
             case 6:
+                damageMultiplier += 0.5f;
+                break;
+            case 7:
                 baseDamage += 6;
                 break;
             default:

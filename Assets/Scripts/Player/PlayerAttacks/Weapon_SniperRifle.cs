@@ -1,19 +1,22 @@
 using UnityEngine;
 
-public class Weapon_Fireball : Equippable
+public class Weapon_SniperRifle : Equippable
 {
     [Header("Base stats")]
-    [SerializeField] private int damage = 5;
-    [SerializeField] private float attackRange = 5f;
-    [SerializeField] private float attackCooldown = 1.5f;
-    [SerializeField] private float fireballSpeed = 10f;
+    [SerializeField] private int damage = 1;
+    [SerializeField] private float bulletSpeed = 10f;
+    [SerializeField] private float firingCooldown;
+    [SerializeField] private float firingRange;
     [SerializeField] private int maxEnemyPenetration = 1;
 
     [Header("References")]
-    public GameObject fireballPrefab;
+    public GameObject bulletPrefab;
+    public Transform firingPoint;
+    public LineRenderer laser;
 
     private float cooldownTimer = 0f;
 
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         
@@ -23,16 +26,31 @@ public class Weapon_Fireball : Equippable
     {
         cooldownTimer -= Time.deltaTime;
 
-        if (cooldownTimer <= 0f)
-        {
-            EnemyAI nearestEnemy = FindNearestEnemy();
+        EnemyAI nearestEnemy = FindNearestEnemy();
 
-            if (nearestEnemy != null)
+        if (nearestEnemy != null)
+        {
+            Vector3 direction = nearestEnemy.transform.position - transform.position;
+
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+            transform.rotation = Quaternion.Euler(0f, 0f, angle - 90f);
+
+            laser.SetPosition(0, firingPoint.position);
+            laser.SetPosition(1, nearestEnemy.transform.position);
+            if (cooldownTimer <= 0f)
             {
                 Shoot(nearestEnemy);
-                cooldownTimer = attackCooldown * PlayerGlobalStats.Instance.CooldownMultiplier;
+                cooldownTimer = firingCooldown * PlayerGlobalStats.Instance.CooldownMultiplier;
             }
         }
+        else
+        {
+            laser.SetPosition(0, firingPoint.position);
+            laser.SetPosition(1, firingPoint.position);
+        }
+
+        
     }
 
     private EnemyAI FindNearestEnemy()
@@ -49,7 +67,7 @@ public class Weapon_Fireball : Equippable
 
             float distance = Vector3.Distance(transform.position, enemyObject.transform.position);
 
-            if (distance <= attackRange && distance < minDistance)
+            if (distance <= firingRange && distance < minDistance)
             {
                 minDistance = distance;
                 nearest = enemyObject.GetComponent<EnemyAI>();
@@ -61,23 +79,23 @@ public class Weapon_Fireball : Equippable
 
     private void Shoot(EnemyAI enemy)
     {
-        if (fireballPrefab == null)
+        if (bulletPrefab == null)
             return;
 
-        Vector3 direction = (enemy.transform.position - transform.position).normalized;
+        Vector3 direction = (enemy.transform.position - firingPoint.position).normalized;
 
-        GameObject fireballObject = Instantiate(
-            fireballPrefab,
-            transform.position,
+        GameObject bulletObject = Instantiate(
+            bulletPrefab,
+            firingPoint.position,
             Quaternion.identity
         );
 
-        ProjectilePrefab projectile = fireballObject.GetComponent<ProjectilePrefab>();
+        ProjectilePrefab projectile = bulletObject.GetComponent<ProjectilePrefab>();
 
         if (projectile != null)
         {
             projectile.damage = Mathf.RoundToInt(damage * PlayerGlobalStats.Instance.DamageMultiplier);
-            projectile.speed += fireballSpeed * PlayerGlobalStats.Instance.ProjectileSpeedMultiplier; 
+            projectile.speed = bulletSpeed * PlayerGlobalStats.Instance.ProjectileSpeedMultiplier;
             projectile.maxEnemyPenetration = maxEnemyPenetration + PlayerGlobalStats.Instance.ProjectilePenetration;
             projectile.SetDirection(direction);
         }
@@ -88,28 +106,28 @@ public class Weapon_Fireball : Equippable
         switch (currentLevel)
         {
             case 2:
-                damage += 3;
+                // baseDamage += 3;
                 break;
             case 3:
-                fireballSpeed += 1f;
+                // damageMultiplier += 0.2f;
                 break;
             case 4:
-                fireballSpeed += 3f;
+                // baseDamage += 3;
                 break;
             case 5:
-                attackCooldown -= 0.2f;
+                // baseDamage += 6;
                 break;
             case 6:
-                damage += 3;
+                // damageMultiplier += 0.5f;
                 break;
             case 7:
-                damage += 4;
+                // baseDamage += 6;
                 break;
             case 8:
-                fireballSpeed += 6f;
+                //
                 break;
             case 9:
-                attackCooldown -= 0.3f;
+                //
                 break;
             default:
                 Debug.LogError("Wtf?");

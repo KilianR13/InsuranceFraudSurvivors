@@ -770,6 +770,7 @@ MonoBehaviour:
   MaxSpeedMultiplier: 1
   EXPMultiplier: 5
   EXPMagnetSize: 1
+  ProjectilePenetration: 1
 --- !u!4 &812121004
 Transform:
   m_ObjectHideFlags: 0
@@ -1003,7 +1004,7 @@ PrefabInstance:
     - target: {fileID: 1011106369661173039, guid: 914a115e6c673bf42818dc404bd00802, type: 3}
       propertyPath: StartingWeapon
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 4220522932344424602, guid: 637517891a16eb944b7eb2841c083846, type: 3}
     - target: {fileID: 2696105773617812948, guid: 914a115e6c673bf42818dc404bd00802, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -1260,6 +1261,10 @@ PrefabInstance:
       propertyPath: maxItems
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 5892222177803268883, guid: 914a115e6c673bf42818dc404bd00802, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6637530519179374289, guid: 914a115e6c673bf42818dc404bd00802, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -1268,8 +1273,17 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8469271797902378380, guid: 914a115e6c673bf42818dc404bd00802, type: 3}
+      propertyPath: m_ChildControlWidth
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8469271797902378380, guid: 914a115e6c673bf42818dc404bd00802, type: 3}
+      propertyPath: m_ChildForceExpandWidth
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 7772477377746499456, guid: 914a115e6c673bf42818dc404bd00802, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 914a115e6c673bf42818dc404bd00802, type: 3}
@@ -1283,6 +1297,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1768283990}
   - component: {fileID: 1768283989}
+  - component: {fileID: 1768283991}
   - component: {fileID: 1768283988}
   m_Layer: 0
   m_Name: EventSystem
@@ -1352,6 +1367,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1768283991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1768283987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c61015bcf8e59b49b611db87fd8c47c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EventSystemFocus
 --- !u!1 &1799651874
 GameObject:
   m_ObjectHideFlags: 0

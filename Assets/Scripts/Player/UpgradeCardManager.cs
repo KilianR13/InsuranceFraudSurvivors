@@ -66,12 +66,14 @@ public class UpgradeCardManager : MonoBehaviour
         upgradeChosen.Play();
     }
 
+
     /// <summary>
     /// Clears the cards.
     /// </summary>
     public void ClearCards()
     {
         if (cardParent == null) return;
+        firstCard = null;
         for (int i = cardParent.childCount - 1; i >= 0; i--)
         {
             Destroy(cardParent.GetChild(i).gameObject);
