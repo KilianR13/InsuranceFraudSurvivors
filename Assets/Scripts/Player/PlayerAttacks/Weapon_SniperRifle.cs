@@ -16,12 +16,6 @@ public class Weapon_SniperRifle : Equippable
 
     private float cooldownTimer = 0f;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
     private void Update()
     {
         cooldownTimer -= Time.deltaTime;

@@ -765,12 +765,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerGlobalStats
   CooldownMultiplier: 1
   DamageMultiplier: 1
+  ProjectileSpeedMultiplier: 1
+  ProjectilePenetration: 1
   MaxHealthMultiplier: 1
   AccelMultiplier: 1
   MaxSpeedMultiplier: 1
   EXPMultiplier: 5
   EXPMagnetSize: 1
-  ProjectilePenetration: 1
+  projectileSizeMultiplier: 1
 --- !u!4 &812121004
 Transform:
   m_ObjectHideFlags: 0
@@ -1004,7 +1006,7 @@ PrefabInstance:
     - target: {fileID: 1011106369661173039, guid: 914a115e6c673bf42818dc404bd00802, type: 3}
       propertyPath: StartingWeapon
       value: 
-      objectReference: {fileID: 4220522932344424602, guid: 637517891a16eb944b7eb2841c083846, type: 3}
+      objectReference: {fileID: 5535915080014624384, guid: 37bc6f9f45fefe54a841b2349db9ad8b, type: 3}
     - target: {fileID: 2696105773617812948, guid: 914a115e6c673bf42818dc404bd00802, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -1272,6 +1274,26 @@ PrefabInstance:
     - target: {fileID: 6637530519179374289, guid: 914a115e6c673bf42818dc404bd00802, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8429762854993615854, guid: 914a115e6c673bf42818dc404bd00802, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.00000041723246
+      objectReference: {fileID: 0}
+    - target: {fileID: 8429762854993615854, guid: 914a115e6c673bf42818dc404bd00802, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8429762854993615854, guid: 914a115e6c673bf42818dc404bd00802, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8429762854993615854, guid: 914a115e6c673bf42818dc404bd00802, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8429762854993615854, guid: 914a115e6c673bf42818dc404bd00802, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -180
       objectReference: {fileID: 0}
     - target: {fileID: 8469271797902378380, guid: 914a115e6c673bf42818dc404bd00802, type: 3}
       propertyPath: m_ChildControlWidth

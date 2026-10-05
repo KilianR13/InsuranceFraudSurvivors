@@ -12,6 +12,14 @@ public class PlayerWeaponHandler : MonoBehaviour
     [SerializeField] private GameObject StartingWeapon;
     [SerializeField] private Transform swordAttachPoint;
 
+    [SerializeField] private Transform frontAttachPoint;
+    [SerializeField] private Transform sideAttachPoint;
+    [SerializeField] private Transform backAttachPoint;
+    [SerializeField] private Transform topAttachPoint;
+    [SerializeField] private Transform specialAttachPoint;
+    private Transform correctTransform;
+
+
     
     void Start()
     {
@@ -71,9 +79,26 @@ public class PlayerWeaponHandler : MonoBehaviour
             Debug.LogError("Player tried to equip a weapon in an occupied slot.");
             return;
         }
-
-        GameObject weapon = Instantiate(newWeapon, transform.position, Quaternion.identity);
-        weapon.transform.SetParent(transform);
+        switch (equippable.itemSlot)
+        {
+            case ItemSlotType.Front:
+                correctTransform = frontAttachPoint;
+                break;
+            case ItemSlotType.Back:
+                correctTransform = backAttachPoint;
+                break;
+            case ItemSlotType.Top:
+                correctTransform = topAttachPoint;
+                break;
+            case ItemSlotType.Side:
+                correctTransform = sideAttachPoint;
+                break;
+            case ItemSlotType.Special:
+                correctTransform = specialAttachPoint;
+                break;
+        }
+        GameObject weapon = Instantiate(newWeapon, correctTransform.position, correctTransform.rotation);
+        weapon.transform.SetParent(correctTransform);
         AddWeapon(weapon);
     }
 

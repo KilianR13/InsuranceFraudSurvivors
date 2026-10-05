@@ -19,6 +19,7 @@ public class PlayerGlobalStats : MonoBehaviour
     [Range(1f, 5f)]
     public float EXPMultiplier = 1f;
     public float EXPMagnetSize = 1f;
+    public float projectileSizeMultiplier = 1f;
     
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
